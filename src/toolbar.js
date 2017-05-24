@@ -11,6 +11,7 @@ import Icon from './components/icon';
 import classnames from 'classnames';
 
 import {getEditor} from './lib/codemirrorEditor';
+import {getCtrl} from './lib/util';
 
 @inject(state => ({
     rangeFormat: state.editor.format,
@@ -19,6 +20,47 @@ import {getEditor} from './lib/codemirrorEditor';
 export default class EditorToolbar extends Component {
     constructor() {
         super();
+    }
+
+    componentDidMount(){
+        setTimeout(()=>{
+            if(getEditor()){
+                getEditor().addKeyMap({
+                    [`${getCtrl()}-B`]: (cm) => {
+                        this.insertAround('**', '**');
+                    },
+                    [`${getCtrl()}-I`]: (cm) => {
+                        this.insertAround('**', '**');
+                    },
+                    [`${getCtrl()}-shift-S`]:()=>{
+                        this.insertAround('~', '~')
+                    },
+                    [`${getCtrl()}-Alt-L`]:()=>{
+                        this.insertBefore('1. ', 3);
+                    },
+                    [`${getCtrl()}-Alt-U`]:()=>{
+                        this.insertBefore('* ', 3);
+                    },
+                    [`${getCtrl()}-Alt-H`]:()=>{
+                        this.insert('---');
+                    },
+                    [`${getCtrl()}-Alt-C`]:()=>{
+                        this.insertAround('```\r\n', '\r\n```')
+                    },
+                    [`${getCtrl()}-Alt-I`]:()=>{
+                        this.insertAround('[', '](http://)');
+                    },
+                    [`${getCtrl()}-Alt-Q`]:()=>{
+                        this.insertBefore('> ', 2);
+                    },
+                    [`${getCtrl()}-Alt-L`]:()=>{
+                        this.insertBefore('![](http://)', 2);
+                    }
+                })
+            }
+        },1000);
+
+
     }
 
     /**
@@ -179,7 +221,7 @@ export default class EditorToolbar extends Component {
                     placement="bottom"
                     mouseEnterDelay={0}
                     mouseLeaveDelay={0}
-                    overlay={<div>撤销(ctrl+Z)</div>}
+                    overlay={<div>撤销({getCtrl()}+Z)</div>}
                 >
                     <button className="ql-undo" onClick={this.undo}>
                         <Icon type="undo"/>
@@ -189,7 +231,7 @@ export default class EditorToolbar extends Component {
                     placement="bottom"
                     mouseEnterDelay={0}
                     mouseLeaveDelay={0}
-                    overlay={<div>重做(ctrl+Y)</div>}
+                    overlay={<div>重做({getCtrl()}+Y)</div>}
                 >
                     <button className="ql-redo" onClick={this.redo}>
                         <Icon type="redo"/>
@@ -201,7 +243,7 @@ export default class EditorToolbar extends Component {
                     placement="bottom"
                     mouseEnterDelay={0}
                     mouseLeaveDelay={0}
-                    overlay={<div>加粗 ctrl+b</div>}
+                    overlay={<div>加粗 {getCtrl()}+b</div>}
                 >
                     {this.renderMarkButton('bold', 'bold')}
                 </ToolTip>
@@ -209,7 +251,7 @@ export default class EditorToolbar extends Component {
                     placement="bottom"
                     mouseEnterDelay={0}
                     mouseLeaveDelay={0}
-                    overlay={<div>斜体 ctrl+i</div>}
+                    overlay={<div>斜体 {getCtrl()}+i</div>}
                 >
                     {this.renderMarkButton('italic', 'italic')}
                 </ToolTip>
@@ -217,7 +259,7 @@ export default class EditorToolbar extends Component {
                     placement="bottom"
                     mouseEnterDelay={0}
                     mouseLeaveDelay={0}
-                    overlay={<div>删除线 ctrl+shift+s</div>}
+                    overlay={<div>删除线 {getCtrl()}+shift+s</div>}
                 >
                     {this.renderMarkButton('strike', 'strike')}
                 </ToolTip>
@@ -226,7 +268,7 @@ export default class EditorToolbar extends Component {
                     placement="bottom"
                     mouseEnterDelay={0}
                     mouseLeaveDelay={0}
-                    overlay={<div>有序列表 ctrl+Option+L</div>}
+                    overlay={<div>有序列表 {getCtrl()}+Alt+L</div>}
                 >
                     {this.renderMarkButton('ordered', 'ol')}
                 </ToolTip>
@@ -234,7 +276,7 @@ export default class EditorToolbar extends Component {
                     placement="bottom"
                     mouseEnterDelay={0}
                     mouseLeaveDelay={0}
-                    overlay={<div>无序列表 ctrl+Option+U</div>}
+                    overlay={<div>无序列表 {getCtrl()}+Alt+U</div>}
                 >
                     {this.renderMarkButton('bullet', 'ul')}
                 </ToolTip>
@@ -243,7 +285,7 @@ export default class EditorToolbar extends Component {
                     placement="bottom"
                     mouseEnterDelay={0}
                     mouseLeaveDelay={0}
-                    overlay={<div>插入水平线 ctrl+Option+U</div>}
+                    overlay={<div>插入水平线 {getCtrl()}+Alt+h</div>}
                 >
                     {this.renderMarkButton('hr', 'min')}
                 </ToolTip>
@@ -251,7 +293,7 @@ export default class EditorToolbar extends Component {
                     placement="bottom"
                     mouseEnterDelay={0}
                     mouseLeaveDelay={0}
-                    overlay={<div>插入代码 ctrl+Option+U</div>}
+                    overlay={<div>插入代码 {getCtrl()}+Alt+c</div>}
                 >
                     {this.renderMarkButton('code', 'code')}
                 </ToolTip>
@@ -259,7 +301,7 @@ export default class EditorToolbar extends Component {
                     placement="bottom"
                     mouseEnterDelay={0}
                     mouseLeaveDelay={0}
-                    overlay={<div>插入引用 ctrl+Option+U</div>}
+                    overlay={<div>插入引用 {getCtrl()}+Alt+q</div>}
                 >
                     {this.renderMarkButton('quote', 'quote')}
                 </ToolTip>
@@ -267,7 +309,7 @@ export default class EditorToolbar extends Component {
                     placement="bottom"
                     mouseEnterDelay={0}
                     mouseLeaveDelay={0}
-                    overlay={<div>插入图片 ctrl+Option+U</div>}
+                    overlay={<div>插入图片 {getCtrl()}+Alt+i</div>}
                 >
                     {this.renderMarkButton('image', 'image')}
                 </ToolTip>
@@ -275,7 +317,7 @@ export default class EditorToolbar extends Component {
                     placement="bottom"
                     mouseEnterDelay={0}
                     mouseLeaveDelay={0}
-                    overlay={<div>插入链接 ctrl+Option+U</div>}
+                    overlay={<div>插入链接 {getCtrl()}+Alt+l</div>}
                 >
                     {this.renderMarkButton('link', 'link')}
                 </ToolTip>

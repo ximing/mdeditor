@@ -4,7 +4,7 @@
 
 'use strict';
 import React, {Component} from 'react';
-import {observer,Provider} from 'mobx-react';
+import {Provider} from 'mobx-react';
 
 import './style/index.scss';
 import {getEditor} from './lib/codemirrorEditor';
@@ -34,11 +34,9 @@ class  Editor extends Component {
         this.getEditor = getEditor;
     };
 
-    setContents(content) {
-        if(getEditor()) {
-            getEditor().setContents(content);
-        }
-    };
+    getEditor(){
+        return getEditor();
+    }
 
     render() {
         return(

@@ -19,7 +19,6 @@ export default class Editor extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props.defalutValue)
         let editor = initCodeMirrorEditor(ReactDOM.findDOMNode(this.refs.editor));
 
         editor.on('change', this.props.onChange);
