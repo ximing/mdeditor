@@ -55,6 +55,27 @@ export default class EditorToolbar extends Component {
                     },
                     [`${getCtrl()}-Alt-L`]:()=>{
                         this.insertBefore('![](http://)', 2);
+                    },
+                    [`${getCtrl()}-Alt-0`]:()=>{
+                        this.insertBefore('![](http://)', 2);
+                    },
+                    [`${getCtrl()}-Alt-1`]:()=>{
+                        this.insertBefore('# ', 0);
+                    },
+                    [`${getCtrl()}-Alt-2`]:()=>{
+                        this.insertBefore('## ', 0);
+                    },
+                    [`${getCtrl()}-Alt-3`]:()=>{
+                        this.insertBefore('### ', 0);
+                    },
+                    [`${getCtrl()}-Alt-4`]:()=>{
+                        this.insertBefore('#### ', 0);
+                    },
+                    [`${getCtrl()}-Alt-5`]:()=>{
+                        this.insertBefore('##### ', 0);
+                    },
+                    [`${getCtrl()}-Alt-6`]:()=>{
+                        this.insertBefore('###### ', 0);
                     }
                 })
             }
