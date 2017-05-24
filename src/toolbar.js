@@ -5,7 +5,6 @@
 import React, {Component} from 'react';
 import {inject, observer} from 'mobx-react';
 
-import HeaderDropDown from './components/headerDropDown/index';
 import ToolTip from './components/tooltip';
 import Icon from './components/icon';
 import classnames from 'classnames';
@@ -160,6 +159,12 @@ export default class EditorToolbar extends Component {
                 this.insertAround('[', '](http://)');
             }else if(type === 'link'){
                 this.insertBefore('![](http://)', 2);
+            }else if(type === 'h1'){
+                this.insertBefore('# ', 0);
+            }else if(type === 'h2'){
+                this.insertBefore('## ', 0);
+            }else if(type === 'h3'){
+                this.insertBefore('### ', 0);
             }
         }
     }
@@ -259,7 +264,31 @@ export default class EditorToolbar extends Component {
                     </button>
                 </ToolTip>
                 <Icon type="vertical"/>
-                <HeaderDropDown val={header}/>
+                <ToolTip
+                    placement="bottom"
+                    mouseEnterDelay={0}
+                    mouseLeaveDelay={0}
+                    overlay={<div>H1 {getCtrl()}+Alt+1</div>}
+                >
+                    {this.renderMarkButton('h1', 'h1')}
+                </ToolTip>
+                <ToolTip
+                    placement="bottom"
+                    mouseEnterDelay={0}
+                    mouseLeaveDelay={0}
+                    overlay={<div>H2 {getCtrl()}+Alt+2</div>}
+                >
+                    {this.renderMarkButton('h2', 'h2')}
+                </ToolTip>
+                <ToolTip
+                    placement="bottom"
+                    mouseEnterDelay={0}
+                    mouseLeaveDelay={0}
+                    overlay={<div>H3 {getCtrl()}+Alt+3</div>}
+                >
+                    {this.renderMarkButton('h3', 'h3')}
+                </ToolTip>
+                <Icon type="vertical"/>
                 <ToolTip
                     placement="bottom"
                     mouseEnterDelay={0}
