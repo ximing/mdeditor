@@ -3,9 +3,11 @@
     "version": "0.0.2",
     "description": "A new React project",
     "author": "",
-    "main": "./dist/mdeditor.js",
+    "main": "./dist/index.js",
+    "repository": "https://github.com/ximing/mdeditor",
     "scripts": {
         "i": "SASS_BINARY_SITE=https://npm.taobao.org/mirrors/node-sass/ yarn install --registry=https://registry.npm.taobao.org",
+        "build": "rimraf dist && babel src --out-dir dist",
         "dev": "./node_modules/.bin/webpack-dev-server ",
         "builddemo": "webpack --config webpack.build.demo.config.js",
         "buildlib": "webpack --config webpack.build.lib.config.js"
@@ -43,6 +45,7 @@
         "react": "15.4.2",
         "react-dom": "15.4.2",
         "react-hot-loader": "^3.0.0-beta.6",
+        "rimraf": "^2.6.1",
         "sass-loader": "^4.1.1",
         "style-loader": "^0.13.1",
         "url-loader": "^0.5.7",
@@ -71,5 +74,9 @@
         "rc-progress": "^2.1.1",
         "rc-tabs": "^7.5.0",
         "rc-tooltip": "^3.4.3"
-    }
+    },
+    "files": [
+        "dist",
+        "src"
+    ]
 }

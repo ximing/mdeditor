@@ -1,0 +1,16 @@
+{
+  "presets": [
+    ["es2015", {
+      "modules": false
+    }], "stage-0", "react"
+  ],
+  "env": {},
+  "ignore": [
+    "node_modules/**",
+    "dist"
+  ],
+  "plugins": [
+    "react-hot-loader/babel",
+    "transform-decorators-legacy"
+  ]
+}
