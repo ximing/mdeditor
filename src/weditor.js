@@ -39,12 +39,14 @@ export default class WEditor extends Component {
         });
 
         const $divs = $('.CodeMirror-scroll, .weditor-preview');
+        let timer = null;
         const sync = function (e) {
+            clearTimeout(timer);
             let $other = $divs.not(this).off('scroll'),
                 other = $other.get(0);
             let percentage = this.scrollTop / (this.scrollHeight - this.offsetHeight);
             other.scrollTop = percentage * (other.scrollHeight - other.offsetHeight);
-            setTimeout(function () {
+            timer = setTimeout(function () {
                 $other.on('scroll', sync);
             }, 200);
         };
