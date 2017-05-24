@@ -58,12 +58,14 @@ var WEditor = (_dec = inject(function (state) {
             });
 
             var $divs = $('.CodeMirror-scroll, .weditor-preview');
+            var timer = null;
             var sync = function sync(e) {
+                clearTimeout(timer);
                 var $other = $divs.not(this).off('scroll'),
                     other = $other.get(0);
                 var percentage = this.scrollTop / (this.scrollHeight - this.offsetHeight);
                 other.scrollTop = percentage * (other.scrollHeight - other.offsetHeight);
-                setTimeout(function () {
+                timer = setTimeout(function () {
                     $other.on('scroll', sync);
                 }, 200);
             };
