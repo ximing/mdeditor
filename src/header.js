@@ -3,7 +3,6 @@
  */
 'use strict';
 import React, {Component} from 'react';
-import Toolbar from './toolbar';
 import {getEditor} from './lib/codemirrorEditor';
 import {info} from './components/toast';
 import Dropdown from 'rc-dropdown';
@@ -167,7 +166,7 @@ export default class EditorHeader extends Component {
 
         const {panel} = this.state;
         return(
-            <div className="toolbar-tab">
+            <div className="menu-bar">
                 <Dropdown
                     trigger={['click']}
                     overlay={fileMenu}
@@ -210,9 +209,6 @@ export default class EditorHeader extends Component {
             <div className="weditor-header">
                 <div className="header-left-box list-header">
                     <div className="s-header">
-                        <a className="header-back-up" onClick={this.backList}>
-                            <span className="header-back-icon"/>
-                        </a>
                         <span className="s-header-text">
                             <div className="span-input-wrap">
                                 <input className="title-input span-input" defaultValue={'ceshi.doc'} maxLength="100"
@@ -222,17 +218,13 @@ export default class EditorHeader extends Component {
                                 <span className="title-input-pre span-input-pre">{this.props.doc.name || '未命名'}</span>
                             </div>
                         </span>
-                        <span className="s-header-time"
-                              id="save-status">{this.props.doc.status}</span>
                     </div>
                 </div>
+                {this.renderMenubar()}
                 <div className="header-right-box">
                     {this.props.rightContent}
                 </div>
-                <div className="editor-toolbar" id="toolbar">
-                    {this.renderMenubar()}
-                    <Toolbar/>
-                </div>
+
             </div>
         );
     }
