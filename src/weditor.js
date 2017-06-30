@@ -84,7 +84,9 @@ export default class WEditor extends Component {
                 </div>
                 <div className="weditor-body">
                     <div className="content-container">
-                        <Editor defalutValue={this.props.defaultValue} onChange={this.onChange}/>
+                        <Editor readOnly={this.props.readOnly}
+                            defalutValue={this.props.defaultValue}
+                            onChange={this.onChange}/>
                     </div>
                     {
                         this.state.width > 900 && (

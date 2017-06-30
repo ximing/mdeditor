@@ -53,7 +53,8 @@ var Editor = (_temp = _class = function (_Component) {
                     editor: editor,
                     help: help
                 },
-                React.createElement(WEditor, { defaultValue: this.props.defaultValue,
+                React.createElement(WEditor, { readOnly: this.props.readOnly,
+                    defaultValue: this.props.defaultValue,
                     options: this.props.options,
                     coCursors: this.props.coCursors,
                     doc: this.props.doc,
@@ -74,7 +75,8 @@ var Editor = (_temp = _class = function (_Component) {
         status: ''
     },
     coCursors: [],
-    rightContent: null
+    rightContent: null,
+    readOnly: false
 }, _temp);
 var _default = Editor;
 

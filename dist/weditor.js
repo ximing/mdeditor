@@ -133,7 +133,9 @@ var WEditor = (_dec = inject(function (state) {
                     React.createElement(
                         'div',
                         { className: 'content-container' },
-                        React.createElement(Editor, { defalutValue: this.props.defaultValue, onChange: this.onChange })
+                        React.createElement(Editor, { readOnly: this.props.readOnly,
+                            defalutValue: this.props.defaultValue,
+                            onChange: this.onChange })
                     ),
                     this.state.width > 900 && React.createElement(
                         'div',

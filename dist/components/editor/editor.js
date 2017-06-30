@@ -36,8 +36,8 @@ var Editor = (_temp = _class = function (_Component) {
         key: 'componentDidMount',
         value: function componentDidMount() {
             var editor = initCodeMirrorEditor(ReactDOM.findDOMNode(this.refs.editor));
-
             editor.on('change', this.props.onChange);
+            editor.setOption('readOnly', this.props.readOnly);
         }
     }, {
         key: 'render',

@@ -20,9 +20,8 @@ export default class Editor extends Component {
 
     componentDidMount() {
         let editor = initCodeMirrorEditor(ReactDOM.findDOMNode(this.refs.editor));
-
         editor.on('change', this.props.onChange);
-
+        editor.setOption('readOnly',this.props.readOnly);
     }
 
     render() {
