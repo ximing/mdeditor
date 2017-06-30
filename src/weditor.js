@@ -24,7 +24,7 @@ import editor from './model/editor';
 })) @observer
 export default class WEditor extends Component {
     state = {
-        left: window.innerWidth / 2 - 400,
+        width: window.innerWidth,
         scrollTop: 0
     };
 
@@ -52,11 +52,19 @@ export default class WEditor extends Component {
             }, 200);
         };
         $divs.on('scroll', sync);
-
+        $(window).on('resize', this.onWindowResize)
     }
 
     componentWillUnmount() {
+        $(window).off('resize', this.onWindowResize)
     }
+
+    onWindowResize = () => {
+        this.setState({
+            width: window.innerWidth
+        });
+    };
+
 
     componentWillReceiveProps(nextProps) {
         this.setState({
@@ -78,9 +86,13 @@ export default class WEditor extends Component {
                     <div className="content-container">
                         <Editor defalutValue={this.props.defaultValue} onChange={this.onChange}/>
                     </div>
-                    <div className="weditor-preview">
-                        <Preview/>
-                    </div>
+                    {
+                        this.state.width > 900 && (
+                            <div className="weditor-preview">
+                                <Preview/>
+                            </div>
+                        )
+                    }
                 </div>
 
                 {
