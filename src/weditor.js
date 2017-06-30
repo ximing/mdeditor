@@ -71,10 +71,6 @@ export default class WEditor extends Component {
     render() {
         return (
             <div className="weditor-wrapper">
-                <Header doc={this.props.doc}
-                        fileOptions={this.props.options.fileOptions}
-                        rightContent={this.props.rightContent}
-                        helpOptions={this.props.options.helpOptions}/>
                 <div className="editor-toolbar" id="toolbar">
                     <Toolbar/>
                 </div>
