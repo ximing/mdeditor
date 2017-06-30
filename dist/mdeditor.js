@@ -60800,11 +60800,7 @@ var Editor = (_temp = _class = function (_Component) {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'textarea',
-                    { ref: 'editor' },
-                    this.props.defalutValue
-                )
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('textarea', { ref: 'editor', defalutValue: this.props.defalutValue })
             );
         }
     }]);
