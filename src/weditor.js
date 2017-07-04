@@ -4,7 +4,6 @@
 'use strict';
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import Header from './header';
 import Toolbar from './toolbar';
 import LinkBubble from './components/linkBubble';
 import InsertImage from './components/insertImage';
@@ -85,7 +84,7 @@ export default class WEditor extends Component {
                 <div className="weditor-body">
                     <div className="content-container">
                         <Editor readOnly={this.props.readOnly}
-                            defalutValue={this.props.defaultValue}
+                                defaultValue={this.props.defaultValue}
                             onChange={this.onChange}/>
                     </div>
                     {

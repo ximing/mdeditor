@@ -48,7 +48,7 @@ class  Editor extends Component {
                 help={help}
             >
                 <WEditor readOnly={this.props.readOnly}
-                        defaultValue={this.props.defaultValue}
+                         defaultValue={this.props.defaultValue}
                         options={this.props.options}
                          coCursors = {this.props.coCursors}
                          doc={this.props.doc}

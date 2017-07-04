@@ -60800,7 +60800,7 @@ var Editor = (_temp = _class = function (_Component) {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('textarea', { ref: 'editor', defalutValue: this.props.defalutValue })
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('textarea', { ref: 'editor', defaultValue: this.props.defaultValue })
             );
         }
     }]);
@@ -66814,7 +66814,7 @@ var WEditor = (_dec = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_8_mobx_rea
                         'div',
                         { className: 'content-container' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__components_editor__["a" /* default */], { readOnly: this.props.readOnly,
-                            defalutValue: this.props.defaultValue,
+                            defaultValue: this.props.defaultValue,
                             onChange: this.onChange })
                     ),
                     this.state.width > 900 && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(

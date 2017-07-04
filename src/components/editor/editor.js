@@ -27,7 +27,7 @@ export default class Editor extends Component {
     render() {
         return(
             <div >
-                <textarea ref="editor" defalutValue={this.props.defalutValue}>
+                <textarea ref="editor" defaultValue={this.props.defaultValue}>
                 </textarea>
             </div>
         );

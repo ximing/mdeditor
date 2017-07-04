@@ -1,6 +1,6 @@
 {
     "name": "mdeditorjs",
-    "version": "0.0.10",
+    "version": "0.1.0",
     "description": "a markdown editor",
     "author": "",
     "main": "./dist/mdeditor.js",

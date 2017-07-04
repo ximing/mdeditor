@@ -6,7 +6,11 @@ import React, {Component} from "react";
 import MDEditor from '../src/index';
 
 export default class DemoContainer extends Component{
-    componentDidMount(){}
+    componentDidMount(){
+        this.MDEditor.getEditor().on('change',(codeMirror, change)=>{
+            console.log(change);
+        })
+    }
 
     render(){
         return (
@@ -36,6 +40,7 @@ export default class DemoContainer extends Component{
 - 列表文本前使用 [减号+空格]
 + 列表文本前使用 [加号+空格]
 * 列表文本前使用 [星号+空格]
+*
 
 1. 列表前使用 [数字+空格]
 2. 我们会自动帮你添加数字
