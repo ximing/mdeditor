@@ -4,18 +4,7 @@
 'use strict';
 import React, {Component} from "react";
 import MDEditor from '../src/index';
-
-export default class DemoContainer extends Component{
-    componentDidMount(){
-        this.MDEditor.getEditor().on('change',(codeMirror, change)=>{
-            console.log(change);
-        })
-    }
-
-    render(){
-        return (
-            <MDEditor
-                defaultValue={`
+let defaultVal = `
 # markdown 简易说明
 
 这就是 ~~删除线~~
@@ -82,7 +71,68 @@ export default class DemoContainer extends Component{
 - [x] 新增 Todo 列表功能
 - [x] 修复 LaTex 公式渲染问题
 - [x] 新增 LaTex 公式编号功能
-`}
+`
+export default class DemoContainer extends Component{
+    componentDidMount(){
+        this.MDEditor.getEditor().on('change',(codeMirror, change)=>{
+            console.log('change',change);
+            console.log('op', this._createOpFromChange(change))
+        })
+        this.MDEditor.getEditor().on('changes',(codeMirror,changes)=>{
+            let op = [];
+            console.log('changes',changes);
+            changes.forEach((change,i)=>{
+                op = op.concat(this._createOpFromChange(change));
+                console.log(`change step ${i}`,this._createOpFromChange(change),op)
+            })
+            console.log('ops', op);
+        })
+    }
+
+    _createOpFromChange = (change) => {
+        var codeMirror = this.MDEditor.getEditor();
+        var op = [];
+        var textIndex = 0;
+        var startLine = change.from.line;
+
+        for (let i = 0; i < startLine; i++) {
+            textIndex += codeMirror.lineInfo(i).text.length + 1; // + 1 for '\n'
+        }
+
+        textIndex += change.from.ch;
+
+        if (textIndex > 0) {
+            op.push(textIndex); // skip textIndex chars
+        }
+
+        if (change.to.line !== change.from.line || change.to.ch !== change.from.ch) {
+            var delLen = 0;
+            var numLinesRemoved = change.removed.length;
+
+            for (let i = 0; i < numLinesRemoved; i++) {
+                delLen += change.removed[i].length + 1; // +1 for '\n'
+            }
+
+            delLen -= 1; // last '\n' shouldn't be included
+
+            op.push({d: delLen}) // delete delLen chars
+        }
+
+        if (change.text) {
+            var text = change.text.join('\n');
+            if (text) {
+                op.push(text); // insert text
+            }
+        }
+
+        return op;
+    };
+
+    render(){
+        return (
+            <MDEditor
+                defaultValue={`* 列
+* `}
                 doc = {{name:'test.doc',status:'fjdisoaifasdof'
                 }}
                 ref={(e)=>{this.MDEditor = e;}}

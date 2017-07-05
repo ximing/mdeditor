@@ -12,8 +12,12 @@ var listRE = /^(\s*)(>[> ]*|[*+-]\s|(\d+)\.)(\s*)/,
 
 CodeMirror.commands.newlineAndIndentContinueMarkdownList = function(cm) {
     if (cm.getOption("disableInput")) return CodeMirror.Pass;
-    var ranges = cm.listSelections(), replacements = [];
-    for (var i = 0; i < ranges.length; i++) {
+    let ranges = cm.listSelections(),
+        replacements = [];
+
+    //console.log('range:',ranges);
+
+    for (let i = 0; i < ranges.length; i++) {
         var pos = ranges[i].head;
         var eolState = cm.getStateAfter(pos.line);
         var inList = eolState.list !== false;
@@ -25,12 +29,12 @@ CodeMirror.commands.newlineAndIndentContinueMarkdownList = function(cm) {
             return;
         }
         if (emptyListRE.test(line)) {
-            cm.replaceRange("", {
+            cm.replaceRange("\n", {
                 line: pos.line, ch: 0
             }, {
                 line: pos.line, ch: pos.ch + 1
             });
-            replacements[i] = "\n";
+            //replacements[i] = "\n";
         } else {
             var indent = match[1], after = match[4];
             var bullet = unorderedListRE.test(match[2]) || match[2].indexOf(">") >= 0
@@ -41,5 +45,7 @@ CodeMirror.commands.newlineAndIndentContinueMarkdownList = function(cm) {
         }
     }
 
-    cm.replaceSelections(replacements);
+    if(replacements.length>0){
+        cm.replaceSelections(replacements);
+    }
 };
