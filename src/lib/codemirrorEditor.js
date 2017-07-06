@@ -12,6 +12,7 @@ import 'codemirror/mode/gfm/gfm';
 import 'codemirror/mode/javascript/javascript'
 import 'codemirror/mode/css/css';
 import 'codemirror/mode/htmlmixed/htmlmixed';
+import '../style/codemirror.scss';
 
 let editor = null;
 export const initCodeMirrorEditor = function (dom) {

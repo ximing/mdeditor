@@ -6,7 +6,8 @@ body {
     right: 0;
     margin: 0;
     overflow: hidden;
-    background-color: #f9f9f5;
+    //background-color: #f9f9f5;
+    background-color: #ffffff;
 }
 
 .weditor-wrapper {
@@ -185,7 +186,8 @@ body {
     right: 0px;
     bottom: 0px;
     overflow: hidden;
-    background-color: #f9f9f5;
+    //background-color: #f9f9f5;
+    background-color: #ffffff;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -194,7 +196,8 @@ body {
         z-index: 1000000;
     }
     .content-container {
-        background-color: #f9f9f5;
+        //background-color: #f9f9f5;
+        background-color: #ffffff;
         &::selection {
             background: rgba(130, 182, 255, .4);
         }
@@ -216,7 +219,9 @@ body {
         .CodeMirror {
             border: none;
             flex: 1;
-            background-color: #f9f9f5;
+            //background-color: #f9f9f5;
+            background-color: #ffffff;
+
             font-size: 14px;
             .cm-header-1 {
                 font-size: 2em;
@@ -275,7 +280,8 @@ body {
     }
     .weditor-preview {
         font-size: 14px;
-        background-color: #f9f9f5;
+        //background-color: #f9f9f5;
+        background-color: #ffffff;
         flex: 1;
         margin: 0;
         padding: 20px 30px;
