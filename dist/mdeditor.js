@@ -22640,113 +22640,111 @@ exports.Mode = Mode;
 
 /***/ }),
 
-/***/ "./node_modules/brace/theme/monokai.js":
+/***/ "./node_modules/brace/theme/github.js":
 /***/ (function(module, exports) {
 
-ace.define("ace/theme/monokai",["require","exports","module","ace/lib/dom"], function(acequire, exports, module) {
+ace.define("ace/theme/github",["require","exports","module","ace/lib/dom"], function(acequire, exports, module) {
 
-exports.isDark = true;
-exports.cssClass = "ace-monokai";
-exports.cssText = ".ace-monokai .ace_gutter {\
-background: #2F3129;\
-color: #8F908A\
+exports.isDark = false;
+exports.cssClass = "ace-github";
+exports.cssText = "\
+.ace-github .ace_gutter {\
+background: #e8e8e8;\
+color: #AAA;\
 }\
-.ace-monokai .ace_print-margin {\
-width: 1px;\
-background: #555651\
+.ace-github  {\
+background: #fff;\
+color: #000;\
 }\
-.ace-monokai {\
-background-color: #272822;\
-color: #F8F8F2\
+.ace-github .ace_keyword {\
+font-weight: bold;\
 }\
-.ace-monokai .ace_cursor {\
-color: #F8F8F0\
+.ace-github .ace_string {\
+color: #D14;\
 }\
-.ace-monokai .ace_marker-layer .ace_selection {\
-background: #49483E\
+.ace-github .ace_variable.ace_class {\
+color: teal;\
 }\
-.ace-monokai.ace_multiselect .ace_selection.ace_start {\
-box-shadow: 0 0 3px 0px #272822;\
+.ace-github .ace_constant.ace_numeric {\
+color: #099;\
 }\
-.ace-monokai .ace_marker-layer .ace_step {\
-background: rgb(102, 82, 0)\
+.ace-github .ace_constant.ace_buildin {\
+color: #0086B3;\
 }\
-.ace-monokai .ace_marker-layer .ace_bracket {\
+.ace-github .ace_support.ace_function {\
+color: #0086B3;\
+}\
+.ace-github .ace_comment {\
+color: #998;\
+font-style: italic;\
+}\
+.ace-github .ace_variable.ace_language  {\
+color: #0086B3;\
+}\
+.ace-github .ace_paren {\
+font-weight: bold;\
+}\
+.ace-github .ace_boolean {\
+font-weight: bold;\
+}\
+.ace-github .ace_string.ace_regexp {\
+color: #009926;\
+font-weight: normal;\
+}\
+.ace-github .ace_variable.ace_instance {\
+color: teal;\
+}\
+.ace-github .ace_constant.ace_language {\
+font-weight: bold;\
+}\
+.ace-github .ace_cursor {\
+color: black;\
+}\
+.ace-github.ace_focus .ace_marker-layer .ace_active-line {\
+background: rgb(255, 255, 204);\
+}\
+.ace-github .ace_marker-layer .ace_active-line {\
+background: rgb(245, 245, 245);\
+}\
+.ace-github .ace_marker-layer .ace_selection {\
+background: rgb(181, 213, 255);\
+}\
+.ace-github.ace_multiselect .ace_selection.ace_start {\
+box-shadow: 0 0 3px 0px white;\
+}\
+.ace-github.ace_nobold .ace_line > span {\
+font-weight: normal !important;\
+}\
+.ace-github .ace_marker-layer .ace_step {\
+background: rgb(252, 255, 0);\
+}\
+.ace-github .ace_marker-layer .ace_stack {\
+background: rgb(164, 229, 101);\
+}\
+.ace-github .ace_marker-layer .ace_bracket {\
 margin: -1px 0 0 -1px;\
-border: 1px solid #49483E\
+border: 1px solid rgb(192, 192, 192);\
 }\
-.ace-monokai .ace_marker-layer .ace_active-line {\
-background: #202020\
+.ace-github .ace_gutter-active-line {\
+background-color : rgba(0, 0, 0, 0.07);\
 }\
-.ace-monokai .ace_gutter-active-line {\
-background-color: #272727\
+.ace-github .ace_marker-layer .ace_selected-word {\
+background: rgb(250, 250, 255);\
+border: 1px solid rgb(200, 200, 250);\
 }\
-.ace-monokai .ace_marker-layer .ace_selected-word {\
-border: 1px solid #49483E\
+.ace-github .ace_invisible {\
+color: #BFBFBF\
 }\
-.ace-monokai .ace_invisible {\
-color: #52524d\
+.ace-github .ace_print-margin {\
+width: 1px;\
+background: #e8e8e8;\
 }\
-.ace-monokai .ace_entity.ace_name.ace_tag,\
-.ace-monokai .ace_keyword,\
-.ace-monokai .ace_meta.ace_tag,\
-.ace-monokai .ace_storage {\
-color: #F92672\
-}\
-.ace-monokai .ace_punctuation,\
-.ace-monokai .ace_punctuation.ace_tag {\
-color: #fff\
-}\
-.ace-monokai .ace_constant.ace_character,\
-.ace-monokai .ace_constant.ace_language,\
-.ace-monokai .ace_constant.ace_numeric,\
-.ace-monokai .ace_constant.ace_other {\
-color: #AE81FF\
-}\
-.ace-monokai .ace_invalid {\
-color: #F8F8F0;\
-background-color: #F92672\
-}\
-.ace-monokai .ace_invalid.ace_deprecated {\
-color: #F8F8F0;\
-background-color: #AE81FF\
-}\
-.ace-monokai .ace_support.ace_constant,\
-.ace-monokai .ace_support.ace_function {\
-color: #66D9EF\
-}\
-.ace-monokai .ace_fold {\
-background-color: #A6E22E;\
-border-color: #F8F8F2\
-}\
-.ace-monokai .ace_storage.ace_type,\
-.ace-monokai .ace_support.ace_class,\
-.ace-monokai .ace_support.ace_type {\
-font-style: italic;\
-color: #66D9EF\
-}\
-.ace-monokai .ace_entity.ace_name.ace_function,\
-.ace-monokai .ace_entity.ace_other,\
-.ace-monokai .ace_entity.ace_other.ace_attribute-name,\
-.ace-monokai .ace_variable {\
-color: #A6E22E\
-}\
-.ace-monokai .ace_variable.ace_parameter {\
-font-style: italic;\
-color: #FD971F\
-}\
-.ace-monokai .ace_string {\
-color: #E6DB74\
-}\
-.ace-monokai .ace_comment {\
-color: #75715E\
-}\
-.ace-monokai .ace_indent-guide {\
-background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEklEQVQImWPQ0FD0ZXBzd/wPAAjVAoxeSgNeAAAAAElFTkSuQmCC) right repeat-y\
+.ace-github .ace_indent-guide {\
+background: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bLly//BwAmVgd1/w11/gAAAABJRU5ErkJggg==\") right repeat-y;\
 }";
 
-var dom = acequire("../lib/dom");
-dom.importCssString(exports.cssText, exports.cssClass);
+    var dom = acequire("../lib/dom");
+    dom.importCssString(exports.cssText, exports.cssClass);
 });
 
 
@@ -38668,7 +38666,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/* font */\n/* font */\n@font-face {\n  font-family: \"docicon\";\n  src: url(\"https://at.alicdn.com/t/font_afw1mj420y919k9.eot\");\n  src: url(\"https://at.alicdn.com/t/font_afw1mj420y919k9.eot?#iefix\") format(\"embedded-opentype\"), url(\"https://at.alicdn.com/t/font_afw1mj420y919k9.woff\") format(\"woff\"), url(\"https://at.alicdn.com/t/font_afw1mj420y919k9.ttf\") format(\"truetype\"), url(\"https://at.alicdn.com/t/font_afw1mj420y919k9.svg#dxicon\") format(\"svg\"); }\n\n.docicon {\n  display: inline-block;\n  font-style: normal;\n  vertical-align: middle;\n  text-align: center;\n  text-transform: none;\n  text-rendering: auto;\n  line-height: 1;\n  font-size: 14px;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale; }\n  .docicon:before {\n    display: block;\n    font-family: \"docicon\" !important; }\n\n.docicon-undo:before {\n  content: \"\\E697\"; }\n\n.docicon-redo:before {\n  content: \"\\E688\"; }\n\n.docicon-ol:before {\n  content: \"\\E68F\"; }\n\n.docicon-ul:before {\n  content: \"\\E691\"; }\n\n.docicon-right-indent:before {\n  content: \"\\E690\"; }\n\n.docicon-left-indent:before {\n  content: \"\\E698\"; }\n\n.docicon-right-align:before {\n  content: \"\\E68D\"; }\n\n.docicon-left-align:before {\n  content: \"\\E68B\"; }\n\n.docicon-center-align:before {\n  content: \"\\E693\"; }\n\n.docicon-justify-align:before {\n  content: \"\\E696\"; }\n\n.docicon-strike:before {\n  content: \"\\E692\"; }\n\n.docicon-underline:before {\n  content: \"\\E68E\"; }\n\n.docicon-italic:before {\n  content: \"\\E694\"; }\n\n.docicon-clear:before {\n  content: \"\\E68A\"; }\n\n.docicon-bold:before {\n  content: \"\\E686\"; }\n\n.docicon-format:before {\n  content: \"\\E687\"; }\n\n.docicon-max:before {\n  content: \"\\E60E\"; }\n\n.docicon-zoom-out:before {\n  content: \"\\E69E\"; }\n\n.docicon-zoom-in:before {\n  content: \"\\E69A\"; }\n\n.docicon-close:before {\n  content: \"\\E631\"; }\n\n.docicon-min:before {\n  content: \"\\E699\"; }\n\n.docicon-vertical:before {\n  content: \"\\E625\"; }\n\n.docicon-color:before {\n  content: \"\\E68C\"; }\n\n.docicon-background:before {\n  content: \"\\E695\"; }\n\n.docicon-image:before {\n  content: \"\\E674\"; }\n\n.docicon-link:before {\n  content: \"\\E602\"; }\n\n.docicon-quote:before {\n  content: \"\\E626\"; }\n\n.docicon-code:before {\n  content: \"\\E627\"; }\n\n.docicon-h1:before {\n  content: \"\\E93A\"; }\n\n.docicon-h3:before {\n  content: \"\\E93B\"; }\n\n.docicon-h2:before {\n  content: \"\\E628\"; }\n\n.weditor-wrapper {\n  /*! normalize.css v7.0.0 | MIT License | github.com/necolas/normalize.css */\n  /* Document\n       ========================================================================== */\n  /**\n     * 1. Correct the line height in all browsers.\n     * 2. Prevent adjustments of font size after orientation changes in\n     *    IE on Windows Phone and in iOS.\n     */\n  /* Sections\n       ========================================================================== */\n  /**\n     * Remove the margin in all browsers (opinionated).\n     */\n  /**\n     * Add the correct display in IE 9-.\n     */\n  /**\n     * Correct the font size and margin on `h1` elements within `section` and\n     * `article` contexts in Chrome, Firefox, and Safari.\n     */\n  /* Grouping content\n       ========================================================================== */\n  /**\n     * Add the correct display in IE 9-.\n     * 1. Add the correct display in IE.\n     */\n  /**\n     * Add the correct margin in IE 8.\n     */\n  /**\n     * 1. Add the correct box sizing in Firefox.\n     * 2. Show the overflow in Edge and IE.\n     */\n  /**\n     * 1. Correct the inheritance and scaling of font size in all browsers.\n     * 2. Correct the odd `em` font sizing in all browsers.\n     */\n  /* Text-level semantics\n       ========================================================================== */\n  /**\n     * 1. Remove the gray background on active links in IE 10.\n     * 2. Remove gaps in links underline in iOS 8+ and Safari 8+.\n     */\n  /**\n     * 1. Remove the bottom border in Chrome 57- and Firefox 39-.\n     * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.\n     */\n  /**\n     * Prevent the duplicate application of `bolder` by the next rule in Safari 6.\n     */\n  /**\n     * Add the correct font weight in Chrome, Edge, and Safari.\n     */\n  /**\n     * 1. Correct the inheritance and scaling of font size in all browsers.\n     * 2. Correct the odd `em` font sizing in all browsers.\n     */\n  /**\n     * Add the correct font style in Android 4.3-.\n     */\n  /**\n     * Add the correct background and color in IE 9-.\n     */\n  /**\n     * Add the correct font size in all browsers.\n     */\n  /**\n     * Prevent `sub` and `sup` elements from affecting the line height in\n     * all browsers.\n     */\n  /* Embedded content\n       ========================================================================== */\n  /**\n     * Add the correct display in IE 9-.\n     */\n  /**\n     * Add the correct display in iOS 4-7.\n     */\n  /**\n     * Remove the border on images inside links in IE 10-.\n     */\n  /**\n     * Hide the overflow in IE.\n     */\n  /* Forms\n       ========================================================================== */\n  /**\n     * 1. Change the font styles in all browsers (opinionated).\n     * 2. Remove the margin in Firefox and Safari.\n     */\n  /**\n     * Show the overflow in IE.\n     * 1. Show the overflow in Edge.\n     */\n  /**\n     * Remove the inheritance of text transform in Edge, Firefox, and IE.\n     * 1. Remove the inheritance of text transform in Firefox.\n     */\n  /**\n     * 1. Prevent a WebKit bug where (2) destroys native `audio` and `video`\n     *    controls in Android 4.\n     * 2. Correct the inability to style clickable types in iOS and Safari.\n     */\n  /**\n     * Remove the inner border and padding in Firefox.\n     */\n  /**\n     * Restore the focus styles unset by the previous rule.\n     */\n  /**\n     * Correct the padding in Firefox.\n     */\n  /**\n     * 1. Correct the text wrapping in Edge and IE.\n     * 2. Correct the color inheritance from `fieldset` elements in IE.\n     * 3. Remove the padding so developers are not caught out when they zero out\n     *    `fieldset` elements in all browsers.\n     */\n  /**\n     * 1. Add the correct display in IE 9-.\n     * 2. Add the correct vertical alignment in Chrome, Firefox, and Opera.\n     */\n  /**\n     * Remove the default vertical scrollbar in IE.\n     */\n  /**\n     * 1. Add the correct box sizing in IE 10-.\n     * 2. Remove the padding in IE 10-.\n     */\n  /**\n     * Correct the cursor style of increment and decrement buttons in Chrome.\n     */\n  /**\n     * 1. Correct the odd appearance in Chrome and Safari.\n     * 2. Correct the outline style in Safari.\n     */\n  /**\n     * Remove the inner padding and cancel buttons in Chrome and Safari on macOS.\n     */\n  /**\n     * 1. Correct the inability to style clickable types in iOS and Safari.\n     * 2. Change font properties to `inherit` in Safari.\n     */\n  /* Interactive\n       ========================================================================== */\n  /*\n     * Add the correct display in IE 9-.\n     * 1. Add the correct display in Edge, IE, and Firefox.\n     */\n  /*\n     * Add the correct display in all browsers.\n     */\n  /* Scripting\n       ========================================================================== */\n  /**\n     * Add the correct display in IE 9-.\n     */\n  /**\n     * Add the correct display in IE.\n     */\n  /* Hidden\n       ========================================================================== */\n  /**\n     * Add the correct display in IE 10-.\n     */ }\n  .weditor-wrapper html {\n    line-height: 1.15;\n    /* 1 */\n    -ms-text-size-adjust: 100%;\n    /* 2 */\n    -webkit-text-size-adjust: 100%;\n    /* 2 */ }\n  .weditor-wrapper body {\n    margin: 0; }\n  .weditor-wrapper article,\n  .weditor-wrapper aside,\n  .weditor-wrapper footer,\n  .weditor-wrapper header,\n  .weditor-wrapper nav,\n  .weditor-wrapper section {\n    display: block; }\n  .weditor-wrapper h1 {\n    font-size: 2em;\n    margin: 0.67em 0; }\n  .weditor-wrapper figcaption,\n  .weditor-wrapper figure,\n  .weditor-wrapper main {\n    /* 1 */\n    display: block; }\n  .weditor-wrapper figure {\n    margin: 1em 40px; }\n  .weditor-wrapper hr {\n    box-sizing: content-box;\n    /* 1 */\n    height: 0;\n    /* 1 */\n    overflow: visible;\n    /* 2 */ }\n  .weditor-wrapper pre {\n    font-family: monospace, monospace;\n    /* 1 */\n    font-size: 1em;\n    /* 2 */ }\n  .weditor-wrapper a {\n    background-color: transparent;\n    /* 1 */\n    -webkit-text-decoration-skip: objects;\n    /* 2 */ }\n  .weditor-wrapper abbr[title] {\n    border-bottom: none;\n    /* 1 */\n    text-decoration: underline;\n    /* 2 */\n    text-decoration: underline dotted;\n    /* 2 */ }\n  .weditor-wrapper b,\n  .weditor-wrapper strong {\n    font-weight: inherit; }\n  .weditor-wrapper b,\n  .weditor-wrapper strong {\n    font-weight: bolder; }\n  .weditor-wrapper code,\n  .weditor-wrapper kbd,\n  .weditor-wrapper samp {\n    font-family: monospace, monospace;\n    /* 1 */\n    font-size: 1em;\n    /* 2 */ }\n  .weditor-wrapper dfn {\n    font-style: italic; }\n  .weditor-wrapper mark {\n    background-color: #ff0;\n    color: #000; }\n  .weditor-wrapper small {\n    font-size: 80%; }\n  .weditor-wrapper sub,\n  .weditor-wrapper sup {\n    font-size: 75%;\n    line-height: 0;\n    position: relative;\n    vertical-align: baseline; }\n  .weditor-wrapper sub {\n    bottom: -0.25em; }\n  .weditor-wrapper sup {\n    top: -0.5em; }\n  .weditor-wrapper audio,\n  .weditor-wrapper video {\n    display: inline-block; }\n  .weditor-wrapper audio:not([controls]) {\n    display: none;\n    height: 0; }\n  .weditor-wrapper img {\n    border-style: none; }\n  .weditor-wrapper svg:not(:root) {\n    overflow: hidden; }\n  .weditor-wrapper button,\n  .weditor-wrapper input,\n  .weditor-wrapper optgroup,\n  .weditor-wrapper select,\n  .weditor-wrapper textarea {\n    font-family: sans-serif;\n    /* 1 */\n    font-size: 100%;\n    /* 1 */\n    line-height: 1.15;\n    /* 1 */\n    margin: 0;\n    /* 2 */ }\n  .weditor-wrapper button,\n  .weditor-wrapper input {\n    /* 1 */\n    overflow: visible; }\n  .weditor-wrapper button,\n  .weditor-wrapper select {\n    /* 1 */\n    text-transform: none; }\n  .weditor-wrapper button,\n  .weditor-wrapper html [type=\"button\"],\n  .weditor-wrapper [type=\"reset\"],\n  .weditor-wrapper [type=\"submit\"] {\n    -webkit-appearance: button;\n    /* 2 */ }\n  .weditor-wrapper button::-moz-focus-inner,\n  .weditor-wrapper [type=\"button\"]::-moz-focus-inner,\n  .weditor-wrapper [type=\"reset\"]::-moz-focus-inner,\n  .weditor-wrapper [type=\"submit\"]::-moz-focus-inner {\n    border-style: none;\n    padding: 0; }\n  .weditor-wrapper button:-moz-focusring,\n  .weditor-wrapper [type=\"button\"]:-moz-focusring,\n  .weditor-wrapper [type=\"reset\"]:-moz-focusring,\n  .weditor-wrapper [type=\"submit\"]:-moz-focusring {\n    outline: 1px dotted ButtonText; }\n  .weditor-wrapper fieldset {\n    padding: 0.35em 0.75em 0.625em; }\n  .weditor-wrapper legend {\n    box-sizing: border-box;\n    /* 1 */\n    color: inherit;\n    /* 2 */\n    display: table;\n    /* 1 */\n    max-width: 100%;\n    /* 1 */\n    padding: 0;\n    /* 3 */\n    white-space: normal;\n    /* 1 */ }\n  .weditor-wrapper progress {\n    display: inline-block;\n    /* 1 */\n    vertical-align: baseline;\n    /* 2 */ }\n  .weditor-wrapper textarea {\n    overflow: auto; }\n  .weditor-wrapper [type=\"checkbox\"],\n  .weditor-wrapper [type=\"radio\"] {\n    box-sizing: border-box;\n    /* 1 */\n    padding: 0;\n    /* 2 */ }\n  .weditor-wrapper [type=\"number\"]::-webkit-inner-spin-button,\n  .weditor-wrapper [type=\"number\"]::-webkit-outer-spin-button {\n    height: auto; }\n  .weditor-wrapper [type=\"search\"] {\n    -webkit-appearance: textfield;\n    /* 1 */\n    outline-offset: -2px;\n    /* 2 */ }\n  .weditor-wrapper [type=\"search\"]::-webkit-search-cancel-button,\n  .weditor-wrapper [type=\"search\"]::-webkit-search-decoration {\n    -webkit-appearance: none; }\n  .weditor-wrapper ::-webkit-file-upload-button {\n    -webkit-appearance: button;\n    /* 1 */\n    font: inherit;\n    /* 2 */ }\n  .weditor-wrapper details,\n  .weditor-wrapper menu {\n    display: block; }\n  .weditor-wrapper summary {\n    display: list-item; }\n  .weditor-wrapper canvas {\n    display: inline-block; }\n  .weditor-wrapper template {\n    display: none; }\n  .weditor-wrapper [hidden] {\n    display: none; }\n  .weditor-wrapper .CodeMirror pre {\n    line-height: 1.5; }\n\n/* font */\n.weditor-header {\n  width: 100%;\n  margin: 0;\n  padding: 0;\n  border-bottom: 1px solid #ddd;\n  position: relative;\n  z-index: 110;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  background: #FFFFFF;\n  box-shadow: 0 1px 0 0 #DDDDDD;\n  box-sizing: border-box;\n  height: 69px; }\n  .weditor-header button {\n    outline: none; }\n  .weditor-header .menu-bar {\n    height: 35px;\n    line-height: 35px;\n    position: absolute;\n    bottom: 0px;\n    left: 0px;\n    padding-left: 10px; }\n    .weditor-header .menu-bar span {\n      padding: 0 10px;\n      -webkit-user-select: none;\n         -moz-user-select: none;\n          -ms-user-select: none;\n              user-select: none;\n      font-size: 14px;\n      cursor: pointer;\n      color: #333333; }\n    .weditor-header .menu-bar span.active {\n      color: #2374d1;\n      background: #f6f6f6; }\n  .weditor-header .header-left-box {\n    line-height: 35px;\n    height: 35px;\n    position: absolute;\n    top: 0;\n    left: 0;\n    padding-left: 20px; }\n    .weditor-header .header-left-box .header-back-up {\n      float: left;\n      width: 40px;\n      height: 60px;\n      cursor: pointer;\n      background-color: #4285f4; }\n      .weditor-header .header-left-box .header-back-up .header-back-icon {\n        display: block;\n        background: url(//mss.sankuai.com/v1/mss_814dc1610cda4b2e8febd6ea2c809db5/image/1489546222140.svg) center no-repeat;\n        height: 60px;\n        position: absolute;\n        width: 40px;\n        -webkit-transition: all 125ms linear;\n        transition: all 125ms linear; }\n    .weditor-header .header-left-box .team-sprite {\n      background-image: url(https://assets-cdn.shimo.im/assets/images/teams-31aea6334f.png);\n      background-size: 499px 310px;\n      background-repeat: no-repeat; }\n    .weditor-header .header-left-box .s-header-text {\n      display: inline-block;\n      height: 35px;\n      line-height: 35px;\n      vertical-align: top; }\n      .weditor-header .header-left-box .s-header-text .title-input-pre {\n        font-size: 14px;\n        font-family: -apple-system, system-ui, \"PingFang SC\", Helvetica, Tahoma, Arial, \"Hiragino Sans GB\", \"Microsoft YaHei\", \"\\\\5FAE\\8F6F\\96C5\\9ED1\", SimSun, \"\\\\5B8B\\4F53\", Heiti, \"\\\\9ED1\\4F53\", sans-serif;\n        font-weight: bold;\n        font-style: normal;\n        letter-spacing: normal; }\n  .weditor-header .header-right-box {\n    position: relative;\n    height: 69px;\n    float: right;\n    line-height: 69px; }\n    .weditor-header .header-right-box .header-item-wrap {\n      display: inline-block;\n      height: 40px;\n      width: 40px; }\n      .weditor-header .header-right-box .header-item-wrap .header-item-inner {\n        border: 1px solid #eee;\n        height: 35px;\n        width: 35px;\n        border-radius: 50%;\n        text-align: center;\n        display: inline-block;\n        position: relative;\n        line-height: 0px; }\n        .weditor-header .header-right-box .header-item-wrap .header-item-inner:before {\n          content: '';\n          display: inline-block;\n          vertical-align: middle;\n          width: 0;\n          height: 100%;\n          font-size: 0; }\n        .weditor-header .header-right-box .header-item-wrap .header-item-inner img {\n          height: 25px;\n          width: 25px;\n          border-radius: 50%;\n          vertical-align: middle; }\n  .weditor-header .opver-icon {\n    background-image: url(https://s3.meituan.net/v1/mss_814dc1610cda4b2e8febd6ea2c809db5/image/1489914204976.png);\n    background-repeat: no-repeat;\n    height: 20px;\n    width: 20px;\n    display: inline-block; }\n  .weditor-header .opver-area span {\n    vertical-align: middle;\n    font-size: 12px; }\n  .weditor-header .opver-area:hover {\n    border: 1px solid #b6b6b6; }\n\n.editor-toolbar .ql-toolbar.ql-snow {\n  border: none;\n  background-color: #f6f6f6;\n  height: 40px;\n  line-height: 35px;\n  padding: 0;\n  border-bottom: solid 1px #e2e2e2; }\n  .editor-toolbar .ql-toolbar.ql-snow .ql-formats {\n    margin-right: 0px; }\n\n.editor-toolbar .docicon-vertical {\n  display: inline-block;\n  margin: 0 5px; }\n\n.toolbar-opver {\n  padding-left: 30px !important;\n  background-color: #FFFFFF;\n  border-bottom: 1px solid #ddd;\n  box-shadow: 0 1px 0 0 rgba(221, 221, 221, 0.5);\n  line-height: 50px;\n  height: 50px; }\n  .toolbar-opver button {\n    background: none;\n    cursor: pointer;\n    display: inline-block;\n    height: 26px;\n    width: 26px;\n    padding: 0;\n    outline: none;\n    margin-right: 10px;\n    border: 1px solid #FFFFFF;\n    border-radius: 2px; }\n    .toolbar-opver button:hover {\n      border: 1px solid #CCCCCC; }\n    .toolbar-opver button:active {\n      background: #DDDDDD;\n      border: 1px solid #CCCCCC; }\n\nbody {\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  margin: 0;\n  overflow: hidden;\n  background-color: #ffffff; }\n\n.weditor-wrapper {\n  overflow: hidden;\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0; }\n  .weditor-wrapper div {\n    box-sizing: border-box; }\n  .weditor-wrapper h1, .weditor-wrapper h2, .weditor-wrapper h3 {\n    line-height: 40px; }\n  .weditor-wrapper h1, .weditor-wrapper h2, .weditor-wrapper h3, .weditor-wrapper h4, .weditor-wrapper h5, .weditor-wrapper h6 {\n    margin: 10px 0;\n    font-family: inherit;\n    font-weight: 700;\n    line-height: 20px;\n    color: #111;\n    text-rendering: optimizelegibility; }\n  .weditor-wrapper h1 {\n    margin: 50px 0 20px;\n    font-size: 30px; }\n  .weditor-wrapper h2 {\n    margin: 35px 0 20px;\n    font-size: 26px; }\n  .weditor-wrapper h3 {\n    margin: 20px 0;\n    font-size: 21px; }\n  .weditor-wrapper h4 {\n    font-size: 18px; }\n  .weditor-wrapper h5 {\n    font-size: 16px; }\n  .weditor-wrapper h6 {\n    font-size: 16px; }\n  .weditor-wrapper blockquote {\n    padding: 10px 15px;\n    border-left-style: solid;\n    border-left-width: 10px;\n    margin: 0 0 20px;\n    border-color: #D6DBDF;\n    background: none repeat scroll 0 0 rgba(102, 128, 153, 0.05); }\n  .weditor-wrapper hr {\n    display: block;\n    height: 2px;\n    border: 0;\n    border-top: 1px solid #aaa;\n    border-bottom: 1px solid #eee;\n    margin: 1em 0;\n    padding: 0; }\n  .weditor-wrapper pre, .weditor-wrapper code {\n    color: #000;\n    font-family: Consolas, \"Liberation Mono\", Menlo, Courier, monospace;\n    font-size: 0.94em;\n    /* 0.94 = 0.88 + (1.00 - 0.88) / 2 */\n    border-radius: 3px;\n    background-color: #F8F8F8;\n    border: 1px solid #CCC; }\n  .weditor-wrapper pre {\n    white-space: pre;\n    white-space: pre-wrap;\n    word-wrap: break-word;\n    padding: 5px; }\n  .weditor-wrapper pre code {\n    border: 0px !important;\n    background: transparent !important;\n    line-height: 1.3em; }\n  .weditor-wrapper code {\n    padding: 0 3px 0 3px; }\n  .weditor-wrapper sub, .weditor-wrapper sup {\n    font-size: 75%;\n    line-height: 0;\n    position: relative;\n    vertical-align: baseline; }\n  .weditor-wrapper sup {\n    top: -0.5em; }\n  .weditor-wrapper sub {\n    bottom: -0.25em; }\n  .weditor-wrapper ul, .weditor-wrapper ol {\n    margin: 1em 0;\n    padding: 0 0 0 2em; }\n  .weditor-wrapper li p:last-child {\n    margin: 0; }\n  .weditor-wrapper dd {\n    margin: 0 0 0 2em; }\n  .weditor-wrapper img {\n    border: 0;\n    -ms-interpolation-mode: bicubic;\n    vertical-align: middle; }\n  .weditor-wrapper table {\n    border-bottom: 1px solid #ddd;\n    border-right: 1px solid #ddd;\n    border-collapse: separate;\n    border-left: 0;\n    border-radius: 4px;\n    width: 100%;\n    margin-bottom: 20px;\n    max-width: 100%;\n    background-color: transparent;\n    border-spacing: 0; }\n  .weditor-wrapper thead {\n    display: table-header-group;\n    vertical-align: middle;\n    border-color: inherit; }\n  .weditor-wrapper tr {\n    display: table-row;\n    vertical-align: inherit;\n    border-color: inherit;\n    border: none; }\n  .weditor-wrapper td, .weditor-wrapper th {\n    vertical-align: top;\n    padding: 4px 10px;\n    border: none; }\n  .weditor-wrapper tr:nth-child(even) td, .weditor-wrapper tr:nth-child(even) th {\n    background-color: rgba(102, 128, 153, 0.05); }\n  .weditor-wrapper table th, .weditor-wrapper table td {\n    border-left: 1px solid #ddd;\n    padding: 8px;\n    line-height: 20px;\n    text-align: left;\n    vertical-align: top;\n    border-top: 1px solid #ddd; }\n  .weditor-wrapper blockquote p:last-child {\n    margin: 0px; }\n  .weditor-wrapper p {\n    line-height: 1.2;\n    margin-bottom: 20px; }\n  .weditor-wrapper li {\n    margin: 10px 0; }\n\n.weditor-body {\n  padding: 0;\n  position: absolute;\n  left: 0;\n  top: 50px;\n  right: 0px;\n  bottom: 0px;\n  overflow: hidden;\n  background-color: #ffffff;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: row;\n      -ms-flex-direction: row;\n          flex-direction: row;\n  -webkit-flex-wrap: nowrap;\n      -ms-flex-wrap: nowrap;\n          flex-wrap: nowrap;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center; }\n  .weditor-body .ql-tooltip {\n    z-index: 1000000; }\n  .weditor-body .content-container {\n    background-color: #ffffff;\n    box-shadow: 0 0 0 0.1px #d1d1d1, 0 0 1px 0.1px #ccc;\n    position: relative;\n    border: 0;\n    padding: 20px 30px;\n    margin: 0;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    width: 50%; }\n    .weditor-body .content-container::-moz-selection {\n      background: rgba(130, 182, 255, 0.4); }\n    .weditor-body .content-container::selection {\n      background: rgba(130, 182, 255, 0.4); }\n    .weditor-body .content-container > div {\n      display: -webkit-box;\n      display: -webkit-flex;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-flex: 1;\n      -webkit-flex: 1;\n          -ms-flex: 1;\n              flex: 1;\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n      -webkit-flex-direction: column;\n          -ms-flex-direction: column;\n              flex-direction: column;\n      background-color: #FFFFFF; }\n    .weditor-body .content-container .CodeMirror {\n      border: none;\n      -webkit-box-flex: 1;\n      -webkit-flex: 1;\n          -ms-flex: 1;\n              flex: 1;\n      background-color: #ffffff;\n      font-size: 14px; }\n      .weditor-body .content-container .CodeMirror .cm-header-1 {\n        font-size: 2em; }\n      .weditor-body .content-container .CodeMirror .cm-header-2 {\n        font-size: 1.75em; }\n      .weditor-body .content-container .CodeMirror .cm-header-3 {\n        font-size: 1.5em; }\n      .weditor-body .content-container .CodeMirror .cm-header-4 {\n        font-size: 1.3em; }\n      .weditor-body .content-container .CodeMirror .cm-header-5 {\n        font-size: 1.2em; }\n      .weditor-body .content-container .CodeMirror .cm-header-6 {\n        font-size: 1.15em; }\n      .weditor-body .content-container .CodeMirror .cm-quote {\n        color: #90a959;\n        font-style: italic; }\n      .weditor-body .content-container .CodeMirror a {\n        color: #0645ad;\n        text-decoration: none; }\n      .weditor-body .content-container .CodeMirror a:visited {\n        color: #0b0080; }\n      .weditor-body .content-container .CodeMirror a:hover {\n        color: #06e; }\n      .weditor-body .content-container .CodeMirror a:active {\n        color: #faa700; }\n      .weditor-body .content-container .CodeMirror a:focus {\n        outline: thin dotted; }\n      .weditor-body .content-container .CodeMirror a:hover, .weditor-body .content-container .CodeMirror a:active {\n        outline: 0; }\n      .weditor-body .content-container .CodeMirror .CodeMirror-scroll {\n        min-height: 100%;\n        width: 100%;\n        -webkit-box-flex: 1;\n        -webkit-flex: 1;\n            -ms-flex: 1;\n                flex: 1; }\n      .weditor-body .content-container .CodeMirror .CodeMirror-gutters {\n        background-color: #FFFFFF; }\n  .weditor-body .weditor-preview {\n    font-size: 14px;\n    background-color: #ffffff;\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1;\n    margin: 0;\n    padding: 20px 30px;\n    overflow: hidden;\n    overflow-y: auto; }\n    .weditor-body .weditor-preview img {\n      max-width: 100%; }\n  .weditor-body .editormd-toolbar {\n    width: 100%;\n    min-height: 37px;\n    background: #f0f0f0;\n    display: none;\n    position: fixed;\n    top: 55px;\n    left: 0;\n    z-index: 10;\n    border: none; }\n    .weditor-body .editormd-toolbar.scroll {\n      box-shadow: 0 2px 4px rgba(20, 20, 20, 0.15); }\n    .weditor-body .editormd-toolbar .editormd-menu {\n      width: 910px;\n      margin: 0 auto; }\n    .weditor-body .editormd-toolbar .editormd-menu > li > a {\n      border: none; }\n      .weditor-body .editormd-toolbar .editormd-menu > li > a i {\n        font-weight: 200; }\n\n.rc-dropdown {\n  background: #FFFFFF;\n  box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.1);\n  border: none !important; }\n  .rc-dropdown .rc-dropdown-menu {\n    border: none !important;\n    border-radius: 2px; }\n\n.rc-dropdown-menu-item {\n  width: 150px;\n  cursor: pointer;\n  height: 40px;\n  line-height: 40px;\n  padding: 0 !important;\n  padding-left: 20px !important;\n  border: none !important; }\n\n::-webkit-scrollbar-thumb {\n  background-color: rgba(0, 0, 0, 0.2);\n  background-clip: padding-box;\n  border: solid transparent;\n  border-width: 1px 1px 1px 6px;\n  min-height: 28px;\n  padding: 100px 0 0;\n  box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.1), inset 0 -1px 0 rgba(0, 0, 0, 0.07); }\n\n::-webkit-scrollbar-corner {\n  background: transparent; }\n\n::-webkit-scrollbar-button {\n  height: 0;\n  width: 0; }\n\n::-webkit-scrollbar {\n  height: 16px;\n  overflow: visible;\n  width: 16px; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/* font */\n/* font */\n@font-face {\n  font-family: \"docicon\";\n  src: url(\"https://at.alicdn.com/t/font_afw1mj420y919k9.eot\");\n  src: url(\"https://at.alicdn.com/t/font_afw1mj420y919k9.eot?#iefix\") format(\"embedded-opentype\"), url(\"https://at.alicdn.com/t/font_afw1mj420y919k9.woff\") format(\"woff\"), url(\"https://at.alicdn.com/t/font_afw1mj420y919k9.ttf\") format(\"truetype\"), url(\"https://at.alicdn.com/t/font_afw1mj420y919k9.svg#dxicon\") format(\"svg\"); }\n\n.docicon {\n  display: inline-block;\n  font-style: normal;\n  vertical-align: middle;\n  text-align: center;\n  text-transform: none;\n  text-rendering: auto;\n  line-height: 1;\n  font-size: 14px;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale; }\n  .docicon:before {\n    display: block;\n    font-family: \"docicon\" !important; }\n\n.docicon-undo:before {\n  content: \"\\E697\"; }\n\n.docicon-redo:before {\n  content: \"\\E688\"; }\n\n.docicon-ol:before {\n  content: \"\\E68F\"; }\n\n.docicon-ul:before {\n  content: \"\\E691\"; }\n\n.docicon-right-indent:before {\n  content: \"\\E690\"; }\n\n.docicon-left-indent:before {\n  content: \"\\E698\"; }\n\n.docicon-right-align:before {\n  content: \"\\E68D\"; }\n\n.docicon-left-align:before {\n  content: \"\\E68B\"; }\n\n.docicon-center-align:before {\n  content: \"\\E693\"; }\n\n.docicon-justify-align:before {\n  content: \"\\E696\"; }\n\n.docicon-strike:before {\n  content: \"\\E692\"; }\n\n.docicon-underline:before {\n  content: \"\\E68E\"; }\n\n.docicon-italic:before {\n  content: \"\\E694\"; }\n\n.docicon-clear:before {\n  content: \"\\E68A\"; }\n\n.docicon-bold:before {\n  content: \"\\E686\"; }\n\n.docicon-format:before {\n  content: \"\\E687\"; }\n\n.docicon-max:before {\n  content: \"\\E60E\"; }\n\n.docicon-zoom-out:before {\n  content: \"\\E69E\"; }\n\n.docicon-zoom-in:before {\n  content: \"\\E69A\"; }\n\n.docicon-close:before {\n  content: \"\\E631\"; }\n\n.docicon-min:before {\n  content: \"\\E699\"; }\n\n.docicon-vertical:before {\n  content: \"\\E625\"; }\n\n.docicon-color:before {\n  content: \"\\E68C\"; }\n\n.docicon-background:before {\n  content: \"\\E695\"; }\n\n.docicon-image:before {\n  content: \"\\E674\"; }\n\n.docicon-link:before {\n  content: \"\\E602\"; }\n\n.docicon-quote:before {\n  content: \"\\E626\"; }\n\n.docicon-code:before {\n  content: \"\\E627\"; }\n\n.docicon-h1:before {\n  content: \"\\E93A\"; }\n\n.docicon-h3:before {\n  content: \"\\E93B\"; }\n\n.docicon-h2:before {\n  content: \"\\E628\"; }\n\n.weditor-wrapper {\n  /*! normalize.css v7.0.0 | MIT License | github.com/necolas/normalize.css */\n  /* Document\n       ========================================================================== */\n  /**\n     * 1. Correct the line height in all browsers.\n     * 2. Prevent adjustments of font size after orientation changes in\n     *    IE on Windows Phone and in iOS.\n     */\n  /* Sections\n       ========================================================================== */\n  /**\n     * Remove the margin in all browsers (opinionated).\n     */\n  /**\n     * Add the correct display in IE 9-.\n     */\n  /**\n     * Correct the font size and margin on `h1` elements within `section` and\n     * `article` contexts in Chrome, Firefox, and Safari.\n     */\n  /* Grouping content\n       ========================================================================== */\n  /**\n     * Add the correct display in IE 9-.\n     * 1. Add the correct display in IE.\n     */\n  /**\n     * Add the correct margin in IE 8.\n     */\n  /**\n     * 1. Add the correct box sizing in Firefox.\n     * 2. Show the overflow in Edge and IE.\n     */\n  /**\n     * 1. Correct the inheritance and scaling of font size in all browsers.\n     * 2. Correct the odd `em` font sizing in all browsers.\n     */\n  /* Text-level semantics\n       ========================================================================== */\n  /**\n     * 1. Remove the gray background on active links in IE 10.\n     * 2. Remove gaps in links underline in iOS 8+ and Safari 8+.\n     */\n  /**\n     * 1. Remove the bottom border in Chrome 57- and Firefox 39-.\n     * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.\n     */\n  /**\n     * Prevent the duplicate application of `bolder` by the next rule in Safari 6.\n     */\n  /**\n     * Add the correct font weight in Chrome, Edge, and Safari.\n     */\n  /**\n     * 1. Correct the inheritance and scaling of font size in all browsers.\n     * 2. Correct the odd `em` font sizing in all browsers.\n     */\n  /**\n     * Add the correct font style in Android 4.3-.\n     */\n  /**\n     * Add the correct background and color in IE 9-.\n     */\n  /**\n     * Add the correct font size in all browsers.\n     */\n  /**\n     * Prevent `sub` and `sup` elements from affecting the line height in\n     * all browsers.\n     */\n  /* Embedded content\n       ========================================================================== */\n  /**\n     * Add the correct display in IE 9-.\n     */\n  /**\n     * Add the correct display in iOS 4-7.\n     */\n  /**\n     * Remove the border on images inside links in IE 10-.\n     */\n  /**\n     * Hide the overflow in IE.\n     */\n  /* Forms\n       ========================================================================== */\n  /**\n     * 1. Change the font styles in all browsers (opinionated).\n     * 2. Remove the margin in Firefox and Safari.\n     */\n  /**\n     * Remove the inheritance of text transform in Edge, Firefox, and IE.\n     * 1. Remove the inheritance of text transform in Firefox.\n     */\n  /**\n     * 1. Prevent a WebKit bug where (2) destroys native `audio` and `video`\n     *    controls in Android 4.\n     * 2. Correct the inability to style clickable types in iOS and Safari.\n     */\n  /**\n     * Remove the inner border and padding in Firefox.\n     */\n  /**\n     * Restore the focus styles unset by the previous rule.\n     */\n  /**\n     * Correct the padding in Firefox.\n     */\n  /**\n     * 1. Correct the text wrapping in Edge and IE.\n     * 2. Correct the color inheritance from `fieldset` elements in IE.\n     * 3. Remove the padding so developers are not caught out when they zero out\n     *    `fieldset` elements in all browsers.\n     */\n  /**\n     * 1. Add the correct display in IE 9-.\n     * 2. Add the correct vertical alignment in Chrome, Firefox, and Opera.\n     */\n  /**\n     * 1. Add the correct box sizing in IE 10-.\n     * 2. Remove the padding in IE 10-.\n     */\n  /**\n     * Correct the cursor style of increment and decrement buttons in Chrome.\n     */\n  /**\n     * 1. Correct the odd appearance in Chrome and Safari.\n     * 2. Correct the outline style in Safari.\n     */\n  /**\n     * Remove the inner padding and cancel buttons in Chrome and Safari on macOS.\n     */\n  /**\n     * 1. Correct the inability to style clickable types in iOS and Safari.\n     * 2. Change font properties to `inherit` in Safari.\n     */\n  /* Interactive\n       ========================================================================== */\n  /*\n     * Add the correct display in IE 9-.\n     * 1. Add the correct display in Edge, IE, and Firefox.\n     */\n  /*\n     * Add the correct display in all browsers.\n     */\n  /* Scripting\n       ========================================================================== */\n  /**\n     * Add the correct display in IE 9-.\n     */\n  /**\n     * Add the correct display in IE.\n     */\n  /* Hidden\n       ========================================================================== */\n  /**\n     * Add the correct display in IE 10-.\n     */ }\n  .weditor-wrapper html {\n    line-height: 1.15;\n    /* 1 */\n    -ms-text-size-adjust: 100%;\n    /* 2 */\n    -webkit-text-size-adjust: 100%;\n    /* 2 */ }\n  .weditor-wrapper body {\n    margin: 0; }\n  .weditor-wrapper article,\n  .weditor-wrapper aside,\n  .weditor-wrapper footer,\n  .weditor-wrapper header,\n  .weditor-wrapper nav,\n  .weditor-wrapper section {\n    display: block; }\n  .weditor-wrapper h1 {\n    font-size: 2em;\n    margin: 0.67em 0; }\n  .weditor-wrapper figcaption,\n  .weditor-wrapper figure,\n  .weditor-wrapper main {\n    /* 1 */\n    display: block; }\n  .weditor-wrapper figure {\n    margin: 1em 40px; }\n  .weditor-wrapper hr {\n    box-sizing: content-box;\n    /* 1 */\n    height: 0;\n    /* 1 */\n    overflow: visible;\n    /* 2 */ }\n  .weditor-wrapper pre {\n    font-family: monospace, monospace;\n    /* 1 */\n    font-size: 1em;\n    /* 2 */ }\n  .weditor-wrapper a {\n    background-color: transparent;\n    /* 1 */\n    -webkit-text-decoration-skip: objects;\n    /* 2 */ }\n  .weditor-wrapper abbr[title] {\n    border-bottom: none;\n    /* 1 */\n    text-decoration: underline;\n    /* 2 */\n    text-decoration: underline dotted;\n    /* 2 */ }\n  .weditor-wrapper b,\n  .weditor-wrapper strong {\n    font-weight: inherit; }\n  .weditor-wrapper b,\n  .weditor-wrapper strong {\n    font-weight: bolder; }\n  .weditor-wrapper code,\n  .weditor-wrapper kbd,\n  .weditor-wrapper samp {\n    font-family: monospace, monospace;\n    /* 1 */\n    font-size: 1em;\n    /* 2 */ }\n  .weditor-wrapper dfn {\n    font-style: italic; }\n  .weditor-wrapper mark {\n    background-color: #ff0;\n    color: #000; }\n  .weditor-wrapper small {\n    font-size: 80%; }\n  .weditor-wrapper sub,\n  .weditor-wrapper sup {\n    font-size: 75%;\n    line-height: 0;\n    position: relative;\n    vertical-align: baseline; }\n  .weditor-wrapper sub {\n    bottom: -0.25em; }\n  .weditor-wrapper sup {\n    top: -0.5em; }\n  .weditor-wrapper audio,\n  .weditor-wrapper video {\n    display: inline-block; }\n  .weditor-wrapper audio:not([controls]) {\n    display: none;\n    height: 0; }\n  .weditor-wrapper img {\n    border-style: none; }\n  .weditor-wrapper svg:not(:root) {\n    overflow: hidden; }\n  .weditor-wrapper button,\n  .weditor-wrapper input,\n  .weditor-wrapper optgroup,\n  .weditor-wrapper select,\n  .weditor-wrapper button,\n  .weditor-wrapper input {\n    /* 1 */\n    overflow: visible; }\n  .weditor-wrapper button,\n  .weditor-wrapper select {\n    /* 1 */\n    text-transform: none; }\n  .weditor-wrapper button,\n  .weditor-wrapper html [type=\"button\"],\n  .weditor-wrapper [type=\"reset\"],\n  .weditor-wrapper [type=\"submit\"] {\n    -webkit-appearance: button;\n    /* 2 */ }\n  .weditor-wrapper button::-moz-focus-inner,\n  .weditor-wrapper [type=\"button\"]::-moz-focus-inner,\n  .weditor-wrapper [type=\"reset\"]::-moz-focus-inner,\n  .weditor-wrapper [type=\"submit\"]::-moz-focus-inner {\n    border-style: none;\n    padding: 0; }\n  .weditor-wrapper button:-moz-focusring,\n  .weditor-wrapper [type=\"button\"]:-moz-focusring,\n  .weditor-wrapper [type=\"reset\"]:-moz-focusring,\n  .weditor-wrapper [type=\"submit\"]:-moz-focusring {\n    outline: 1px dotted ButtonText; }\n  .weditor-wrapper fieldset {\n    padding: 0.35em 0.75em 0.625em; }\n  .weditor-wrapper legend {\n    box-sizing: border-box;\n    /* 1 */\n    color: inherit;\n    /* 2 */\n    display: table;\n    /* 1 */\n    max-width: 100%;\n    /* 1 */\n    padding: 0;\n    /* 3 */\n    white-space: normal;\n    /* 1 */ }\n  .weditor-wrapper progress {\n    display: inline-block;\n    /* 1 */\n    vertical-align: baseline;\n    /* 2 */ }\n  .weditor-wrapper [type=\"checkbox\"],\n  .weditor-wrapper [type=\"radio\"] {\n    box-sizing: border-box;\n    /* 1 */\n    padding: 0;\n    /* 2 */ }\n  .weditor-wrapper [type=\"number\"]::-webkit-inner-spin-button,\n  .weditor-wrapper [type=\"number\"]::-webkit-outer-spin-button {\n    height: auto; }\n  .weditor-wrapper [type=\"search\"] {\n    -webkit-appearance: textfield;\n    /* 1 */\n    outline-offset: -2px;\n    /* 2 */ }\n  .weditor-wrapper [type=\"search\"]::-webkit-search-cancel-button,\n  .weditor-wrapper [type=\"search\"]::-webkit-search-decoration {\n    -webkit-appearance: none; }\n  .weditor-wrapper ::-webkit-file-upload-button {\n    -webkit-appearance: button;\n    /* 1 */\n    font: inherit;\n    /* 2 */ }\n  .weditor-wrapper details,\n  .weditor-wrapper menu {\n    display: block; }\n  .weditor-wrapper summary {\n    display: list-item; }\n  .weditor-wrapper canvas {\n    display: inline-block; }\n  .weditor-wrapper template {\n    display: none; }\n  .weditor-wrapper [hidden] {\n    display: none; }\n  .weditor-wrapper .CodeMirror pre {\n    line-height: 1.5; }\n\n/* font */\n.weditor-header {\n  width: 100%;\n  margin: 0;\n  padding: 0;\n  border-bottom: 1px solid #ddd;\n  position: relative;\n  z-index: 110;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  background: #FFFFFF;\n  box-shadow: 0 1px 0 0 #DDDDDD;\n  box-sizing: border-box;\n  height: 69px; }\n  .weditor-header button {\n    outline: none; }\n  .weditor-header .menu-bar {\n    height: 35px;\n    line-height: 35px;\n    position: absolute;\n    bottom: 0px;\n    left: 0px;\n    padding-left: 10px; }\n    .weditor-header .menu-bar span {\n      padding: 0 10px;\n      -webkit-user-select: none;\n         -moz-user-select: none;\n          -ms-user-select: none;\n              user-select: none;\n      font-size: 14px;\n      cursor: pointer;\n      color: #333333; }\n    .weditor-header .menu-bar span.active {\n      color: #2374d1;\n      background: #f6f6f6; }\n  .weditor-header .header-left-box {\n    line-height: 35px;\n    height: 35px;\n    position: absolute;\n    top: 0;\n    left: 0;\n    padding-left: 20px; }\n    .weditor-header .header-left-box .header-back-up {\n      float: left;\n      width: 40px;\n      height: 60px;\n      cursor: pointer;\n      background-color: #4285f4; }\n      .weditor-header .header-left-box .header-back-up .header-back-icon {\n        display: block;\n        background: url(//mss.sankuai.com/v1/mss_814dc1610cda4b2e8febd6ea2c809db5/image/1489546222140.svg) center no-repeat;\n        height: 60px;\n        position: absolute;\n        width: 40px;\n        -webkit-transition: all 125ms linear;\n        transition: all 125ms linear; }\n    .weditor-header .header-left-box .team-sprite {\n      background-image: url(https://assets-cdn.shimo.im/assets/images/teams-31aea6334f.png);\n      background-size: 499px 310px;\n      background-repeat: no-repeat; }\n    .weditor-header .header-left-box .s-header-text {\n      display: inline-block;\n      height: 35px;\n      line-height: 35px;\n      vertical-align: top; }\n      .weditor-header .header-left-box .s-header-text .title-input-pre {\n        font-size: 14px;\n        font-family: -apple-system, system-ui, \"PingFang SC\", Helvetica, Tahoma, Arial, \"Hiragino Sans GB\", \"Microsoft YaHei\", \"\\\\5FAE\\8F6F\\96C5\\9ED1\", SimSun, \"\\\\5B8B\\4F53\", Heiti, \"\\\\9ED1\\4F53\", sans-serif;\n        font-weight: bold;\n        font-style: normal;\n        letter-spacing: normal; }\n  .weditor-header .header-right-box {\n    position: relative;\n    height: 69px;\n    float: right;\n    line-height: 69px; }\n    .weditor-header .header-right-box .header-item-wrap {\n      display: inline-block;\n      height: 40px;\n      width: 40px; }\n      .weditor-header .header-right-box .header-item-wrap .header-item-inner {\n        border: 1px solid #eee;\n        height: 35px;\n        width: 35px;\n        border-radius: 50%;\n        text-align: center;\n        display: inline-block;\n        position: relative;\n        line-height: 0px; }\n        .weditor-header .header-right-box .header-item-wrap .header-item-inner:before {\n          content: '';\n          display: inline-block;\n          vertical-align: middle;\n          width: 0;\n          height: 100%;\n          font-size: 0; }\n        .weditor-header .header-right-box .header-item-wrap .header-item-inner img {\n          height: 25px;\n          width: 25px;\n          border-radius: 50%;\n          vertical-align: middle; }\n  .weditor-header .opver-icon {\n    background-image: url(https://s3.meituan.net/v1/mss_814dc1610cda4b2e8febd6ea2c809db5/image/1489914204976.png);\n    background-repeat: no-repeat;\n    height: 20px;\n    width: 20px;\n    display: inline-block; }\n  .weditor-header .opver-area span {\n    vertical-align: middle;\n    font-size: 12px; }\n  .weditor-header .opver-area:hover {\n    border: 1px solid #b6b6b6; }\n\n.editor-toolbar .ql-toolbar.ql-snow {\n  border: none;\n  background-color: #f6f6f6;\n  height: 40px;\n  line-height: 35px;\n  padding: 0;\n  border-bottom: solid 1px #e2e2e2; }\n  .editor-toolbar .ql-toolbar.ql-snow .ql-formats {\n    margin-right: 0px; }\n\n.editor-toolbar .docicon-vertical {\n  display: inline-block;\n  margin: 0 5px; }\n\n.toolbar-opver {\n  padding-left: 30px !important;\n  background-color: #FFFFFF;\n  border-bottom: 1px solid #ddd;\n  box-shadow: 0 1px 0 0 rgba(221, 221, 221, 0.5);\n  line-height: 50px;\n  height: 50px; }\n  .toolbar-opver button {\n    background: none;\n    cursor: pointer;\n    display: inline-block;\n    height: 26px;\n    width: 26px;\n    padding: 0;\n    outline: none;\n    margin-right: 10px;\n    border: 1px solid #FFFFFF;\n    border-radius: 2px; }\n    .toolbar-opver button:hover {\n      border: 1px solid #CCCCCC; }\n    .toolbar-opver button:active {\n      background: #DDDDDD;\n      border: 1px solid #CCCCCC; }\n\nbody {\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  margin: 0;\n  overflow: hidden;\n  background-color: #ffffff; }\n\n.weditor-wrapper {\n  overflow: hidden;\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0; }\n  .weditor-wrapper div {\n    box-sizing: border-box; }\n  .weditor-wrapper h1, .weditor-wrapper h2, .weditor-wrapper h3 {\n    line-height: 40px; }\n  .weditor-wrapper h1, .weditor-wrapper h2, .weditor-wrapper h3, .weditor-wrapper h4, .weditor-wrapper h5, .weditor-wrapper h6 {\n    margin: 10px 0;\n    font-family: inherit;\n    font-weight: 700;\n    line-height: 20px;\n    color: #111;\n    text-rendering: optimizelegibility; }\n  .weditor-wrapper h1 {\n    margin: 50px 0 20px;\n    font-size: 30px; }\n  .weditor-wrapper h2 {\n    margin: 35px 0 20px;\n    font-size: 26px; }\n  .weditor-wrapper h3 {\n    margin: 20px 0;\n    font-size: 21px; }\n  .weditor-wrapper h4 {\n    font-size: 18px; }\n  .weditor-wrapper h5 {\n    font-size: 16px; }\n  .weditor-wrapper h6 {\n    font-size: 16px; }\n  .weditor-wrapper blockquote {\n    padding: 10px 15px;\n    border-left-style: solid;\n    border-left-width: 10px;\n    margin: 0 0 20px;\n    border-color: #D6DBDF;\n    background: none repeat scroll 0 0 rgba(102, 128, 153, 0.05); }\n  .weditor-wrapper hr {\n    display: block;\n    height: 2px;\n    border: 0;\n    border-top: 1px solid #aaa;\n    border-bottom: 1px solid #eee;\n    margin: 1em 0;\n    padding: 0; }\n  .weditor-wrapper pre, .weditor-wrapper code {\n    color: #000;\n    font-family: Consolas, \"Liberation Mono\", Menlo, Courier, monospace;\n    font-size: 0.94em;\n    /* 0.94 = 0.88 + (1.00 - 0.88) / 2 */\n    border-radius: 3px;\n    background-color: #F8F8F8;\n    border: 1px solid #CCC; }\n  .weditor-wrapper pre {\n    white-space: pre;\n    white-space: pre-wrap;\n    word-wrap: break-word;\n    padding: 5px; }\n  .weditor-wrapper pre code {\n    border: 0px !important;\n    background: transparent !important;\n    line-height: 1.3em; }\n  .weditor-wrapper code {\n    padding: 0 3px 0 3px; }\n  .weditor-wrapper sub, .weditor-wrapper sup {\n    font-size: 75%;\n    line-height: 0;\n    position: relative;\n    vertical-align: baseline; }\n  .weditor-wrapper sup {\n    top: -0.5em; }\n  .weditor-wrapper sub {\n    bottom: -0.25em; }\n  .weditor-wrapper ul, .weditor-wrapper ol {\n    margin: 1em 0;\n    padding: 0 0 0 2em; }\n  .weditor-wrapper li p:last-child {\n    margin: 0; }\n  .weditor-wrapper dd {\n    margin: 0 0 0 2em; }\n  .weditor-wrapper img {\n    border: 0;\n    -ms-interpolation-mode: bicubic;\n    vertical-align: middle; }\n  .weditor-wrapper table {\n    border-bottom: 1px solid #ddd;\n    border-right: 1px solid #ddd;\n    border-collapse: separate;\n    border-left: 0;\n    border-radius: 4px;\n    width: 100%;\n    margin-bottom: 20px;\n    max-width: 100%;\n    background-color: transparent;\n    border-spacing: 0; }\n  .weditor-wrapper thead {\n    display: table-header-group;\n    vertical-align: middle;\n    border-color: inherit; }\n  .weditor-wrapper tr {\n    display: table-row;\n    vertical-align: inherit;\n    border-color: inherit;\n    border: none; }\n  .weditor-wrapper td, .weditor-wrapper th {\n    vertical-align: top;\n    padding: 4px 10px;\n    border: none; }\n  .weditor-wrapper tr:nth-child(even) td, .weditor-wrapper tr:nth-child(even) th {\n    background-color: rgba(102, 128, 153, 0.05); }\n  .weditor-wrapper table th, .weditor-wrapper table td {\n    border-left: 1px solid #ddd;\n    padding: 8px;\n    line-height: 20px;\n    text-align: left;\n    vertical-align: top;\n    border-top: 1px solid #ddd; }\n  .weditor-wrapper blockquote p:last-child {\n    margin: 0px; }\n  .weditor-wrapper p {\n    line-height: 1.2;\n    margin-bottom: 20px; }\n  .weditor-wrapper li {\n    margin: 10px 0; }\n\n.weditor-body {\n  padding: 0;\n  position: absolute;\n  left: 0;\n  top: 50px;\n  right: 0px;\n  bottom: 0px;\n  overflow: hidden;\n  background-color: #ffffff; }\n  .weditor-body .content-container {\n    position: absolute;\n    left: 0;\n    bottom: 0;\n    top: 0;\n    width: 50%;\n    box-sizing: border-box;\n    background-color: #ffffff;\n    box-shadow: 0 0 0 0.1px #d1d1d1, 0 0 1px 0.1px #ccc;\n    border: 0;\n    padding: 20px 10px;\n    margin: 0; }\n    .weditor-body .content-container .ace_editor {\n      border: none;\n      background-color: #ffffff;\n      font-size: 14px;\n      height: 100%; }\n      .weditor-body .content-container .ace_editor.ace-github .ace_marker-layer .ace_active-line {\n        background: #FFFFFF !important; }\n      .weditor-body .content-container .ace_editor * {\n        font-family: \"Monaco\", \"Menlo\", \"Ubuntu Mono\", \"Droid Sans Mono\", \"Consolas\", monospace !important; }\n      .weditor-body .content-container .ace_editor .cm-header-1 {\n        font-size: 2em; }\n      .weditor-body .content-container .ace_editor .cm-header-2 {\n        font-size: 1.75em; }\n      .weditor-body .content-container .ace_editor .cm-header-3 {\n        font-size: 1.5em; }\n      .weditor-body .content-container .ace_editor .cm-header-4 {\n        font-size: 1.3em; }\n      .weditor-body .content-container .ace_editor .cm-header-5 {\n        font-size: 1.2em; }\n      .weditor-body .content-container .ace_editor .cm-header-6 {\n        font-size: 1.15em; }\n      .weditor-body .content-container .ace_editor .cm-quote {\n        color: #90a959;\n        font-style: italic; }\n      .weditor-body .content-container .ace_editor a {\n        color: #0645ad;\n        text-decoration: none; }\n      .weditor-body .content-container .ace_editor a:visited {\n        color: #0b0080; }\n      .weditor-body .content-container .ace_editor a:hover {\n        color: #06e; }\n      .weditor-body .content-container .ace_editor a:active {\n        color: #faa700; }\n      .weditor-body .content-container .ace_editor a:focus {\n        outline: thin dotted; }\n      .weditor-body .content-container .ace_editor a:hover, .weditor-body .content-container .ace_editor a:active {\n        outline: 0; }\n      .weditor-body .content-container .ace_editor .ace_gutter {\n        background-color: #FFFFFF; }\n  .weditor-body .mdeditor-preview {\n    position: absolute;\n    right: 0;\n    width: 50%;\n    bottom: 0;\n    top: 0;\n    box-sizing: border-box;\n    font-size: 14px;\n    background-color: #ffffff;\n    margin: 0;\n    padding: 20px 30px;\n    overflow: hidden;\n    overflow-y: auto; }\n    .weditor-body .mdeditor-preview img {\n      max-width: 100%; }\n  .weditor-body .editormd-toolbar {\n    width: 100%;\n    min-height: 37px;\n    background: #f0f0f0;\n    display: none;\n    position: fixed;\n    top: 55px;\n    left: 0;\n    z-index: 10;\n    border: none; }\n    .weditor-body .editormd-toolbar.scroll {\n      box-shadow: 0 2px 4px rgba(20, 20, 20, 0.15); }\n    .weditor-body .editormd-toolbar .editormd-menu {\n      width: 910px;\n      margin: 0 auto; }\n    .weditor-body .editormd-toolbar .editormd-menu > li > a {\n      border: none; }\n      .weditor-body .editormd-toolbar .editormd-menu > li > a i {\n        font-weight: 200; }\n\n.rc-dropdown {\n  background: #FFFFFF;\n  box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.1);\n  border: none !important; }\n  .rc-dropdown .rc-dropdown-menu {\n    border: none !important;\n    border-radius: 2px; }\n\n.rc-dropdown-menu-item {\n  width: 150px;\n  cursor: pointer;\n  height: 40px;\n  line-height: 40px;\n  padding: 0 !important;\n  padding-left: 20px !important;\n  border: none !important; }\n\n::-webkit-scrollbar-thumb {\n  background-color: rgba(0, 0, 0, 0.2);\n  background-clip: padding-box;\n  border: solid transparent;\n  border-width: 1px 1px 1px 6px;\n  min-height: 28px;\n  padding: 100px 0 0;\n  box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.1), inset 0 -1px 0 rgba(0, 0, 0, 0.07); }\n\n::-webkit-scrollbar-corner {\n  background: transparent; }\n\n::-webkit-scrollbar-button {\n  height: 0;\n  width: 0; }\n\n::-webkit-scrollbar {\n  height: 16px;\n  overflow: visible;\n  width: 16px; }\n", ""]);
 
 // exports
 
@@ -80732,17 +80730,17 @@ var Editor = (_temp = _class = function (_Component) {
     }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
-            var editor = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__lib_aceEditor_js__["a" /* initAceEditor */])(__WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.findDOMNode(this.refs.editor));
-            // editor.on('change', this.props.onChange);
+            var editor = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__lib_aceEditor_js__["b" /* initAceEditor */])(__WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.findDOMNode(this.refs.editor));
             // editor.setOption('readOnly',this.props.readOnly);
+            editor.getSession().on('change', this.props.onChange);
         }
     }, {
         key: 'render',
         value: function render() {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('textarea', { ref: 'editor', defaultValue: this.props.defaultValue })
+                { ref: 'editor' },
+                this.props.defaultValue
             );
         }
     }]);
@@ -80753,6 +80751,9 @@ var Editor = (_temp = _class = function (_Component) {
     defalutValue: ''
 }, _temp);
 
+
+
+{/*<textarea ref="editor" defaultValue={this.props.defaultValue}></textarea>*/}
 ;
 
 var _temp2 = function () {
@@ -84751,14 +84752,15 @@ var _temp2 = function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return initAceEditor; });
-/* unused harmony export getEditor */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return initAceEditor; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return getEditor; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return getUndoManager; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_brace__ = __webpack_require__("./node_modules/brace/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_brace___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_brace__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_brace_mode_markdown__ = __webpack_require__("./node_modules/brace/mode/markdown.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_brace_mode_markdown___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_brace_mode_markdown__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_brace_theme_monokai__ = __webpack_require__("./node_modules/brace/theme/monokai.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_brace_theme_monokai___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_brace_theme_monokai__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_brace_theme_github__ = __webpack_require__("./node_modules/brace/theme/github.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_brace_theme_github___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_brace_theme_github__);
 /**
  * Created by yeanzhi on 17/7/20.
  */
@@ -84769,15 +84771,28 @@ var _temp2 = function () {
 
 
 var editor = null;
+var undoManager = new __WEBPACK_IMPORTED_MODULE_0_brace___default.a.UndoManager();
 var initAceEditor = function initAceEditor(dom) {
-    editor = __WEBPACK_IMPORTED_MODULE_0_brace___default.a.edit(dom);
+    editor = window.aceEditor = __WEBPACK_IMPORTED_MODULE_0_brace___default.a.edit(dom);
     editor.getSession().setMode("ace/mode/markdown");
-    editor.setTheme('ace/theme/monokai');
+    editor.getSession().setTabSize(4);
+    editor.getSession().setUseWrapMode(true);
+    editor.getSession().setUndoManager(undoManager);
+
+    editor.setTheme('ace/theme/github');
+
+    editor.setOptions({
+        fontSize: "12pt"
+    });
     return editor;
 };
 
 var getEditor = function getEditor() {
     return editor;
+};
+
+var getUndoManager = function getUndoManager() {
+    return undoManager;
 };
 ;
 
@@ -84790,7 +84805,11 @@ var _temp = function () {
 
     __REACT_HOT_LOADER__.register(getEditor, 'getEditor', '/Users/yeanzhi/project/mygithub/mdeditor/src/lib/aceEditor.js');
 
+    __REACT_HOT_LOADER__.register(getUndoManager, 'getUndoManager', '/Users/yeanzhi/project/mygithub/mdeditor/src/lib/aceEditor.js');
+
     __REACT_HOT_LOADER__.register(editor, 'editor', '/Users/yeanzhi/project/mygithub/mdeditor/src/lib/aceEditor.js');
+
+    __REACT_HOT_LOADER__.register(undoManager, 'undoManager', '/Users/yeanzhi/project/mygithub/mdeditor/src/lib/aceEditor.js');
 }();
 
 ;
@@ -85506,7 +85525,7 @@ if(false) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_icon__ = __webpack_require__("./src/components/icon/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_classnames__ = __webpack_require__("./node_modules/classnames/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_classnames__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__lib_codemirrorEditor__ = __webpack_require__("./src/lib/codemirrorEditor.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__lib_aceEditor__ = __webpack_require__("./src/lib/aceEditor.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__lib_util__ = __webpack_require__("./src/lib/util.js");
 /**
  * Created by yeanzhi on 17/5/20.
@@ -85574,7 +85593,7 @@ var EditorToolbar = (_dec = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_mo
 
         _this.onClickMark = function (e, type) {
             e.preventDefault();
-            var quillEditor = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__lib_codemirrorEditor__["a" /* getEditor */])();
+            var quillEditor = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__lib_aceEditor__["a" /* getEditor */])();
             if (quillEditor) {
                 if (type === 'bold') {
                     _this.insertAround('**', '**');
@@ -85607,14 +85626,14 @@ var EditorToolbar = (_dec = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_mo
         };
 
         _this.undo = function () {
-            if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__lib_codemirrorEditor__["a" /* getEditor */])()) {
-                __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__lib_codemirrorEditor__["a" /* getEditor */])().execCommand('undo');
+            if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__lib_aceEditor__["c" /* getUndoManager */])()) {
+                __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__lib_aceEditor__["c" /* getUndoManager */])().undo();
             }
         };
 
         _this.redo = function () {
-            if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__lib_codemirrorEditor__["a" /* getEditor */])()) {
-                __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__lib_codemirrorEditor__["a" /* getEditor */])().execCommand('redo');
+            if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__lib_aceEditor__["c" /* getUndoManager */])()) {
+                __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__lib_aceEditor__["c" /* getUndoManager */])().redo();
             }
         };
 
@@ -85627,42 +85646,42 @@ var EditorToolbar = (_dec = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_mo
             var _this2 = this;
 
             setTimeout(function () {
-                if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__lib_codemirrorEditor__["a" /* getEditor */])()) {
+                if (false) {
                     var _getEditor$addKeyMap;
 
-                    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__lib_codemirrorEditor__["a" /* getEditor */])().addKeyMap((_getEditor$addKeyMap = {}, _defineProperty(_getEditor$addKeyMap, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__lib_util__["b" /* getCtrl */])() + '-B', function undefined(cm) {
+                    getEditor().addKeyMap((_getEditor$addKeyMap = {}, _defineProperty(_getEditor$addKeyMap, getCtrl() + '-B', function undefined(cm) {
                         _this2.insertAround('**', '**');
-                    }), _defineProperty(_getEditor$addKeyMap, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__lib_util__["b" /* getCtrl */])() + '-I', function undefined(cm) {
+                    }), _defineProperty(_getEditor$addKeyMap, getCtrl() + '-I', function undefined(cm) {
                         _this2.insertAround('**', '**');
-                    }), _defineProperty(_getEditor$addKeyMap, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__lib_util__["b" /* getCtrl */])() + '-shift-S', function undefined() {
+                    }), _defineProperty(_getEditor$addKeyMap, getCtrl() + '-shift-S', function undefined() {
                         _this2.insertAround('~', '~');
-                    }), _defineProperty(_getEditor$addKeyMap, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__lib_util__["b" /* getCtrl */])() + '-Alt-L', function undefined() {
+                    }), _defineProperty(_getEditor$addKeyMap, getCtrl() + '-Alt-L', function undefined() {
                         _this2.insertBefore('1. ', 3);
-                    }), _defineProperty(_getEditor$addKeyMap, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__lib_util__["b" /* getCtrl */])() + '-Alt-U', function undefined() {
+                    }), _defineProperty(_getEditor$addKeyMap, getCtrl() + '-Alt-U', function undefined() {
                         _this2.insertBefore('* ', 3);
-                    }), _defineProperty(_getEditor$addKeyMap, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__lib_util__["b" /* getCtrl */])() + '-Alt-H', function undefined() {
+                    }), _defineProperty(_getEditor$addKeyMap, getCtrl() + '-Alt-H', function undefined() {
                         _this2.insert('---');
-                    }), _defineProperty(_getEditor$addKeyMap, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__lib_util__["b" /* getCtrl */])() + '-Alt-C', function undefined() {
+                    }), _defineProperty(_getEditor$addKeyMap, getCtrl() + '-Alt-C', function undefined() {
                         _this2.insertAround('```\r\n', '\r\n```');
-                    }), _defineProperty(_getEditor$addKeyMap, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__lib_util__["b" /* getCtrl */])() + '-Alt-I', function undefined() {
+                    }), _defineProperty(_getEditor$addKeyMap, getCtrl() + '-Alt-I', function undefined() {
                         _this2.insertAround('[', '](http://)');
-                    }), _defineProperty(_getEditor$addKeyMap, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__lib_util__["b" /* getCtrl */])() + '-Alt-Q', function undefined() {
+                    }), _defineProperty(_getEditor$addKeyMap, getCtrl() + '-Alt-Q', function undefined() {
                         _this2.insertBefore('> ', 2);
-                    }), _defineProperty(_getEditor$addKeyMap, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__lib_util__["b" /* getCtrl */])() + '-Alt-L', function undefined() {
+                    }), _defineProperty(_getEditor$addKeyMap, getCtrl() + '-Alt-L', function undefined() {
                         _this2.insertBefore('![](http://)', 2);
-                    }), _defineProperty(_getEditor$addKeyMap, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__lib_util__["b" /* getCtrl */])() + '-Alt-0', function undefined() {
+                    }), _defineProperty(_getEditor$addKeyMap, getCtrl() + '-Alt-0', function undefined() {
                         _this2.insertBefore('![](http://)', 2);
-                    }), _defineProperty(_getEditor$addKeyMap, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__lib_util__["b" /* getCtrl */])() + '-Alt-1', function undefined() {
+                    }), _defineProperty(_getEditor$addKeyMap, getCtrl() + '-Alt-1', function undefined() {
                         _this2.insertBefore('# ', 0);
-                    }), _defineProperty(_getEditor$addKeyMap, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__lib_util__["b" /* getCtrl */])() + '-Alt-2', function undefined() {
+                    }), _defineProperty(_getEditor$addKeyMap, getCtrl() + '-Alt-2', function undefined() {
                         _this2.insertBefore('## ', 0);
-                    }), _defineProperty(_getEditor$addKeyMap, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__lib_util__["b" /* getCtrl */])() + '-Alt-3', function undefined() {
+                    }), _defineProperty(_getEditor$addKeyMap, getCtrl() + '-Alt-3', function undefined() {
                         _this2.insertBefore('### ', 0);
-                    }), _defineProperty(_getEditor$addKeyMap, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__lib_util__["b" /* getCtrl */])() + '-Alt-4', function undefined() {
+                    }), _defineProperty(_getEditor$addKeyMap, getCtrl() + '-Alt-4', function undefined() {
                         _this2.insertBefore('#### ', 0);
-                    }), _defineProperty(_getEditor$addKeyMap, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__lib_util__["b" /* getCtrl */])() + '-Alt-5', function undefined() {
+                    }), _defineProperty(_getEditor$addKeyMap, getCtrl() + '-Alt-5', function undefined() {
                         _this2.insertBefore('##### ', 0);
-                    }), _defineProperty(_getEditor$addKeyMap, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__lib_util__["b" /* getCtrl */])() + '-Alt-6', function undefined() {
+                    }), _defineProperty(_getEditor$addKeyMap, getCtrl() + '-Alt-6', function undefined() {
                         _this2.insertBefore('###### ', 0);
                     }), _getEditor$addKeyMap));
                 }
@@ -85707,10 +85726,9 @@ var EditorToolbar = (_dec = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_mo
          * @param  {String} insertion
          */
         value: function insert(insertion) {
-            var quillEditor = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__lib_codemirrorEditor__["a" /* getEditor */])();
-            var doc = quillEditor.getDoc();
-            var cursor = doc.getCursor();
-            doc.replaceRange(insertion, { line: cursor.line, ch: cursor.ch });
+            var aceEditor = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__lib_aceEditor__["a" /* getEditor */])();
+            console.log(insertion);
+            aceEditor.getSession().replace(aceEditor.getSelectionRange(), insertion);
         }
 
         /**
@@ -85722,18 +85740,20 @@ var EditorToolbar = (_dec = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_mo
     }, {
         key: 'insertAround',
         value: function insertAround(start, end) {
-            var quillEditor = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__lib_codemirrorEditor__["a" /* getEditor */])();
-            var doc = quillEditor.getDoc();
-            var cursor = doc.getCursor();
-
-            if (doc.somethingSelected()) {
-                var selection = doc.getSelection();
-                doc.replaceSelection(start + selection + end);
-            } else {
-                // If no selection then insert start and end args and set cursor position between the two.
-                doc.replaceRange(start + end, { line: cursor.line, ch: cursor.ch });
-                doc.setCursor({ line: cursor.line, ch: cursor.ch + start.length });
-            }
+            //const quillEditor = getEditor();
+            // var doc = quillEditor.getDoc();
+            // var cursor = doc.getCursor();
+            //
+            // if (doc.somethingSelected()) {
+            //     var selection = doc.getSelection();
+            //     doc.replaceSelection(start + selection + end);
+            // } else {
+            //     doc.replaceRange(start + end, { line: cursor.line, ch: cursor.ch });
+            //     doc.setCursor({ line: cursor.line, ch: cursor.ch + start.length })
+            // }
+            console.log(start, end);
+            var aceEditor = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__lib_aceEditor__["a" /* getEditor */])();
+            this.insert('' + start + aceEditor.getSession().getTextRange() + end);
         }
 
         /**
@@ -85743,26 +85763,31 @@ var EditorToolbar = (_dec = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_mo
 
     }, {
         key: 'insertBefore',
-        value: function insertBefore(insertion, cursorOffset) {
-            var quillEditor = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__lib_codemirrorEditor__["a" /* getEditor */])();
-            var doc = quillEditor.getDoc();
-            var cursor = doc.getCursor();
+        value: function insertBefore(insertion) {
+            var cursorOffset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
 
-            if (doc.somethingSelected()) {
-                var selections = doc.listSelections();
-                selections.forEach(function (selection) {
-                    var pos = [selection.head.line, selection.anchor.line].sort();
-
-                    for (var i = pos[0]; i <= pos[1]; i++) {
-                        doc.replaceRange(insertion, { line: i, ch: 0 });
-                    }
-
-                    doc.setCursor({ line: pos[0], ch: cursorOffset || 0 });
-                });
-            } else {
-                doc.replaceRange(insertion, { line: cursor.line, ch: 0 });
-                doc.setCursor({ line: cursor.line, ch: cursorOffset || 0 });
-            }
+            // const quillEditor = getEditor();
+            // var doc = quillEditor.getDoc();
+            // var cursor = doc.getCursor();
+            //
+            // if (doc.somethingSelected()) {
+            //     var selections = doc.listSelections();
+            //     selections.forEach(function(selection) {
+            //         var pos = [selection.head.line, selection.anchor.line].sort();
+            //
+            //         for (var i = pos[0]; i <= pos[1]; i++) {
+            //             doc.replaceRange(insertion, { line: i, ch: 0 });
+            //         }
+            //
+            //         doc.setCursor({ line: pos[0], ch: cursorOffset || 0 });
+            //     });
+            // } else {
+            //     doc.replaceRange(insertion, { line: cursor.line, ch: 0 });
+            //     doc.setCursor({ line: cursor.line, ch: cursorOffset || 0 })
+            // }
+            var aceEditor = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__lib_aceEditor__["a" /* getEditor */])();
+            var position = aceEditor.getCursorPositionScreen();
+            aceEditor.getSession().insert({ row: position.row, column: 0 }, insertion);
         }
     }, {
         key: 'render',
@@ -86065,6 +86090,7 @@ var _temp = function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_mobx_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_mobx_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_editor__ = __webpack_require__("./src/components/editor/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__model_editor__ = __webpack_require__("./src/model/editor.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__lib_aceEditor__ = __webpack_require__("./src/lib/aceEditor.js");
 /**
  * Created by yeanzhi on 17/3/26.
  */
@@ -86090,6 +86116,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 var $ = window.jQuery;
+
 
 
 var WEditor = (_dec = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7_mobx_react__["inject"])(function (state) {
@@ -86121,19 +86148,19 @@ var WEditor = (_dec = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7_mobx_rea
     _createClass(WEditor, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
-            // let editorDom = this.editorDom = $(ReactDOM.findDOMNode(this.refs.editor)).find('.ql-editor');
-            // editorDom.on('blur', () => {
-            //     editor.focus = false;
-            // });
-
-            var $divs = $('.CodeMirror-scroll, .weditor-preview');
+            var $divs = $('.ace_scrollbar-v, .mdeditor-preview');
+            var $aceScrollbar = $('.ace_scrollbar-v');
             var timer = null;
             var sync = function sync(e) {
                 clearTimeout(timer);
                 var $other = $divs.not(this).off('scroll'),
                     other = $other.get(0);
                 var percentage = this.scrollTop / (this.scrollHeight - this.offsetHeight);
-                other.scrollTop = percentage * (other.scrollHeight - other.offsetHeight);
+                if (this !== $aceScrollbar[0]) {
+                    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_10__lib_aceEditor__["a" /* getEditor */])().getSession().setScrollTop(percentage * (other.scrollHeight - other.offsetHeight));
+                } else {
+                    other.scrollTop = percentage * (other.scrollHeight - other.offsetHeight);
+                }
                 timer = setTimeout(function () {
                     $other.on('scroll', sync);
                 }, 200);
@@ -86151,8 +86178,8 @@ var WEditor = (_dec = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7_mobx_rea
         value: function componentWillReceiveProps(nextProps) {}
     }, {
         key: 'onChange',
-        value: function onChange(e) {
-            __WEBPACK_IMPORTED_MODULE_9__model_editor__["a" /* default */].value = e.getValue();
+        value: function onChange(change, editSession) {
+            __WEBPACK_IMPORTED_MODULE_9__model_editor__["a" /* default */].value = editSession.getValue();
         }
     }, {
         key: 'render',
@@ -86177,7 +86204,7 @@ var WEditor = (_dec = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7_mobx_rea
                     ),
                     this.state.width > 900 && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
-                        { className: 'weditor-preview' },
+                        { className: 'mdeditor-preview' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__components_preview_preview__["a" /* default */], null)
                     )
                 ),
