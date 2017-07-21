@@ -74,19 +74,19 @@ let defaultVal = `
 `
 export default class DemoContainer extends Component{
     componentDidMount(){
-        this.MDEditor.getEditor().on('change',(codeMirror, change)=>{
-            console.log('change',change);
-            console.log('op', this._createOpFromChange(change))
-        })
-        this.MDEditor.getEditor().on('changes',(codeMirror,changes)=>{
-            let op = [];
-            console.log('changes',changes);
-            changes.forEach((change,i)=>{
-                op = op.concat(this._createOpFromChange(change));
-                console.log(`change step ${i}`,this._createOpFromChange(change),op)
-            })
-            console.log('ops', op);
-        })
+        // this.MDEditor.getEditor().on('change',(codeMirror, change)=>{
+        //     console.log('change',change);
+        //     console.log('op', this._createOpFromChange(change))
+        // })
+        // this.MDEditor.getEditor().on('changes',(codeMirror,changes)=>{
+        //     let op = [];
+        //     console.log('changes',changes);
+        //     changes.forEach((change,i)=>{
+        //         op = op.concat(this._createOpFromChange(change));
+        //         console.log(`change step ${i}`,this._createOpFromChange(change),op)
+        //     })
+        //     console.log('ops', op);
+        // })
     }
 
     _createOpFromChange = (change) => {

@@ -5,7 +5,8 @@
 import React,{Component} from 'react';
 import ReactDOM from 'react-dom';
 
-import {initCodeMirrorEditor} from '../../lib/codemirrorEditor.js';
+// import {initCodeMirrorEditor} from '../../lib/codemirrorEditor.js';
+import {initAceEditor} from '../../lib/aceEditor.js';
 
 export default class Editor extends Component {
 
@@ -19,17 +20,18 @@ export default class Editor extends Component {
     }
 
     componentDidMount() {
-        let editor = initCodeMirrorEditor(ReactDOM.findDOMNode(this.refs.editor));
-        editor.on('change', this.props.onChange);
-        editor.setOption('readOnly',this.props.readOnly);
+        let editor = initAceEditor(ReactDOM.findDOMNode(this.refs.editor));
+        // editor.setOption('readOnly',this.props.readOnly);
+        editor.getSession().on('change', this.props.onChange);
     }
 
     render() {
         return(
-            <div >
-                <textarea ref="editor" defaultValue={this.props.defaultValue}>
-                </textarea>
+            <div ref="editor">
+                {this.props.defaultValue}
             </div>
         );
     }
 }
+
+{/*<textarea ref="editor" defaultValue={this.props.defaultValue}></textarea>*/}

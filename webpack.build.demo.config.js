@@ -78,7 +78,7 @@ module.exports = {
     plugins: [
         new webpack.NamedModulesPlugin(),
         new HtmlWebpackPlugin({
-            title:'test',
+            title:'mdeditor',
             template:"example/tpl.ejs",
             inject:false
         })

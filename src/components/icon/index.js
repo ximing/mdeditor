@@ -28,14 +28,14 @@ export default class extends Component {
     };
 
     render () {
-        let {type, spin, className} = this.props;
+        let {type, spin, className,...other} = this.props;
         let classString = classNames({
             'xm-icon docicon': true,
             [`docicon-${type}`]: type,
             'iconfont-spin': !!spin || type === 'loading'
         }, className);
         return (
-            <i className={classString} {...omit(this.props, ['type', 'spin', 'className'])}/>
+            <i className={classString} {...other}/>
         );
     }
 }

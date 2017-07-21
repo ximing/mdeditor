@@ -242,12 +242,6 @@
     input,
     optgroup,
     select,
-    textarea {
-        font-family: sans-serif; /* 1 */
-        font-size: 100%; /* 1 */
-        line-height: 1.15; /* 1 */
-        margin: 0; /* 2 */
-    }
 
     /**
      * Show the overflow in IE.
@@ -339,13 +333,6 @@
         vertical-align: baseline; /* 2 */
     }
 
-    /**
-     * Remove the default vertical scrollbar in IE.
-     */
-
-    textarea {
-        overflow: auto;
-    }
 
     /**
      * 1. Add the correct box sizing in IE 10-.

@@ -13,7 +13,7 @@ import {inject, observer} from 'mobx-react';
 import Editor from './components/editor';
 const $ = window.jQuery;
 import editor from './model/editor';
-
+import {getEditor} from './lib/aceEditor';
 
 @inject(state => ({
     insert: state.insert,
@@ -33,46 +33,40 @@ export default class WEditor extends Component {
     }
 
     componentDidMount() {
-        let editorDom = this.editorDom = $(ReactDOM.findDOMNode(this.refs.editor)).find('.ql-editor');
-        editorDom.on('blur', () => {
-            editor.focus = false;
-        });
-
-        const $divs = $('.CodeMirror-scroll, .weditor-preview');
+        const $divs = $('.ace_scrollbar-v, .mdeditor-preview');
+        const $aceScrollbar = $('.ace_scrollbar-v');
         let timer = null;
         const sync = function (e) {
             clearTimeout(timer);
             let $other = $divs.not(this).off('scroll'),
                 other = $other.get(0);
             let percentage = this.scrollTop / (this.scrollHeight - this.offsetHeight);
-            other.scrollTop = percentage * (other.scrollHeight - other.offsetHeight);
+            if(this !== $aceScrollbar[0]){
+                getEditor().getSession().setScrollTop(percentage * (other.scrollHeight - other.offsetHeight))
+            }else{
+                other.scrollTop = percentage * (other.scrollHeight - other.offsetHeight);
+            }
             timer = setTimeout(function () {
                 $other.on('scroll', sync);
             }, 200);
         };
         $divs.on('scroll', sync);
-        $(window).on('resize', this.onWindowResize)
+        $(window).on('resize', this.onWindowResize);
     }
 
     componentWillUnmount() {
-        $(window).off('resize', this.onWindowResize)
+        $(window).off('resize', this.onWindowResize);
     }
 
     onWindowResize = () => {
-        this.setState({
-            width: window.innerWidth
-        });
     };
 
 
     componentWillReceiveProps(nextProps) {
-        this.setState({
-            left: nextProps.open ? window.innerWidth / 2 - 300 : window.innerWidth / 2 - 400
-        });
     }
 
-    onChange(e) {
-        editor.value = e.getValue();
+    onChange(change,editSession) {
+        editor.value = editSession.getValue();
     };
 
     render() {
@@ -89,7 +83,7 @@ export default class WEditor extends Component {
                     </div>
                     {
                         this.state.width > 900 && (
-                            <div className="weditor-preview">
+                            <div className="mdeditor-preview">
                                 <Preview/>
                             </div>
                         )
