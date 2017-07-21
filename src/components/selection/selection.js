@@ -6,7 +6,7 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 
 import {inject, observer} from 'mobx-react';
-import {getEditor} from '../../lib/codemirrorEditor';
+import {getEditor} from '../../lib/aceEditor';
 
 @inject('editor') @observer
 export default class Selection extends Component {

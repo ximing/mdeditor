@@ -74,6 +74,7 @@ let defaultVal = `
 `
 export default class DemoContainer extends Component{
     componentDidMount(){
+        console.log(this.mdEditor.getEditor());
         // this.MDEditor.getEditor().on('change',(codeMirror, change)=>{
         //     console.log('change',change);
         //     console.log('op', this._createOpFromChange(change))
@@ -135,7 +136,7 @@ export default class DemoContainer extends Component{
 * `}
                 doc = {{name:'test.doc',status:'fjdisoaifasdof'
                 }}
-                ref={(e)=>{this.MDEditor = e;}}
+                ref={(e)=>{this.mdEditor = e;}}
                 coCursors = {[{name:'yeanzhi',range:{length:1,index:50},id:'123'}]}
                 options={{
                     uploadUrl:'http://mind.xm.test.sankuai.com/api/upload',

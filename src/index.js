@@ -7,7 +7,7 @@ import React, {Component} from 'react';
 import {Provider} from 'mobx-react';
 
 import './style/index.scss';
-import {getEditor} from './lib/codemirrorEditor';
+import {getEditor} from './lib/aceEditor';
 import WEditor from './weditor';
 import catalogue from './model/catalogue';
 import insert from './model/insert';
