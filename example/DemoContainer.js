@@ -75,10 +75,17 @@ let defaultVal = `
 export default class DemoContainer extends Component{
     componentDidMount(){
         console.log(this.mdEditor.getEditor());
-        // this.MDEditor.getEditor().on('change',(codeMirror, change)=>{
-        //     console.log('change',change);
-        //     console.log('op', this._createOpFromChange(change))
+        window.mdEditor = this.mdEditor.getEditor();
+        this.mdEditor.getEditor().on('change',(change,codeMirror)=>{
+            console.log('change',change);
+            // console.log('op', this._createOpFromChange(change))
+        })
+        // this.mdEditor.getEditor().session.selection.on("changeSelection", (...args)=>{
+        //     console.log('changeSelection',args);
         // })
+        this.mdEditor.getEditor().session.selection.on("changeCursor", (...args)=>{
+            console.log('changeCursor',...args);
+        })
         // this.MDEditor.getEditor().on('changes',(codeMirror,changes)=>{
         //     let op = [];
         //     console.log('changes',changes);
@@ -132,8 +139,16 @@ export default class DemoContainer extends Component{
     render(){
         return (
             <MDEditor
-                defaultValue={`* 列
-* `}
+                defaultValue={`* dasaaassqcs
+* fdsa
+* fdsa
+* fdssssnihaomeiyouss
+* jiushizaishenmeshihou
+* jiushizaizheli
+fdsssssfdsafdsf
+fdsafdsfdsfds
+
+## heheda`}
                 doc = {{name:'test.doc',status:'fjdisoaifasdof'
                 }}
                 ref={(e)=>{this.mdEditor = e;}}
