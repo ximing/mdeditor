@@ -71,7 +71,7 @@ export default class WEditor extends Component {
 
     render() {
         return (
-            <div className="weditor-wrapper">
+            <div className="mdeditor-wrapper">
                 <div className="editor-toolbar" id="toolbar">
                     <Toolbar/>
                 </div>
