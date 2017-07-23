@@ -34,7 +34,6 @@ export default class Dialog extends Component {
                                     <Button
                                         key={i}
                                         type={type}
-                                        cls={'nx_button'}
                                         onClick={(action || onClose)}
                                     >{text}</Button>
                                 ))
