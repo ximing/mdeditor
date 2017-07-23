@@ -3,7 +3,64 @@
  */
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = undefined;
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+require('rc-tabs/assets/index.css');
+
+var _rcTabs = require('rc-tabs');
+
+var _rcTabs2 = _interopRequireDefault(_rcTabs);
+
+var _ScrollableInkTabBar = require('rc-tabs/lib/ScrollableInkTabBar.js');
+
+var _ScrollableInkTabBar2 = _interopRequireDefault(_ScrollableInkTabBar);
+
+var _TabContent = require('rc-tabs/lib/TabContent.js');
+
+var _TabContent2 = _interopRequireDefault(_TabContent);
+
+var _dialog = require('../dialog');
+
+var _dialog2 = _interopRequireDefault(_dialog);
+
+var _util = require('../../lib/util');
+
+var _index = require('../uploader/index');
+
+var _button = require('../button');
+
+var _button2 = _interopRequireDefault(_button);
+
+var _insert = require('../../model/insert');
+
+var _insert2 = _interopRequireDefault(_insert);
+
+var _aceEditor = require('../../lib/aceEditor');
+
+var _rcProgress = require('rc-progress');
+
+var _toast = require('../toast');
+
+var _input = require('../input');
+
+var _input2 = _interopRequireDefault(_input);
+
+var _aceUtil = require('../../lib/aceUtil');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
@@ -13,30 +70,14 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import 'rc-tabs/assets/index.css';
-import Tabs, { TabPane } from 'rc-tabs';
-import ScrollableInkTabBar from 'rc-tabs/lib/ScrollableInkTabBar.js';
-import TabContent from 'rc-tabs/lib/TabContent.js';
-import Dialog from '../dialog';
-import { contains } from '../../lib/util';
-import { Uploader } from '../uploader/index';
-import Button from '../button';
-import insert from '../../model/insert';
-import { getEditor } from '../../lib/aceEditor';
-import { Line } from 'rc-progress';
-import { error } from '../toast';
-import Input from '../input';
 var $ = window.jQuery;
-import { insertAround, insertBefore } from '../../lib/aceUtil';
 
 var InsertImage = function (_Component) {
     _inherits(InsertImage, _Component);
 
     function InsertImage() {
         var _ref,
-            _this3 = this;
+            _this2 = this;
 
         var _temp, _this, _ret;
 
@@ -50,10 +91,10 @@ var InsertImage = function (_Component) {
             activeKey: '1',
             linkUrl: '',
             progress: 0
-        }, _this.onLinkUrlChange = function () {
-            var _this2;
-
-            return (_this2 = _this).__onLinkUrlChange__REACT_HOT_LOADER__.apply(_this2, arguments);
+        }, _this.onLinkUrlChange = function (e) {
+            _this.setState({
+                linkUrl: e.target.value
+            });
         }, _this.onLoad = function () {
             var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee(url) {
                 return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -81,7 +122,7 @@ var InsertImage = function (_Component) {
                                 return _context.stop();
                         }
                     }
-                }, _callee, _this3);
+                }, _callee, _this2);
             }));
 
             return function (_x) {
@@ -93,81 +134,63 @@ var InsertImage = function (_Component) {
                     while (1) {
                         switch (_context2.prev = _context2.next) {
                             case 0:
-                                insertAround('![' + url, '](' + url + ')\n');
-                                insert.openImageDialog = false;
+                                (0, _aceUtil.insertAround)('![' + url, '](' + url + ')\n');
+                                _insert2.default.openImageDialog = false;
 
                             case 2:
                             case 'end':
                                 return _context2.stop();
                         }
                     }
-                }, _callee2, _this3);
+                }, _callee2, _this2);
             }));
 
             return function (_x2) {
                 return _ref3.apply(this, arguments);
             };
         }(), _this.insertLink = function () {
-            var _this4;
-
-            return (_this4 = _this).__insertLink__REACT_HOT_LOADER__.apply(_this4, arguments);
+            if (_this.state.linkUrl) {
+                _this.insertImage(_this.state.linkUrl);
+            }
         }, _this.closeBubble = function () {
-            var _this5;
-
-            return (_this5 = _this).__closeBubble__REACT_HOT_LOADER__.apply(_this5, arguments);
-        }, _this.otherDOMClick = function () {
-            var _this6;
-
-            return (_this6 = _this).__otherDOMClick__REACT_HOT_LOADER__.apply(_this6, arguments);
-        }, _this.onChange = function () {
-            var _this7;
-
-            return (_this7 = _this).__onChange__REACT_HOT_LOADER__.apply(_this7, arguments);
+            if (_this.file && _this.file.id) {
+                _this.uploader.removeFile(_this.file.id);
+            }
+            _insert2.default.openImageDialog = false;
+        }, _this.otherDOMClick = function (e) {
+            var node = e.target;
+            if (!_insert2.default.openImageDialog) {
+                return false;
+            }
+            var target = _this.target;
+            if (_insert2.default.openImageDialog && !(0, _util.contains)(target, node)) {
+                _this.closeBubble();
+            }
+        }, _this.onChange = function (activeKey) {
+            _this.setState({
+                activeKey: activeKey
+            });
         }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
     _createClass(InsertImage, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
-            var _this8 = this;
+            var _this3 = this;
 
             setTimeout(function () {
-                $(document).on('mousedown', _this8.otherDOMClick);
+                $(document).on('mousedown', _this3.otherDOMClick);
             }, 10);
             this.initUploader();
         }
     }, {
-        key: '__onLinkUrlChange__REACT_HOT_LOADER__',
-        value: function __onLinkUrlChange__REACT_HOT_LOADER__() {
-            return this.__onLinkUrlChange__REACT_HOT_LOADER__.apply(this, arguments);
-        }
-    }, {
-        key: '__onLinkUrlChange__REACT_HOT_LOADER__',
-        value: function __onLinkUrlChange__REACT_HOT_LOADER__(e) {
-            this.setState({
-                linkUrl: e.target.value
-            });
-        }
-    }, {
-        key: '__insertLink__REACT_HOT_LOADER__',
-        value: function __insertLink__REACT_HOT_LOADER__() {
-            return this.__insertLink__REACT_HOT_LOADER__.apply(this, arguments);
-        }
-    }, {
-        key: '__insertLink__REACT_HOT_LOADER__',
-        value: function __insertLink__REACT_HOT_LOADER__() {
-            if (this.state.linkUrl) {
-                this.insertImage(this.state.linkUrl);
-            }
-        }
-    }, {
         key: 'initUploader',
         value: function initUploader() {
-            var _this9 = this;
+            var _this4 = this;
 
-            this.rootNode = ReactDOM.findDOMNode(this);
+            this.rootNode = _reactDom2.default.findDOMNode(this);
             this.target = this.rootNode.getElementsByClassName('weditor-insert-image-dialog')[0];
-            var uploader = this.uploader = new Uploader({
+            var uploader = this.uploader = new _index.Uploader({
                 'dnd': '.weditor-uploader-wrapper',
                 'pick': '#weditorUploaderPick',
                 'auto': true,
@@ -189,7 +212,7 @@ var InsertImage = function (_Component) {
 
             uploader.on('beforeFileQueued', function (wuFile) {
                 if (wuFile.size > 1024 * 1024 * 20) {
-                    error('图片大小不能超过20M');
+                    (0, _toast.error)('图片大小不能超过20M');
                     uploader.reset();
                     return false;
                 }
@@ -197,29 +220,29 @@ var InsertImage = function (_Component) {
             });
 
             uploader.on('fileQueued', function (wuFile) {
-                _this9.file = wuFile;
+                _this4.file = wuFile;
             });
 
             uploader.on('uploadProgress', function (file, currentProgress, loaded, total) {
                 console.log('uploadProgress'.repeat(10));
                 console.log(currentProgress, loaded, total);
-                _this9.setState({
+                _this4.setState({
                     progress: currentProgress / total * 100
                 });
             });
 
             uploader.on('uploadAccept', function (obj, res) {
-                _this9.file = null;
+                _this4.file = null;
                 if (typeof res === 'string') {
                     res = JSON.parse(res);
                 }
-                console.log('uploadAccept', res, res.errno === 0, insert);
+                console.log('uploadAccept', res, res.errno === 0, _insert2.default);
                 if (res.errno === 0) {
                     if (res.data.url) {
-                        _this9.insertImage(res.data.url);
+                        _this4.insertImage(res.data.url);
                     }
                 } else {
-                    error('上传服务错误');
+                    (0, _toast.error)('上传服务错误');
                 }
             });
 
@@ -230,7 +253,7 @@ var InsertImage = function (_Component) {
             uploader.on('uploadError', function (file, err) {
                 console.error(err);
                 uploader.reset();
-                error('上传服务错误!');
+                (0, _toast.error)('上传服务错误!');
             });
         }
     }, {
@@ -243,109 +266,67 @@ var InsertImage = function (_Component) {
             this.uploader.destory();
         }
     }, {
-        key: '__closeBubble__REACT_HOT_LOADER__',
-        value: function __closeBubble__REACT_HOT_LOADER__() {
-            return this.__closeBubble__REACT_HOT_LOADER__.apply(this, arguments);
-        }
-    }, {
-        key: '__closeBubble__REACT_HOT_LOADER__',
-        value: function __closeBubble__REACT_HOT_LOADER__() {
-            if (this.file && this.file.id) {
-                this.uploader.removeFile(this.file.id);
-            }
-            insert.openImageDialog = false;
-        }
-    }, {
-        key: '__otherDOMClick__REACT_HOT_LOADER__',
-        value: function __otherDOMClick__REACT_HOT_LOADER__() {
-            return this.__otherDOMClick__REACT_HOT_LOADER__.apply(this, arguments);
-        }
-    }, {
-        key: '__otherDOMClick__REACT_HOT_LOADER__',
-        value: function __otherDOMClick__REACT_HOT_LOADER__(e) {
-            var node = e.target;
-            if (!insert.openImageDialog) {
-                return false;
-            }
-            var target = this.target;
-            if (insert.openImageDialog && !contains(target, node)) {
-                this.closeBubble();
-            }
-        }
-    }, {
-        key: '__onChange__REACT_HOT_LOADER__',
-        value: function __onChange__REACT_HOT_LOADER__() {
-            return this.__onChange__REACT_HOT_LOADER__.apply(this, arguments);
-        }
-    }, {
-        key: '__onChange__REACT_HOT_LOADER__',
-        value: function __onChange__REACT_HOT_LOADER__(activeKey) {
-            this.setState({
-                activeKey: activeKey
-            });
-        }
-    }, {
         key: 'render',
         value: function render() {
-            var _this10 = this;
+            var _this5 = this;
 
             var progress = this.state.progress;
 
-            return React.createElement(Dialog, {
+            return _react2.default.createElement(_dialog2.default, {
                 title: '\u63D2\u5165\u56FE\u7247',
                 className: 'weditor-insert-image-dialog',
-                content: React.createElement(
+                content: _react2.default.createElement(
                     'div',
                     { className: 'weditor-insert-image' },
-                    React.createElement(
+                    _react2.default.createElement(
                         'div',
                         { className: 'weditor-uploader-wrapper' },
-                        React.createElement(
-                            Tabs,
+                        _react2.default.createElement(
+                            _rcTabs2.default,
                             {
                                 renderTabBar: function renderTabBar() {
-                                    return React.createElement(ScrollableInkTabBar, { onTabClick: _this10.onTabClick });
+                                    return _react2.default.createElement(_ScrollableInkTabBar2.default, { onTabClick: _this5.onTabClick });
                                 },
                                 renderTabContent: function renderTabContent() {
-                                    return React.createElement(TabContent, { animatedWithMargin: true });
+                                    return _react2.default.createElement(_TabContent2.default, { animatedWithMargin: true });
                                 },
                                 activeKey: this.state.activeKey,
                                 onChange: this.onChange
                             },
-                            React.createElement(
-                                TabPane,
+                            _react2.default.createElement(
+                                _rcTabs.TabPane,
                                 { tab: '本地上传', key: '1' },
-                                React.createElement(
+                                _react2.default.createElement(
                                     'div',
                                     { className: 'weditor-uploader-file-inner' },
-                                    React.createElement(
+                                    _react2.default.createElement(
                                         'p',
                                         { className: 'weditor-image-tips',
                                             style: { display: progress === 0 || progress === 100 ? 'block' : 'none' } },
                                         '\u6700\u5927\u4E0A\u4F2020M\u7684\u56FE\u7247'
                                     ),
-                                    React.createElement(
-                                        Button,
+                                    _react2.default.createElement(
+                                        _button2.default,
                                         { id: 'weditorUploaderPick',
                                             style: { display: progress === 0 || progress === 100 ? 'block' : 'none' } },
                                         '\u70B9\u51FB\u4E0A\u4F20'
                                     ),
-                                    React.createElement(Line, { percent: progress, trailWidth: '2', strokeWidth: '2', strokeColor: '#118bfb',
+                                    _react2.default.createElement(_rcProgress.Line, { percent: progress, trailWidth: '2', strokeWidth: '2', strokeColor: '#118bfb',
                                         style: { display: progress > 0 && progress < 100 ? 'block' : 'none' } })
                                 )
                             ),
-                            React.createElement(
-                                TabPane,
+                            _react2.default.createElement(
+                                _rcTabs.TabPane,
                                 { tab: '插入外链', key: '2' },
-                                React.createElement(
+                                _react2.default.createElement(
                                     'div',
                                     { className: 'weditor-uploader-file-inner' },
-                                    React.createElement(
+                                    _react2.default.createElement(
                                         'div',
                                         null,
-                                        React.createElement(Input, { onChange: this.onLinkUrlChange }),
-                                        React.createElement(
-                                            Button,
+                                        _react2.default.createElement(_input2.default, { onChange: this.onLinkUrlChange }),
+                                        _react2.default.createElement(
+                                            _button2.default,
                                             { onClick: this.insertLink },
                                             '\u63D2\u5165'
                                         )
@@ -361,19 +342,6 @@ var InsertImage = function (_Component) {
     }]);
 
     return InsertImage;
-}(Component);
+}(_react.Component);
 
-export { InsertImage as default };
-;
-
-var _temp2 = function () {
-    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-        return;
-    }
-
-    __REACT_HOT_LOADER__.register($, '$', 'src/components/insertImage/insertImage.js');
-
-    __REACT_HOT_LOADER__.register(InsertImage, 'InsertImage', 'src/components/insertImage/insertImage.js');
-}();
-
-;
+exports.default = InsertImage;

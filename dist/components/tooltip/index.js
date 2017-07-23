@@ -3,18 +3,16 @@
  */
 'use strict';
 
-import './index.scss';
-import Tooltip from 'rc-tooltip';
-var _default = Tooltip;
-export default _default;
-;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-var _temp = function () {
-  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-    return;
-  }
+require('./index.scss');
 
-  __REACT_HOT_LOADER__.register(_default, 'default', 'src/components/tooltip/index.js');
-}();
+var _rcTooltip = require('rc-tooltip');
 
-;
+var _rcTooltip2 = _interopRequireDefault(_rcTooltip);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _rcTooltip2.default;

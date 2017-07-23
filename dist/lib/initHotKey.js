@@ -3,7 +3,11 @@
  */
 'use strict';
 
-var _default = function _default(quill) {
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+exports.default = function (quill) {
     quill.keyboard.addBinding({
         key: 's',
         shortKey: true
@@ -199,16 +203,3 @@ var _default = function _default(quill) {
         this.quill.format('align', 'right', 'user');
     });
 };
-
-export default _default;
-;
-
-var _temp = function () {
-    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-        return;
-    }
-
-    __REACT_HOT_LOADER__.register(_default, 'default', 'src/lib/initHotKey.js');
-}();
-
-;

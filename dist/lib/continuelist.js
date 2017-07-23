@@ -5,14 +5,18 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
 
-import CodeMirror from 'codemirror';
+var _codemirror = require('codemirror');
+
+var _codemirror2 = _interopRequireDefault(_codemirror);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var listRE = /^(\s*)(>[> ]*|[*+-]\s|(\d+)\.)(\s*)/,
     emptyListRE = /^(\s*)(>[> ]*|[*+-]|(\d+)\.)(\s*)$/,
     unorderedListRE = /[*+-]\s/;
 
-CodeMirror.commands.newlineAndIndentContinueMarkdownList = function (cm) {
-    if (cm.getOption("disableInput")) return CodeMirror.Pass;
+_codemirror2.default.commands.newlineAndIndentContinueMarkdownList = function (cm) {
+    if (cm.getOption("disableInput")) return _codemirror2.default.Pass;
     var ranges = cm.listSelections(),
         replacements = [];
 
@@ -50,18 +54,3 @@ CodeMirror.commands.newlineAndIndentContinueMarkdownList = function (cm) {
         cm.replaceSelections(replacements);
     }
 };
-;
-
-var _temp = function () {
-    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-        return;
-    }
-
-    __REACT_HOT_LOADER__.register(listRE, 'listRE', 'src/lib/continuelist.js');
-
-    __REACT_HOT_LOADER__.register(emptyListRE, 'emptyListRE', 'src/lib/continuelist.js');
-
-    __REACT_HOT_LOADER__.register(unorderedListRE, 'unorderedListRE', 'src/lib/continuelist.js');
-}();
-
-;

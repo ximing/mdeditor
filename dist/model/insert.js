@@ -3,7 +3,13 @@
  */
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5;
+
+var _mobx = require('mobx');
 
 function _initDefineProp(target, property, descriptor, context) {
     if (!descriptor) return;
@@ -50,7 +56,6 @@ function _initializerWarningHelper(descriptor, context) {
     throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
 }
 
-import { observable } from 'mobx';
 var Insert = (_class = function Insert() {
     _classCallCheck(this, Insert);
 
@@ -72,27 +77,27 @@ var Insert = (_class = function Insert() {
         length: 0,
         index: 0
     };
-}, (_descriptor = _applyDecoratedDescriptor(_class.prototype, 'openLinkDialog', [observable], {
+}, (_descriptor = _applyDecoratedDescriptor(_class.prototype, 'openLinkDialog', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return false;
     }
-}), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, 'openImageDialog', [observable], {
+}), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, 'openImageDialog', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return false;
     }
-}), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, 'linkTitle', [observable], {
+}), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, 'linkTitle', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return '';
     }
-}), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, 'linkUrl', [observable], {
+}), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, 'linkUrl', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return '';
     }
-}), _descriptor5 = _applyDecoratedDescriptor(_class.prototype, 'linkPosition', [observable], {
+}), _descriptor5 = _applyDecoratedDescriptor(_class.prototype, 'linkPosition', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return {
@@ -103,20 +108,4 @@ var Insert = (_class = function Insert() {
 })), _class);
 
 var insert = new Insert();
-var _default = insert;
-export default _default;
-;
-
-var _temp = function () {
-    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-        return;
-    }
-
-    __REACT_HOT_LOADER__.register(Insert, 'Insert', 'src/model/insert.js');
-
-    __REACT_HOT_LOADER__.register(insert, 'insert', 'src/model/insert.js');
-
-    __REACT_HOT_LOADER__.register(_default, 'default', 'src/model/insert.js');
-}();
-
-;
+exports.default = insert;

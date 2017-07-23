@@ -3,14 +3,20 @@
  */
 'use strict';
 
-import { getEditor } from './aceEditor';
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.insertBefore = exports.insertAround = exports.insert = undefined;
+
+var _aceEditor = require('./aceEditor');
+
 /**
  * Insert a string at cursor position
  * @param  {String} insertion
  * @param {int} cursorOffset
  */
-export var insert = function insert(insertion, cursorOffset) {
-    var aceEditor = getEditor();
+var insert = exports.insert = function insert(insertion, cursorOffset) {
+    var aceEditor = (0, _aceEditor.getEditor)();
     aceEditor.getSession().replace(aceEditor.getSelectionRange(), insertion);
     if (cursorOffset) {
         aceEditor.gotoLine(aceEditor.getSelectionRange().end.row + 1, aceEditor.getSelectionRange().end.column - insertion.length + cursorOffset - 1);
@@ -22,7 +28,7 @@ export var insert = function insert(insertion, cursorOffset) {
  * @param  {String} start
  * @param  {String} end
  */
-export var insertAround = function insertAround(start, end) {
+var insertAround = exports.insertAround = function insertAround(start, end) {
     //const quillEditor = getEditor();
     // var doc = quillEditor.getDoc();
     // var cursor = doc.getCursor();
@@ -34,7 +40,7 @@ export var insertAround = function insertAround(start, end) {
     //     doc.replaceRange(start + end, { line: cursor.line, ch: cursor.ch });
     //     doc.setCursor({ line: cursor.line, ch: cursor.ch + start.length })
     // }
-    var aceEditor = getEditor();
+    var aceEditor = (0, _aceEditor.getEditor)();
     insert('' + start + aceEditor.getSession().getTextRange() + end);
 };
 
@@ -42,7 +48,7 @@ export var insertAround = function insertAround(start, end) {
  * Insert a string before a selection
  * @param  {String} insertion
  */
-export var insertBefore = function insertBefore(insertion) {
+var insertBefore = exports.insertBefore = function insertBefore(insertion) {
     var cursorOffset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
 
     // const quillEditor = getEditor();
@@ -64,22 +70,7 @@ export var insertBefore = function insertBefore(insertion) {
     //     doc.replaceRange(insertion, { line: cursor.line, ch: 0 });
     //     doc.setCursor({ line: cursor.line, ch: cursorOffset || 0 })
     // }
-    var aceEditor = getEditor();
+    var aceEditor = (0, _aceEditor.getEditor)();
     var position = aceEditor.getCursorPositionScreen();
     aceEditor.getSession().insert({ row: position.row, column: 0 }, insertion);
 };
-;
-
-var _temp = function () {
-    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-        return;
-    }
-
-    __REACT_HOT_LOADER__.register(insert, 'insert', 'src/lib/aceUtil.js');
-
-    __REACT_HOT_LOADER__.register(insertAround, 'insertAround', 'src/lib/aceUtil.js');
-
-    __REACT_HOT_LOADER__.register(insertBefore, 'insertBefore', 'src/lib/aceUtil.js');
-}();
-
-;

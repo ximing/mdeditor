@@ -3,7 +3,13 @@
  */
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _desc, _value, _class, _descriptor, _descriptor2;
+
+var _mobx = require('mobx');
 
 function _initDefineProp(target, property, descriptor, context) {
   if (!descriptor) return;
@@ -50,19 +56,18 @@ function _initializerWarningHelper(descriptor, context) {
   throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
 }
 
-import { observable } from 'mobx';
 var Catalogue = (_class = function Catalogue() {
   _classCallCheck(this, Catalogue);
 
   _initDefineProp(this, 'open', _descriptor, this);
 
   _initDefineProp(this, 'list', _descriptor2, this);
-}, (_descriptor = _applyDecoratedDescriptor(_class.prototype, 'open', [observable], {
+}, (_descriptor = _applyDecoratedDescriptor(_class.prototype, 'open', [_mobx.observable], {
   enumerable: true,
   initializer: function initializer() {
     return false;
   }
-}), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, 'list', [observable], {
+}), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, 'list', [_mobx.observable], {
   enumerable: true,
   initializer: function initializer() {
     return [];
@@ -70,20 +75,4 @@ var Catalogue = (_class = function Catalogue() {
 })), _class);
 
 var catalogue = new Catalogue();
-var _default = catalogue;
-export default _default;
-;
-
-var _temp = function () {
-  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-    return;
-  }
-
-  __REACT_HOT_LOADER__.register(Catalogue, 'Catalogue', 'src/model/catalogue.js');
-
-  __REACT_HOT_LOADER__.register(catalogue, 'catalogue', 'src/model/catalogue.js');
-
-  __REACT_HOT_LOADER__.register(_default, 'default', 'src/model/catalogue.js');
-}();
-
-;
+exports.default = catalogue;

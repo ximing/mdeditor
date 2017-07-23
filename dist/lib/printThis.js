@@ -40,9 +40,11 @@
  *  - the loadCSS will load additional css (with or without @media print) into the iframe, adjusting layout
  */
 
-;
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 
-var _default = function _default($) {
+exports.default = function ($) {
     var opt;
     $.fn.printThis = function (options) {
         opt = $.extend({}, $.fn.printThis.defaults, options);
@@ -300,16 +302,5 @@ var _default = function _default($) {
         return $($('<div></div>').html(this.clone())).html();
     };
 };
-
-export default _default;
-;
-
-var _temp = function () {
-    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-        return;
-    }
-
-    __REACT_HOT_LOADER__.register(_default, 'default', 'src/lib/printThis.js');
-}();
 
 ;

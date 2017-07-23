@@ -6,7 +6,10 @@
  */
 'use strict';
 
-export var getArea = function getArea(selector) {
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var getArea = exports.getArea = function getArea(selector) {
     var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'single';
     var index = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
 
@@ -19,23 +22,23 @@ export var getArea = function getArea(selector) {
     } catch (e) {}
 };
 
-export var inArea = function inArea(x, y, selector) {
+var inArea = exports.inArea = function inArea(x, y, selector) {
     var ele = getArea(selector);
     try {
         return x >= ele.left && x <= ele.right && y >= ele.top && y <= ele.bottom;
     } catch (e) {}
 };
 
-export var getFromLocalStorage = function getFromLocalStorage(key) {
+var getFromLocalStorage = exports.getFromLocalStorage = function getFromLocalStorage(key) {
     return JSON.parse(localStorage.getItem(key)) || [];
 };
 
-export var setIntoLocalStorage = function setIntoLocalStorage(key, value) {
+var setIntoLocalStorage = exports.setIntoLocalStorage = function setIntoLocalStorage(key, value) {
     localStorage.setItem(key, JSON.stringify(value));
     return value;
 };
 
-export var updateDefaultColors = function updateDefaultColors(color, colors) {
+var updateDefaultColors = exports.updateDefaultColors = function updateDefaultColors(color, colors) {
     var tmp = colors.slice();
     if (tmp.indexOf(color) === -1) {
         tmp.unshift(color);
@@ -70,28 +73,3 @@ var getColor = function getColor(selector, s, e) {
     }
     return JSON.stringify(arr);
 };
-;
-
-var _temp = function () {
-    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-        return;
-    }
-
-    __REACT_HOT_LOADER__.register(getArea, 'getArea', 'src/components/color-picker/tools.js');
-
-    __REACT_HOT_LOADER__.register(inArea, 'inArea', 'src/components/color-picker/tools.js');
-
-    __REACT_HOT_LOADER__.register(getFromLocalStorage, 'getFromLocalStorage', 'src/components/color-picker/tools.js');
-
-    __REACT_HOT_LOADER__.register(setIntoLocalStorage, 'setIntoLocalStorage', 'src/components/color-picker/tools.js');
-
-    __REACT_HOT_LOADER__.register(updateDefaultColors, 'updateDefaultColors', 'src/components/color-picker/tools.js');
-
-    __REACT_HOT_LOADER__.register(componentToHex, 'componentToHex', 'src/components/color-picker/tools.js');
-
-    __REACT_HOT_LOADER__.register(rgbToHex, 'rgbToHex', 'src/components/color-picker/tools.js');
-
-    __REACT_HOT_LOADER__.register(getColor, 'getColor', 'src/components/color-picker/tools.js');
-}();
-
-;

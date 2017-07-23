@@ -1,15 +1,15 @@
-import './index.scss';
-import Button from './button';
-var _default = Button;
-export default _default;
-;
+'use strict';
 
-var _temp = function () {
-  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-    return;
-  }
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-  __REACT_HOT_LOADER__.register(_default, 'default', 'src/components/button/index.js');
-}();
+require('./index.scss');
 
-;
+var _button = require('./button');
+
+var _button2 = _interopRequireDefault(_button);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _button2.default;

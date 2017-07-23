@@ -3,18 +3,16 @@
  */
 'use strict';
 
-import './index.scss';
-import HotKeysDialog from './hotKeysDialog';
-var _default = HotKeysDialog;
-export default _default;
-;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-var _temp = function () {
-  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-    return;
-  }
+require('./index.scss');
 
-  __REACT_HOT_LOADER__.register(_default, 'default', 'src/components/hotKeysDialog/index.js');
-}();
+var _hotKeysDialog = require('./hotKeysDialog');
 
-;
+var _hotKeysDialog2 = _interopRequireDefault(_hotKeysDialog);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _hotKeysDialog2.default;

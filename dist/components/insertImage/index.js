@@ -3,18 +3,16 @@
  */
 'use strict';
 
-import './index.scss';
-import InsertImage from './insertImage';
-var _default = InsertImage;
-export default _default;
-;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-var _temp = function () {
-  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-    return;
-  }
+require('./index.scss');
 
-  __REACT_HOT_LOADER__.register(_default, 'default', 'src/components/insertImage/index.js');
-}();
+var _insertImage = require('./insertImage');
 
-;
+var _insertImage2 = _interopRequireDefault(_insertImage);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _insertImage2.default;

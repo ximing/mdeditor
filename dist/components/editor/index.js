@@ -3,17 +3,14 @@
  */
 'use strict';
 
-import Editor from './editor';
-var _default = Editor;
-export default _default;
-;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-var _temp = function () {
-  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-    return;
-  }
+var _editor = require('./editor');
 
-  __REACT_HOT_LOADER__.register(_default, 'default', 'src/components/editor/index.js');
-}();
+var _editor2 = _interopRequireDefault(_editor);
 
-;
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _editor2.default;

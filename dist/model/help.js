@@ -3,7 +3,13 @@
  */
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _desc, _value, _class, _descriptor;
+
+var _mobx = require('mobx');
 
 function _initDefineProp(target, property, descriptor, context) {
   if (!descriptor) return;
@@ -50,12 +56,11 @@ function _initializerWarningHelper(descriptor, context) {
   throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
 }
 
-import { observable } from 'mobx';
 var Help = (_class = function Help() {
   _classCallCheck(this, Help);
 
   _initDefineProp(this, 'hotKeysDialog', _descriptor, this);
-}, (_descriptor = _applyDecoratedDescriptor(_class.prototype, 'hotKeysDialog', [observable], {
+}, (_descriptor = _applyDecoratedDescriptor(_class.prototype, 'hotKeysDialog', [_mobx.observable], {
   enumerable: true,
   initializer: function initializer() {
     return false;
@@ -63,20 +68,4 @@ var Help = (_class = function Help() {
 })), _class);
 
 var help = new Help();
-var _default = help;
-export default _default;
-;
-
-var _temp = function () {
-  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-    return;
-  }
-
-  __REACT_HOT_LOADER__.register(Help, 'Help', 'src/model/help.js');
-
-  __REACT_HOT_LOADER__.register(help, 'help', 'src/model/help.js');
-
-  __REACT_HOT_LOADER__.register(_default, 'default', 'src/model/help.js');
-}();
-
-;
+exports.default = help;

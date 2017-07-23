@@ -3,9 +3,42 @@
  */
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = undefined;
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _dec, _class;
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _highlight = require('highlight.js');
+
+var _highlight2 = _interopRequireDefault(_highlight);
+
+var _markdownIt = require('markdown-it');
+
+var _markdownIt2 = _interopRequireDefault(_markdownIt);
+
+var _markdownItFootnote = require('markdown-it-footnote');
+
+var _markdownItFootnote2 = _interopRequireDefault(_markdownItFootnote);
+
+var _markdownItTaskLists = require('markdown-it-task-lists');
+
+var _markdownItTaskLists2 = _interopRequireDefault(_markdownItTaskLists);
+
+var _markdownItEmoji = require('markdown-it-emoji');
+
+var _markdownItEmoji2 = _interopRequireDefault(_markdownItEmoji);
+
+var _mobxReact = require('mobx-react');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -13,19 +46,11 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-import React, { Component } from 'react';
-import hljs from 'highlight.js';
-import markdownit from 'markdown-it';
-import markdownitFootnote from 'markdown-it-footnote';
-import markdownitTask from 'markdown-it-task-lists';
-import markdownitEmoji from 'markdown-it-emoji';
-import { inject, observer } from 'mobx-react';
-
-var Preview = (_dec = inject(function (state) {
+var Preview = (_dec = (0, _mobxReact.inject)(function (state) {
     return {
         editor: state.editor
     };
-}), _dec(_class = observer(_class = function (_Component) {
+}), _dec(_class = (0, _mobxReact.observer)(_class = function (_Component) {
     _inherits(Preview, _Component);
 
     function Preview(props) {
@@ -38,18 +63,18 @@ var Preview = (_dec = inject(function (state) {
             js: 'javascript',
             html: 'xml'
         };
-        _this.md = markdownit({
+        _this.md = (0, _markdownIt2.default)({
             html: true,
             highlight: function highlight(code, lang) {
                 if (languageOverrides[lang]) lang = languageOverrides[lang];
-                if (lang && hljs.getLanguage(lang)) {
+                if (lang && _highlight2.default.getLanguage(lang)) {
                     try {
-                        return hljs.highlight(lang, code).value;
+                        return _highlight2.default.highlight(lang, code).value;
                     } catch (e) {}
                 }
                 return '';
             }
-        }).use(markdownitFootnote).use(markdownitTask).use(markdownitEmoji);
+        }).use(_markdownItFootnote2.default).use(_markdownItTaskLists2.default).use(_markdownItEmoji2.default);
 
         return _this;
     }
@@ -57,21 +82,10 @@ var Preview = (_dec = inject(function (state) {
     _createClass(Preview, [{
         key: 'render',
         value: function render() {
-            return React.createElement('div', { dangerouslySetInnerHTML: { __html: this.md.render(this.props.editor.value || '') } });
+            return _react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: this.md.render(this.props.editor.value || '') } });
         }
     }]);
 
     return Preview;
-}(Component)) || _class) || _class);
-export { Preview as default };
-;
-
-var _temp = function () {
-    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-        return;
-    }
-
-    __REACT_HOT_LOADER__.register(Preview, 'Preview', 'src/components/preview/preview.js');
-}();
-
-;
+}(_react.Component)) || _class) || _class);
+exports.default = Preview;

@@ -3,21 +3,40 @@
  */
 'use strict';
 
-import CodeMirror from 'codemirror';
-import './continuelist';
-import 'codemirror/lib/codemirror.css';
-import 'codemirror/mode/xml/xml';
-import 'codemirror/theme/base16-light.css';
-import 'codemirror/mode/markdown/markdown';
-import 'codemirror/mode/gfm/gfm';
-import 'codemirror/mode/javascript/javascript';
-import 'codemirror/mode/css/css';
-import 'codemirror/mode/htmlmixed/htmlmixed';
-import '../style/codemirror.scss';
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.getEditor = exports.initCodeMirrorEditor = undefined;
+
+var _codemirror = require('codemirror');
+
+var _codemirror2 = _interopRequireDefault(_codemirror);
+
+require('./continuelist');
+
+require('codemirror/lib/codemirror.css');
+
+require('codemirror/mode/xml/xml');
+
+require('codemirror/theme/base16-light.css');
+
+require('codemirror/mode/markdown/markdown');
+
+require('codemirror/mode/gfm/gfm');
+
+require('codemirror/mode/javascript/javascript');
+
+require('codemirror/mode/css/css');
+
+require('codemirror/mode/htmlmixed/htmlmixed');
+
+require('../style/codemirror.scss');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var editor = null;
-export var initCodeMirrorEditor = function initCodeMirrorEditor(dom) {
-    editor = CodeMirror.fromTextArea(dom, {
+var initCodeMirrorEditor = exports.initCodeMirrorEditor = function initCodeMirrorEditor(dom) {
+    editor = _codemirror2.default.fromTextArea(dom, {
         mode: 'gfm',
         lineNumbers: false,
         matchBrackets: true,
@@ -28,21 +47,6 @@ export var initCodeMirrorEditor = function initCodeMirrorEditor(dom) {
     return editor;
 };
 
-export var getEditor = function getEditor() {
+var getEditor = exports.getEditor = function getEditor() {
     return editor;
 };
-;
-
-var _temp = function () {
-    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-        return;
-    }
-
-    __REACT_HOT_LOADER__.register(editor, 'editor', 'src/lib/codemirrorEditor.js');
-
-    __REACT_HOT_LOADER__.register(initCodeMirrorEditor, 'initCodeMirrorEditor', 'src/lib/codemirrorEditor.js');
-
-    __REACT_HOT_LOADER__.register(getEditor, 'getEditor', 'src/lib/codemirrorEditor.js');
-}();
-
-;

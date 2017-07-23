@@ -1,3 +1,9 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.WUFile = WUFile;
 /**
  * @fileOverview 文件属性封装
  */
@@ -16,7 +22,7 @@ function gid() {
  * @grammar new File( source ) => File
  * @param {Lib.File} source [lib.File](#Lib.File)实例, 此source对象是带有Runtime信息的。
  */
-export function WUFile(source, opt) {
+function WUFile(source, opt) {
   this.eventEmitter = opt.eventEmitter;
   var arrKeys = Object.keys(source);
   for (var i in arrKeys) {
@@ -176,24 +182,3 @@ WUFile.Status = {
   INTERRUPT: 'interrupt', // 上传中断，可续传。
   INVALID: 'invalid' // 文件不合格，不能重试上传。
 };
-;
-
-var _temp = function () {
-  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-    return;
-  }
-
-  __REACT_HOT_LOADER__.register(idPrefix, 'idPrefix', 'src/components/uploader/file.js');
-
-  __REACT_HOT_LOADER__.register(idSuffix, 'idSuffix', 'src/components/uploader/file.js');
-
-  __REACT_HOT_LOADER__.register(rExt, 'rExt', 'src/components/uploader/file.js');
-
-  __REACT_HOT_LOADER__.register(statusMap, 'statusMap', 'src/components/uploader/file.js');
-
-  __REACT_HOT_LOADER__.register(gid, 'gid', 'src/components/uploader/file.js');
-
-  __REACT_HOT_LOADER__.register(WUFile, 'WUFile', 'src/components/uploader/file.js');
-}();
-
-;

@@ -3,18 +3,16 @@
  */
 'use strict';
 
-import './index.scss';
-import OtherSelection from './otherSelection';
-var _default = OtherSelection;
-export default _default;
-;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-var _temp = function () {
-  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-    return;
-  }
+require('./index.scss');
 
-  __REACT_HOT_LOADER__.register(_default, 'default', 'src/components/otherSelection/index.js');
-}();
+var _otherSelection = require('./otherSelection');
 
-;
+var _otherSelection2 = _interopRequireDefault(_otherSelection);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _otherSelection2.default;

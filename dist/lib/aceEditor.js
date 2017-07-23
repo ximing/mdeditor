@@ -6,12 +6,15 @@
 // import 'brace/mode/markdown';
 // import 'brace/theme/github';
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 var ace = window.ace;
 var editor = null;
 var undoManager = new ace.UndoManager();
 ///mdEditor.session.addMarker(new Range(3, 3,3, 11), "bar", true);
 
-export var initAceEditor = function initAceEditor(dom) {
+var initAceEditor = exports.initAceEditor = function initAceEditor(dom) {
     editor = window.aceEditor = ace.edit(dom);
     editor.getSession().setMode("ace/mode/markdown");
     editor.getSession().setTabSize(4);
@@ -27,31 +30,10 @@ export var initAceEditor = function initAceEditor(dom) {
     return editor;
 };
 
-export var getEditor = function getEditor() {
+var getEditor = exports.getEditor = function getEditor() {
     return editor;
 };
 
-export var getUndoManager = function getUndoManager() {
+var getUndoManager = exports.getUndoManager = function getUndoManager() {
     return undoManager;
 };
-;
-
-var _temp = function () {
-    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-        return;
-    }
-
-    __REACT_HOT_LOADER__.register(ace, 'ace', 'src/lib/aceEditor.js');
-
-    __REACT_HOT_LOADER__.register(editor, 'editor', 'src/lib/aceEditor.js');
-
-    __REACT_HOT_LOADER__.register(undoManager, 'undoManager', 'src/lib/aceEditor.js');
-
-    __REACT_HOT_LOADER__.register(initAceEditor, 'initAceEditor', 'src/lib/aceEditor.js');
-
-    __REACT_HOT_LOADER__.register(getEditor, 'getEditor', 'src/lib/aceEditor.js');
-
-    __REACT_HOT_LOADER__.register(getUndoManager, 'getUndoManager', 'src/lib/aceEditor.js');
-}();
-
-;
