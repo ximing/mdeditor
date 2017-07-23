@@ -14,12 +14,12 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+import './style/index.scss';
 import React, { Component } from 'react';
 import { Provider } from 'mobx-react';
 
-import './style/index.scss';
 import { getEditor as _getEditor } from './lib/aceEditor';
-import WEditor from './weditor';
+import MDEditor from './mdeditor';
 import catalogue from './model/catalogue';
 import insert from './model/insert';
 import editor from './model/editor';
@@ -53,7 +53,7 @@ var Editor = (_temp = _class = function (_Component) {
                     editor: editor,
                     help: help
                 },
-                React.createElement(WEditor, { readOnly: this.props.readOnly,
+                React.createElement(MDEditor, { readOnly: this.props.readOnly,
                     defaultValue: this.props.defaultValue,
                     options: this.props.options,
                     coCursors: this.props.coCursors,

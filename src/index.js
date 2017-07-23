@@ -3,12 +3,12 @@
  */
 
 'use strict';
+import './style/index.scss';
 import React, {Component} from 'react';
 import {Provider} from 'mobx-react';
 
-import './style/index.scss';
 import {getEditor} from './lib/aceEditor';
-import WEditor from './weditor';
+import MDEditor from './mdeditor';
 import catalogue from './model/catalogue';
 import insert from './model/insert';
 import editor from './model/editor';
@@ -47,7 +47,7 @@ class  Editor extends Component {
                 editor={editor}
                 help={help}
             >
-                <WEditor readOnly={this.props.readOnly}
+                <MDEditor readOnly={this.props.readOnly}
                          defaultValue={this.props.defaultValue}
                         options={this.props.options}
                          coCursors = {this.props.coCursors}

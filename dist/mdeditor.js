@@ -26,6 +26,7 @@ var $ = window.jQuery;
 import editor from './model/editor';
 import { getEditor } from './lib/aceEditor';
 import debounce from 'lodash.debounce';
+
 var WEditor = (_dec = inject(function (state) {
     return {
         insert: state.insert,
@@ -150,9 +151,6 @@ var WEditor = (_dec = inject(function (state) {
     return WEditor;
 }(Component)) || _class) || _class);
 export { WEditor as default };
-
-
-export var call = function call() {};
 ;
 
 var _temp = function () {
@@ -160,11 +158,9 @@ var _temp = function () {
         return;
     }
 
-    __REACT_HOT_LOADER__.register($, '$', 'src/weditor.js');
+    __REACT_HOT_LOADER__.register($, '$', 'src/mdeditor.js');
 
-    __REACT_HOT_LOADER__.register(WEditor, 'WEditor', 'src/weditor.js');
-
-    __REACT_HOT_LOADER__.register(call, 'call', 'src/weditor.js');
+    __REACT_HOT_LOADER__.register(WEditor, 'WEditor', 'src/mdeditor.js');
 }();
 
 ;

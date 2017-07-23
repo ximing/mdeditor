@@ -5,6 +5,7 @@
 import './index.scss';
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
+import debounce from 'lodash.debounce';
 
 import Input from '../input/index';
 import Button from '../button/index';
@@ -27,17 +28,21 @@ export default class LinkBubble extends Component {
         this.closeBubble();
     };
 
+    constructor(){
+        super();
+        this.debounceWindowResize = debounce(this.onWindowResize);
+    }
     componentDidMount() {
         setTimeout(() => {
             $(document).on('mousedown',this.otherDOMClick);
         }, 10);
         this.target = ReactDOM.findDOMNode(this);
-        $(window).on('resize',this.onWindowResize)
+        $(window).on('resize',this.debounceWindowResize)
     }
 
     componentWillUnmount() {
         $(document).off('mousedown',this.otherDOMClick);
-        $(window).off('resize',this.onWindowResize);
+        $(window).off('resize',this.debounceWindowResize);
     }
 
     closeBubble = () => {

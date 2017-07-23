@@ -15,6 +15,7 @@ const $ = window.jQuery;
 import editor from './model/editor';
 import {getEditor} from './lib/aceEditor';
 import debounce from 'lodash.debounce';
+
 @inject(state => ({
     insert: state.insert,
     open: state.catalogue.open,
@@ -105,8 +106,4 @@ export default class WEditor extends Component {
             </div>
         );
     }
-}
-
-export const call = function () {
-
 }
