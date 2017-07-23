@@ -1,6 +1,6 @@
 {
     "name": "mdeditorjs",
-    "version": "0.3.3",
+    "version": "0.3.4",
     "description": "a markdown editor",
     "author": "",
     "main": "dist/index.js",
@@ -43,8 +43,8 @@
         "postcss-position": "^0.5.0",
         "postcss-size": "^1.1.1",
         "rabjs": "^3.2.3",
-        "react": "15.4.2",
-        "react-dom": "15.4.2",
+        "react": "^15.6.1",
+        "react-dom": "^15.6.1",
         "react-hot-loader": "^3.0.0-beta.6",
         "rimraf": "^2.6.1",
         "sass-loader": "^4.1.1",
@@ -58,7 +58,6 @@
         "npm": ">= 3.0.0"
     },
     "dependencies": {
-        "brace": "^0.10.0",
         "classnames": "^2.2.5",
         "highlight.js": "^9.12.0",
         "hotkeys-js": "^2.0.1",
@@ -72,7 +71,7 @@
         "omit.js": "^1.0.0",
         "rc-dropdown": "^1.4.12",
         "rc-menu": "^5.0.10",
-        "rc-notification": "^1.4.3",
+        "rc-notification": "^2.0.2",
         "rc-progress": "^2.2.1",
         "rc-tabs": "^8.1.0",
         "rc-tooltip": "^3.4.7"
