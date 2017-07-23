@@ -493,6 +493,20 @@ module.exports = { "default": __webpack_require__("./node_modules/core-js/librar
 
 /***/ }),
 
+/***/ "./node_modules/babel-runtime/core-js/object/get-own-property-descriptor.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__("./node_modules/core-js/library/fn/object/get-own-property-descriptor.js"), __esModule: true };
+
+/***/ }),
+
+/***/ "./node_modules/babel-runtime/core-js/object/get-prototype-of.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__("./node_modules/core-js/library/fn/object/get-prototype-of.js"), __esModule: true };
+
+/***/ }),
+
 /***/ "./node_modules/babel-runtime/core-js/object/set-prototype-of.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -621,6 +635,51 @@ exports.default = _assign2.default || function (target) {
   }
 
   return target;
+};
+
+/***/ }),
+
+/***/ "./node_modules/babel-runtime/helpers/get.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _getPrototypeOf = __webpack_require__("./node_modules/babel-runtime/core-js/object/get-prototype-of.js");
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+var _getOwnPropertyDescriptor = __webpack_require__("./node_modules/babel-runtime/core-js/object/get-own-property-descriptor.js");
+
+var _getOwnPropertyDescriptor2 = _interopRequireDefault(_getOwnPropertyDescriptor);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function get(object, property, receiver) {
+  if (object === null) object = Function.prototype;
+  var desc = (0, _getOwnPropertyDescriptor2.default)(object, property);
+
+  if (desc === undefined) {
+    var parent = (0, _getPrototypeOf2.default)(object);
+
+    if (parent === null) {
+      return undefined;
+    } else {
+      return get(parent, property, receiver);
+    }
+  } else if ("value" in desc) {
+    return desc.value;
+  } else {
+    var getter = desc.get;
+
+    if (getter === undefined) {
+      return undefined;
+    }
+
+    return getter.call(receiver);
+  }
 };
 
 /***/ }),
@@ -1033,6 +1092,25 @@ var $Object = __webpack_require__("./node_modules/core-js/library/modules/_core.
 module.exports = function defineProperty(it, key, desc){
   return $Object.defineProperty(it, key, desc);
 };
+
+/***/ }),
+
+/***/ "./node_modules/core-js/library/fn/object/get-own-property-descriptor.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__("./node_modules/core-js/library/modules/es6.object.get-own-property-descriptor.js");
+var $Object = __webpack_require__("./node_modules/core-js/library/modules/_core.js").Object;
+module.exports = function getOwnPropertyDescriptor(it, key){
+  return $Object.getOwnPropertyDescriptor(it, key);
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/library/fn/object/get-prototype-of.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__("./node_modules/core-js/library/modules/es6.object.get-prototype-of.js");
+module.exports = __webpack_require__("./node_modules/core-js/library/modules/_core.js").Object.getPrototypeOf;
 
 /***/ }),
 
@@ -1844,6 +1922,22 @@ exports.f = {}.propertyIsEnumerable;
 
 /***/ }),
 
+/***/ "./node_modules/core-js/library/modules/_object-sap.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+// most Object methods by ES6 should accept primitives
+var $export = __webpack_require__("./node_modules/core-js/library/modules/_export.js")
+  , core    = __webpack_require__("./node_modules/core-js/library/modules/_core.js")
+  , fails   = __webpack_require__("./node_modules/core-js/library/modules/_fails.js");
+module.exports = function(KEY, exec){
+  var fn  = (core.Object || {})[KEY] || Object[KEY]
+    , exp = {};
+  exp[KEY] = exec(fn);
+  $export($export.S + $export.F * fails(function(){ fn(1); }), 'Object', exp);
+};
+
+/***/ }),
+
 /***/ "./node_modules/core-js/library/modules/_property-desc.js":
 /***/ (function(module, exports) {
 
@@ -2149,6 +2243,36 @@ $export($export.S, 'Object', {create: __webpack_require__("./node_modules/core-j
 var $export = __webpack_require__("./node_modules/core-js/library/modules/_export.js");
 // 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
 $export($export.S + $export.F * !__webpack_require__("./node_modules/core-js/library/modules/_descriptors.js"), 'Object', {defineProperty: __webpack_require__("./node_modules/core-js/library/modules/_object-dp.js").f});
+
+/***/ }),
+
+/***/ "./node_modules/core-js/library/modules/es6.object.get-own-property-descriptor.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
+var toIObject                 = __webpack_require__("./node_modules/core-js/library/modules/_to-iobject.js")
+  , $getOwnPropertyDescriptor = __webpack_require__("./node_modules/core-js/library/modules/_object-gopd.js").f;
+
+__webpack_require__("./node_modules/core-js/library/modules/_object-sap.js")('getOwnPropertyDescriptor', function(){
+  return function getOwnPropertyDescriptor(it, key){
+    return $getOwnPropertyDescriptor(toIObject(it), key);
+  };
+});
+
+/***/ }),
+
+/***/ "./node_modules/core-js/library/modules/es6.object.get-prototype-of.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.2.9 Object.getPrototypeOf(O)
+var toObject        = __webpack_require__("./node_modules/core-js/library/modules/_to-object.js")
+  , $getPrototypeOf = __webpack_require__("./node_modules/core-js/library/modules/_object-gpo.js");
+
+__webpack_require__("./node_modules/core-js/library/modules/_object-sap.js")('getPrototypeOf', function(){
+  return function getPrototypeOf(it){
+    return $getPrototypeOf(toObject(it));
+  };
+});
 
 /***/ }),
 
@@ -3620,7 +3744,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, ".weditor-insert-image {\n  overflow: hidden;\n  width: 500px;\n  height: 300px; }\n  .weditor-insert-image .weditor-uploader-wrapper .weditor-uploader-file-inner {\n    height: 200px;\n    width: 100%;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    border: 3px dashed #e6e6e6; }\n  .weditor-insert-image .weditor-uploader-wrapper .rc-tabs-tabpane {\n    padding-top: 10px;\n    height: 300px; }\n  .weditor-insert-image .weditor-uploader-wrapper .weditor-input {\n    display: inline-block;\n    width: 390px;\n    margin-right: 10px; }\n", ""]);
+exports.push([module.i, "/* font */\n.weditor-insert-image {\n  overflow: hidden;\n  width: 500px;\n  height: 300px; }\n  .weditor-insert-image .weditor-uploader-wrapper .weditor-uploader-file-inner {\n    height: 200px;\n    width: 100%;\n    display: -webkit-box;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n    -webkit-flex-direction: column;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-pack: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    border: 3px dashed #e6e6e6; }\n  .weditor-insert-image .weditor-uploader-wrapper .rc-tabs-tab-active, .weditor-insert-image .weditor-uploader-wrapper .rc-tabs-tab-active:hover {\n    color: #118bfb; }\n  .weditor-insert-image .weditor-uploader-wrapper .rc-tabs-tab:hover {\n    color: #118bfb; }\n  .weditor-insert-image .weditor-uploader-wrapper .rc-tabs-ink-bar {\n    background-color: #118bfb; }\n  .weditor-insert-image .weditor-uploader-wrapper .rc-tabs-tabpane {\n    padding-top: 10px;\n    height: 300px; }\n  .weditor-insert-image .weditor-uploader-wrapper .weditor-input {\n    display: inline-block;\n    width: 390px;\n    margin-right: 10px; }\n\n.nx-modal-mask {\n  z-index: 400000 !important;\n  background: rgba(255, 255, 255, 0.6) !important; }\n  .nx-modal-mask .weditor-insert-image-dialog {\n    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);\n    border: 1px solid rgba(0, 0, 0, 0.2); }\n", ""]);
 
 // exports
 
@@ -3635,7 +3759,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, ".weditor-bubble {\n  position: absolute;\n  top: 0;\n  left: 0;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);\n  background-color: #fff;\n  border: 1px solid;\n  border-color: #bbb #bbb #a8a8a8;\n  padding: 16px;\n  z-index: 1201; }\n  .weditor-bubble .weditor-bubble-item {\n    line-height: 2; }\n    .weditor-bubble .weditor-bubble-item:first-child {\n      margin-bottom: 10px; }\n  .weditor-bubble .weditor-insert-input {\n    width: 244px;\n    display: inline-block;\n    color: #a9a9a9; }\n  .weditor-bubble .nx-btn {\n    margin-left: 10px; }\n", ""]);
+exports.push([module.i, ".mdeditor-insert-link-dialog {\n  border: 1px solid #e6e6e6; }\n  .mdeditor-insert-link-dialog .mdeditor-insert-link {\n    height: 80px;\n    width: 400px; }\n\n.mdeditor-form-item {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: start;\n  -webkit-justify-content: flex-start;\n      -ms-flex-pack: start;\n          justify-content: flex-start;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  margin-bottom: 15px; }\n  .mdeditor-form-item .mdeditor-form-title {\n    width: 30px; }\n  .mdeditor-form-item .mdeditor-form-content {\n    -webkit-box-flex: 1;\n    -webkit-flex: 1;\n        -ms-flex: 1;\n            flex: 1; }\n", ""]);
 
 // exports
 
@@ -3680,7 +3804,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/* font */\n/* font */\n@font-face {\n  font-family: \"docicon\";\n  src: url(\"https://at.alicdn.com/t/font_afw1mj420y919k9.eot\");\n  src: url(\"https://at.alicdn.com/t/font_afw1mj420y919k9.eot?#iefix\") format(\"embedded-opentype\"), url(\"https://at.alicdn.com/t/font_afw1mj420y919k9.woff\") format(\"woff\"), url(\"https://at.alicdn.com/t/font_afw1mj420y919k9.ttf\") format(\"truetype\"), url(\"https://at.alicdn.com/t/font_afw1mj420y919k9.svg#dxicon\") format(\"svg\"); }\n\n.docicon {\n  display: inline-block;\n  font-style: normal;\n  vertical-align: middle;\n  text-align: center;\n  text-transform: none;\n  text-rendering: auto;\n  line-height: 1;\n  font-size: 14px;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale; }\n  .docicon:before {\n    display: block;\n    font-family: \"docicon\" !important; }\n\n.docicon-undo:before {\n  content: \"\\E697\"; }\n\n.docicon-redo:before {\n  content: \"\\E688\"; }\n\n.docicon-ol:before {\n  content: \"\\E68F\"; }\n\n.docicon-ul:before {\n  content: \"\\E691\"; }\n\n.docicon-right-indent:before {\n  content: \"\\E690\"; }\n\n.docicon-left-indent:before {\n  content: \"\\E698\"; }\n\n.docicon-right-align:before {\n  content: \"\\E68D\"; }\n\n.docicon-left-align:before {\n  content: \"\\E68B\"; }\n\n.docicon-center-align:before {\n  content: \"\\E693\"; }\n\n.docicon-justify-align:before {\n  content: \"\\E696\"; }\n\n.docicon-strike:before {\n  content: \"\\E692\"; }\n\n.docicon-underline:before {\n  content: \"\\E68E\"; }\n\n.docicon-italic:before {\n  content: \"\\E694\"; }\n\n.docicon-clear:before {\n  content: \"\\E68A\"; }\n\n.docicon-bold:before {\n  content: \"\\E686\"; }\n\n.docicon-format:before {\n  content: \"\\E687\"; }\n\n.docicon-max:before {\n  content: \"\\E60E\"; }\n\n.docicon-zoom-out:before {\n  content: \"\\E69E\"; }\n\n.docicon-zoom-in:before {\n  content: \"\\E69A\"; }\n\n.docicon-close:before {\n  content: \"\\E631\"; }\n\n.docicon-min:before {\n  content: \"\\E699\"; }\n\n.docicon-vertical:before {\n  content: \"\\E625\"; }\n\n.docicon-color:before {\n  content: \"\\E68C\"; }\n\n.docicon-background:before {\n  content: \"\\E695\"; }\n\n.docicon-image:before {\n  content: \"\\E674\"; }\n\n.docicon-link:before {\n  content: \"\\E602\"; }\n\n.docicon-quote:before {\n  content: \"\\E626\"; }\n\n.docicon-code:before {\n  content: \"\\E627\"; }\n\n.docicon-h1:before {\n  content: \"\\E93A\"; }\n\n.docicon-h3:before {\n  content: \"\\E93B\"; }\n\n.docicon-h2:before {\n  content: \"\\E628\"; }\n\n.mdeditor-wrapper {\n  /*! normalize.css v7.0.0 | MIT License | github.com/necolas/normalize.css */\n  /* Document\n       ========================================================================== */\n  /**\n     * 1. Correct the line height in all browsers.\n     * 2. Prevent adjustments of font size after orientation changes in\n     *    IE on Windows Phone and in iOS.\n     */\n  /* Sections\n       ========================================================================== */\n  /**\n     * Remove the margin in all browsers (opinionated).\n     */\n  /**\n     * Add the correct display in IE 9-.\n     */\n  /**\n     * Correct the font size and margin on `h1` elements within `section` and\n     * `article` contexts in Chrome, Firefox, and Safari.\n     */\n  /* Grouping content\n       ========================================================================== */\n  /**\n     * Add the correct display in IE 9-.\n     * 1. Add the correct display in IE.\n     */\n  /**\n     * Add the correct margin in IE 8.\n     */\n  /**\n     * 1. Add the correct box sizing in Firefox.\n     * 2. Show the overflow in Edge and IE.\n     */\n  /**\n     * 1. Correct the inheritance and scaling of font size in all browsers.\n     * 2. Correct the odd `em` font sizing in all browsers.\n     */\n  /* Text-level semantics\n       ========================================================================== */\n  /**\n     * 1. Remove the gray background on active links in IE 10.\n     * 2. Remove gaps in links underline in iOS 8+ and Safari 8+.\n     */\n  /**\n     * 1. Remove the bottom border in Chrome 57- and Firefox 39-.\n     * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.\n     */\n  /**\n     * Prevent the duplicate application of `bolder` by the next rule in Safari 6.\n     */\n  /**\n     * Add the correct font weight in Chrome, Edge, and Safari.\n     */\n  /**\n     * 1. Correct the inheritance and scaling of font size in all browsers.\n     * 2. Correct the odd `em` font sizing in all browsers.\n     */\n  /**\n     * Add the correct font style in Android 4.3-.\n     */\n  /**\n     * Add the correct background and color in IE 9-.\n     */\n  /**\n     * Add the correct font size in all browsers.\n     */\n  /**\n     * Prevent `sub` and `sup` elements from affecting the line height in\n     * all browsers.\n     */\n  /* Embedded content\n       ========================================================================== */\n  /**\n     * Add the correct display in IE 9-.\n     */\n  /**\n     * Add the correct display in iOS 4-7.\n     */\n  /**\n     * Remove the border on images inside links in IE 10-.\n     */\n  /**\n     * Hide the overflow in IE.\n     */\n  /* Forms\n       ========================================================================== */\n  /**\n     * 1. Change the font styles in all browsers (opinionated).\n     * 2. Remove the margin in Firefox and Safari.\n     */\n  /**\n     * Remove the inheritance of text transform in Edge, Firefox, and IE.\n     * 1. Remove the inheritance of text transform in Firefox.\n     */\n  /**\n     * 1. Prevent a WebKit bug where (2) destroys native `audio` and `video`\n     *    controls in Android 4.\n     * 2. Correct the inability to style clickable types in iOS and Safari.\n     */\n  /**\n     * Remove the inner border and padding in Firefox.\n     */\n  /**\n     * Restore the focus styles unset by the previous rule.\n     */\n  /**\n     * Correct the padding in Firefox.\n     */\n  /**\n     * 1. Correct the text wrapping in Edge and IE.\n     * 2. Correct the color inheritance from `fieldset` elements in IE.\n     * 3. Remove the padding so developers are not caught out when they zero out\n     *    `fieldset` elements in all browsers.\n     */\n  /**\n     * 1. Add the correct display in IE 9-.\n     * 2. Add the correct vertical alignment in Chrome, Firefox, and Opera.\n     */\n  /**\n     * 1. Add the correct box sizing in IE 10-.\n     * 2. Remove the padding in IE 10-.\n     */\n  /**\n     * Correct the cursor style of increment and decrement buttons in Chrome.\n     */\n  /**\n     * 1. Correct the odd appearance in Chrome and Safari.\n     * 2. Correct the outline style in Safari.\n     */\n  /**\n     * Remove the inner padding and cancel buttons in Chrome and Safari on macOS.\n     */\n  /**\n     * 1. Correct the inability to style clickable types in iOS and Safari.\n     * 2. Change font properties to `inherit` in Safari.\n     */\n  /* Interactive\n       ========================================================================== */\n  /*\n     * Add the correct display in IE 9-.\n     * 1. Add the correct display in Edge, IE, and Firefox.\n     */\n  /*\n     * Add the correct display in all browsers.\n     */\n  /* Scripting\n       ========================================================================== */\n  /**\n     * Add the correct display in IE 9-.\n     */\n  /**\n     * Add the correct display in IE.\n     */\n  /* Hidden\n       ========================================================================== */\n  /**\n     * Add the correct display in IE 10-.\n     */ }\n  .mdeditor-wrapper html {\n    line-height: 1.15;\n    /* 1 */\n    -ms-text-size-adjust: 100%;\n    /* 2 */\n    -webkit-text-size-adjust: 100%;\n    /* 2 */ }\n  .mdeditor-wrapper body {\n    margin: 0; }\n  .mdeditor-wrapper article,\n  .mdeditor-wrapper aside,\n  .mdeditor-wrapper footer,\n  .mdeditor-wrapper header,\n  .mdeditor-wrapper nav,\n  .mdeditor-wrapper section {\n    display: block; }\n  .mdeditor-wrapper h1 {\n    font-size: 2em;\n    margin: 0.67em 0; }\n  .mdeditor-wrapper figcaption,\n  .mdeditor-wrapper figure,\n  .mdeditor-wrapper main {\n    /* 1 */\n    display: block; }\n  .mdeditor-wrapper figure {\n    margin: 1em 40px; }\n  .mdeditor-wrapper hr {\n    box-sizing: content-box;\n    /* 1 */\n    height: 0;\n    /* 1 */\n    overflow: visible;\n    /* 2 */ }\n  .mdeditor-wrapper pre {\n    font-family: monospace, monospace;\n    /* 1 */\n    font-size: 1em;\n    /* 2 */ }\n  .mdeditor-wrapper a {\n    background-color: transparent;\n    /* 1 */\n    -webkit-text-decoration-skip: objects;\n    /* 2 */ }\n  .mdeditor-wrapper abbr[title] {\n    border-bottom: none;\n    /* 1 */\n    text-decoration: underline;\n    /* 2 */\n    text-decoration: underline dotted;\n    /* 2 */ }\n  .mdeditor-wrapper b,\n  .mdeditor-wrapper strong {\n    font-weight: inherit; }\n  .mdeditor-wrapper b,\n  .mdeditor-wrapper strong {\n    font-weight: bolder; }\n  .mdeditor-wrapper code,\n  .mdeditor-wrapper kbd,\n  .mdeditor-wrapper samp {\n    font-family: monospace, monospace;\n    /* 1 */\n    font-size: 1em;\n    /* 2 */ }\n  .mdeditor-wrapper dfn {\n    font-style: italic; }\n  .mdeditor-wrapper mark {\n    background-color: #ff0;\n    color: #000; }\n  .mdeditor-wrapper small {\n    font-size: 80%; }\n  .mdeditor-wrapper sub,\n  .mdeditor-wrapper sup {\n    font-size: 75%;\n    line-height: 0;\n    position: relative;\n    vertical-align: baseline; }\n  .mdeditor-wrapper sub {\n    bottom: -0.25em; }\n  .mdeditor-wrapper sup {\n    top: -0.5em; }\n  .mdeditor-wrapper audio,\n  .mdeditor-wrapper video {\n    display: inline-block; }\n  .mdeditor-wrapper audio:not([controls]) {\n    display: none;\n    height: 0; }\n  .mdeditor-wrapper img {\n    border-style: none; }\n  .mdeditor-wrapper svg:not(:root) {\n    overflow: hidden; }\n  .mdeditor-wrapper button,\n  .mdeditor-wrapper input,\n  .mdeditor-wrapper optgroup,\n  .mdeditor-wrapper select,\n  .mdeditor-wrapper button,\n  .mdeditor-wrapper input {\n    /* 1 */\n    overflow: visible; }\n  .mdeditor-wrapper button,\n  .mdeditor-wrapper select {\n    /* 1 */\n    text-transform: none; }\n  .mdeditor-wrapper button,\n  .mdeditor-wrapper html [type=\"button\"],\n  .mdeditor-wrapper [type=\"reset\"],\n  .mdeditor-wrapper [type=\"submit\"] {\n    -webkit-appearance: button;\n    /* 2 */ }\n  .mdeditor-wrapper button::-moz-focus-inner,\n  .mdeditor-wrapper [type=\"button\"]::-moz-focus-inner,\n  .mdeditor-wrapper [type=\"reset\"]::-moz-focus-inner,\n  .mdeditor-wrapper [type=\"submit\"]::-moz-focus-inner {\n    border-style: none;\n    padding: 0; }\n  .mdeditor-wrapper button:-moz-focusring,\n  .mdeditor-wrapper [type=\"button\"]:-moz-focusring,\n  .mdeditor-wrapper [type=\"reset\"]:-moz-focusring,\n  .mdeditor-wrapper [type=\"submit\"]:-moz-focusring {\n    outline: 1px dotted ButtonText; }\n  .mdeditor-wrapper fieldset {\n    padding: 0.35em 0.75em 0.625em; }\n  .mdeditor-wrapper legend {\n    box-sizing: border-box;\n    /* 1 */\n    color: inherit;\n    /* 2 */\n    display: table;\n    /* 1 */\n    max-width: 100%;\n    /* 1 */\n    padding: 0;\n    /* 3 */\n    white-space: normal;\n    /* 1 */ }\n  .mdeditor-wrapper progress {\n    display: inline-block;\n    /* 1 */\n    vertical-align: baseline;\n    /* 2 */ }\n  .mdeditor-wrapper [type=\"checkbox\"],\n  .mdeditor-wrapper [type=\"radio\"] {\n    box-sizing: border-box;\n    /* 1 */\n    padding: 0;\n    /* 2 */ }\n  .mdeditor-wrapper [type=\"number\"]::-webkit-inner-spin-button,\n  .mdeditor-wrapper [type=\"number\"]::-webkit-outer-spin-button {\n    height: auto; }\n  .mdeditor-wrapper [type=\"search\"] {\n    -webkit-appearance: textfield;\n    /* 1 */\n    outline-offset: -2px;\n    /* 2 */ }\n  .mdeditor-wrapper [type=\"search\"]::-webkit-search-cancel-button,\n  .mdeditor-wrapper [type=\"search\"]::-webkit-search-decoration {\n    -webkit-appearance: none; }\n  .mdeditor-wrapper ::-webkit-file-upload-button {\n    -webkit-appearance: button;\n    /* 1 */\n    font: inherit;\n    /* 2 */ }\n  .mdeditor-wrapper details,\n  .mdeditor-wrapper menu {\n    display: block; }\n  .mdeditor-wrapper summary {\n    display: list-item; }\n  .mdeditor-wrapper canvas {\n    display: inline-block; }\n  .mdeditor-wrapper template {\n    display: none; }\n  .mdeditor-wrapper [hidden] {\n    display: none; }\n  .mdeditor-wrapper .CodeMirror pre {\n    line-height: 1.5; }\n\n/* font */\n.weditor-header {\n  width: 100%;\n  margin: 0;\n  padding: 0;\n  border-bottom: 1px solid #ddd;\n  position: relative;\n  z-index: 110;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  background: #FFFFFF;\n  box-shadow: 0 1px 0 0 #DDDDDD;\n  box-sizing: border-box;\n  height: 69px; }\n  .weditor-header button {\n    outline: none; }\n  .weditor-header .menu-bar {\n    height: 35px;\n    line-height: 35px;\n    position: absolute;\n    bottom: 0px;\n    left: 0px;\n    padding-left: 10px; }\n    .weditor-header .menu-bar span {\n      padding: 0 10px;\n      -webkit-user-select: none;\n         -moz-user-select: none;\n          -ms-user-select: none;\n              user-select: none;\n      font-size: 14px;\n      cursor: pointer;\n      color: #333333; }\n    .weditor-header .menu-bar span.active {\n      color: #2374d1;\n      background: #f6f6f6; }\n  .weditor-header .header-left-box {\n    line-height: 35px;\n    height: 35px;\n    position: absolute;\n    top: 0;\n    left: 0;\n    padding-left: 20px; }\n    .weditor-header .header-left-box .header-back-up {\n      float: left;\n      width: 40px;\n      height: 60px;\n      cursor: pointer;\n      background-color: #4285f4; }\n      .weditor-header .header-left-box .header-back-up .header-back-icon {\n        display: block;\n        background: url(//mss.sankuai.com/v1/mss_814dc1610cda4b2e8febd6ea2c809db5/image/1489546222140.svg) center no-repeat;\n        height: 60px;\n        position: absolute;\n        width: 40px;\n        -webkit-transition: all 125ms linear;\n        transition: all 125ms linear; }\n    .weditor-header .header-left-box .team-sprite {\n      background-image: url(https://assets-cdn.shimo.im/assets/images/teams-31aea6334f.png);\n      background-size: 499px 310px;\n      background-repeat: no-repeat; }\n    .weditor-header .header-left-box .s-header-text {\n      display: inline-block;\n      height: 35px;\n      line-height: 35px;\n      vertical-align: top; }\n      .weditor-header .header-left-box .s-header-text .title-input-pre {\n        font-size: 14px;\n        font-family: -apple-system, system-ui, \"PingFang SC\", Helvetica, Tahoma, Arial, \"Hiragino Sans GB\", \"Microsoft YaHei\", \"\\\\5FAE\\8F6F\\96C5\\9ED1\", SimSun, \"\\\\5B8B\\4F53\", Heiti, \"\\\\9ED1\\4F53\", sans-serif;\n        font-weight: bold;\n        font-style: normal;\n        letter-spacing: normal; }\n  .weditor-header .header-right-box {\n    position: relative;\n    height: 69px;\n    float: right;\n    line-height: 69px; }\n    .weditor-header .header-right-box .header-item-wrap {\n      display: inline-block;\n      height: 40px;\n      width: 40px; }\n      .weditor-header .header-right-box .header-item-wrap .header-item-inner {\n        border: 1px solid #eee;\n        height: 35px;\n        width: 35px;\n        border-radius: 50%;\n        text-align: center;\n        display: inline-block;\n        position: relative;\n        line-height: 0px; }\n        .weditor-header .header-right-box .header-item-wrap .header-item-inner:before {\n          content: '';\n          display: inline-block;\n          vertical-align: middle;\n          width: 0;\n          height: 100%;\n          font-size: 0; }\n        .weditor-header .header-right-box .header-item-wrap .header-item-inner img {\n          height: 25px;\n          width: 25px;\n          border-radius: 50%;\n          vertical-align: middle; }\n  .weditor-header .opver-icon {\n    background-image: url(https://s3.meituan.net/v1/mss_814dc1610cda4b2e8febd6ea2c809db5/image/1489914204976.png);\n    background-repeat: no-repeat;\n    height: 20px;\n    width: 20px;\n    display: inline-block; }\n  .weditor-header .opver-area span {\n    vertical-align: middle;\n    font-size: 12px; }\n  .weditor-header .opver-area:hover {\n    border: 1px solid #b6b6b6; }\n\n.editor-toolbar .ql-toolbar.ql-snow {\n  border: none;\n  background-color: #f6f6f6;\n  height: 40px;\n  line-height: 35px;\n  padding: 0;\n  border-bottom: solid 1px #e2e2e2; }\n  .editor-toolbar .ql-toolbar.ql-snow .ql-formats {\n    margin-right: 0px; }\n\n.editor-toolbar .docicon-vertical {\n  display: inline-block;\n  margin: 0 5px; }\n\n.toolbar-opver {\n  padding-left: 30px !important;\n  background: #F0F0F0;\n  border-bottom: 1px solid #ddd;\n  box-shadow: 0 1px 0 0 rgba(221, 221, 221, 0.5);\n  line-height: 40px;\n  height: 40px;\n  box-sizing: border-box;\n  font-size: 0; }\n  .toolbar-opver button {\n    background: none;\n    cursor: pointer;\n    display: inline-block;\n    height: 26px;\n    width: 26px;\n    padding: 0;\n    outline: none;\n    margin-right: 10px;\n    border: 1px solid transparent;\n    border-radius: 2px;\n    vertical-align: middle; }\n    .toolbar-opver button:hover {\n      border: 1px solid #CCCCCC; }\n    .toolbar-opver button:active {\n      background: #DDDDDD;\n      border: 1px solid #CCCCCC; }\n\nbody {\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  margin: 0;\n  overflow: hidden;\n  background-color: #ffffff; }\n\n.mdeditor-wrapper {\n  overflow: hidden;\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0; }\n  .mdeditor-wrapper div {\n    box-sizing: border-box; }\n  .mdeditor-wrapper h1, .mdeditor-wrapper h2, .mdeditor-wrapper h3 {\n    line-height: 40px; }\n  .mdeditor-wrapper h1, .mdeditor-wrapper h2, .mdeditor-wrapper h3, .mdeditor-wrapper h4, .mdeditor-wrapper h5, .mdeditor-wrapper h6 {\n    margin: 10px 0;\n    font-family: inherit;\n    font-weight: 700;\n    line-height: 20px;\n    color: #111;\n    text-rendering: optimizelegibility; }\n  .mdeditor-wrapper h1 {\n    margin: 50px 0 20px;\n    font-size: 30px; }\n  .mdeditor-wrapper h2 {\n    margin: 35px 0 20px;\n    font-size: 26px; }\n  .mdeditor-wrapper h3 {\n    margin: 20px 0;\n    font-size: 21px; }\n  .mdeditor-wrapper h4 {\n    font-size: 18px; }\n  .mdeditor-wrapper h5 {\n    font-size: 16px; }\n  .mdeditor-wrapper h6 {\n    font-size: 16px; }\n  .mdeditor-wrapper blockquote {\n    padding: 10px 15px;\n    border-left-style: solid;\n    border-left-width: 10px;\n    margin: 0 0 20px;\n    border-color: #D6DBDF;\n    background: none repeat scroll 0 0 rgba(102, 128, 153, 0.05); }\n  .mdeditor-wrapper hr {\n    display: block;\n    height: 2px;\n    border: 0;\n    border-top: 1px solid #aaa;\n    border-bottom: 1px solid #eee;\n    margin: 1em 0;\n    padding: 0; }\n  .mdeditor-wrapper pre, .mdeditor-wrapper code {\n    color: #000;\n    font-family: Consolas, \"Liberation Mono\", Menlo, Courier, monospace;\n    font-size: 0.94em;\n    /* 0.94 = 0.88 + (1.00 - 0.88) / 2 */\n    border-radius: 3px;\n    background-color: #F8F8F8;\n    border: 1px solid #CCC; }\n  .mdeditor-wrapper pre {\n    white-space: pre;\n    white-space: pre-wrap;\n    word-wrap: break-word;\n    padding: 5px; }\n  .mdeditor-wrapper pre code {\n    border: 0px !important;\n    background: transparent !important;\n    line-height: 1.3em; }\n  .mdeditor-wrapper code {\n    padding: 0 3px 0 3px; }\n  .mdeditor-wrapper sub, .mdeditor-wrapper sup {\n    font-size: 75%;\n    line-height: 0;\n    position: relative;\n    vertical-align: baseline; }\n  .mdeditor-wrapper sup {\n    top: -0.5em; }\n  .mdeditor-wrapper sub {\n    bottom: -0.25em; }\n  .mdeditor-wrapper ul, .mdeditor-wrapper ol {\n    margin: 1em 0;\n    padding: 0 0 0 2em; }\n  .mdeditor-wrapper li p:last-child {\n    margin: 0; }\n  .mdeditor-wrapper dd {\n    margin: 0 0 0 2em; }\n  .mdeditor-wrapper img {\n    border: 0;\n    -ms-interpolation-mode: bicubic;\n    vertical-align: middle; }\n  .mdeditor-wrapper table {\n    border-bottom: 1px solid #ddd;\n    border-right: 1px solid #ddd;\n    border-collapse: separate;\n    border-left: 0;\n    border-radius: 4px;\n    width: 100%;\n    margin-bottom: 20px;\n    max-width: 100%;\n    background-color: transparent;\n    border-spacing: 0; }\n  .mdeditor-wrapper thead {\n    display: table-header-group;\n    vertical-align: middle;\n    border-color: inherit; }\n  .mdeditor-wrapper tr {\n    display: table-row;\n    vertical-align: inherit;\n    border-color: inherit;\n    border: none; }\n  .mdeditor-wrapper td, .mdeditor-wrapper th {\n    vertical-align: top;\n    padding: 4px 10px;\n    border: none; }\n  .mdeditor-wrapper tr:nth-child(even) td, .mdeditor-wrapper tr:nth-child(even) th {\n    background-color: rgba(102, 128, 153, 0.05); }\n  .mdeditor-wrapper table th, .mdeditor-wrapper table td {\n    border-left: 1px solid #ddd;\n    padding: 8px;\n    line-height: 20px;\n    text-align: left;\n    vertical-align: top;\n    border-top: 1px solid #ddd; }\n  .mdeditor-wrapper blockquote p:last-child {\n    margin: 0px; }\n  .mdeditor-wrapper p {\n    line-height: 1.2;\n    margin-bottom: 20px; }\n  .mdeditor-wrapper li {\n    margin: 10px 0; }\n\n.weditor-body {\n  padding: 0;\n  position: absolute;\n  left: 0;\n  top: 40px;\n  right: 0px;\n  bottom: 0px;\n  overflow: hidden;\n  background-color: #ffffff; }\n  .weditor-body .content-container {\n    position: absolute;\n    left: 0;\n    bottom: 0;\n    top: 0;\n    width: 50%;\n    box-sizing: border-box;\n    background-color: #ffffff;\n    box-shadow: 0 0 0 0.1px #d1d1d1, 0 0 1px 0.1px #ccc;\n    border: 0;\n    padding: 10px 10px;\n    margin: 0; }\n    .weditor-body .content-container .ace_editor {\n      border: none;\n      background-color: #ffffff;\n      font-size: 14px;\n      height: 100%; }\n      .weditor-body .content-container .ace_editor.ace-github .ace_marker-layer .ace_active-line {\n        background: #FFFFFF !important; }\n      .weditor-body .content-container .ace_editor * {\n        font-family: \"Monaco\", \"Menlo\", \"Ubuntu Mono\", \"Droid Sans Mono\", \"Consolas\", monospace !important; }\n      .weditor-body .content-container .ace_editor .cm-header-1 {\n        font-size: 2em; }\n      .weditor-body .content-container .ace_editor .cm-header-2 {\n        font-size: 1.75em; }\n      .weditor-body .content-container .ace_editor .cm-header-3 {\n        font-size: 1.5em; }\n      .weditor-body .content-container .ace_editor .cm-header-4 {\n        font-size: 1.3em; }\n      .weditor-body .content-container .ace_editor .cm-header-5 {\n        font-size: 1.2em; }\n      .weditor-body .content-container .ace_editor .cm-header-6 {\n        font-size: 1.15em; }\n      .weditor-body .content-container .ace_editor .cm-quote {\n        color: #90a959;\n        font-style: italic; }\n      .weditor-body .content-container .ace_editor a {\n        color: #0645ad;\n        text-decoration: none; }\n      .weditor-body .content-container .ace_editor a:visited {\n        color: #0b0080; }\n      .weditor-body .content-container .ace_editor a:hover {\n        color: #06e; }\n      .weditor-body .content-container .ace_editor a:active {\n        color: #faa700; }\n      .weditor-body .content-container .ace_editor a:focus {\n        outline: thin dotted; }\n      .weditor-body .content-container .ace_editor a:hover, .weditor-body .content-container .ace_editor a:active {\n        outline: 0; }\n      .weditor-body .content-container .ace_editor .ace_gutter {\n        background-color: #FFFFFF; }\n  .weditor-body .mdeditor-preview {\n    position: absolute;\n    right: 0;\n    width: 50%;\n    bottom: 0;\n    top: 0;\n    box-sizing: border-box;\n    font-size: 14px;\n    background-color: #ffffff;\n    border-left: 1px solid #dddddd;\n    margin: 0;\n    padding: 10px 20px;\n    overflow: hidden;\n    overflow-y: auto; }\n    .weditor-body .mdeditor-preview img {\n      max-width: 100%; }\n  .weditor-body .editormd-toolbar {\n    width: 100%;\n    min-height: 37px;\n    background: #f0f0f0;\n    display: none;\n    position: fixed;\n    top: 55px;\n    left: 0;\n    z-index: 10;\n    border: none; }\n    .weditor-body .editormd-toolbar.scroll {\n      box-shadow: 0 2px 4px rgba(20, 20, 20, 0.15); }\n    .weditor-body .editormd-toolbar .editormd-menu {\n      width: 910px;\n      margin: 0 auto; }\n    .weditor-body .editormd-toolbar .editormd-menu > li > a {\n      border: none; }\n      .weditor-body .editormd-toolbar .editormd-menu > li > a i {\n        font-weight: 200; }\n\n.rc-dropdown {\n  background: #FFFFFF;\n  box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.1);\n  border: none !important; }\n  .rc-dropdown .rc-dropdown-menu {\n    border: none !important;\n    border-radius: 2px; }\n\n.rc-dropdown-menu-item {\n  width: 150px;\n  cursor: pointer;\n  height: 40px;\n  line-height: 40px;\n  padding: 0 !important;\n  padding-left: 20px !important;\n  border: none !important; }\n\n::-webkit-scrollbar-thumb {\n  background-color: rgba(0, 0, 0, 0.2);\n  background-clip: padding-box;\n  border: solid transparent;\n  border-width: 1px 1px 1px 6px;\n  min-height: 28px;\n  padding: 100px 0 0;\n  box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.1), inset 0 -1px 0 rgba(0, 0, 0, 0.07); }\n\n::-webkit-scrollbar-corner {\n  background: transparent; }\n\n::-webkit-scrollbar-button {\n  height: 0;\n  width: 0; }\n\n::-webkit-scrollbar {\n  height: 16px;\n  overflow: visible;\n  width: 16px; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/* font */\n/* font */\n@font-face {\n  font-family: \"docicon\";\n  src: url(\"https://at.alicdn.com/t/font_afw1mj420y919k9.eot\");\n  src: url(\"https://at.alicdn.com/t/font_afw1mj420y919k9.eot?#iefix\") format(\"embedded-opentype\"), url(\"https://at.alicdn.com/t/font_afw1mj420y919k9.woff\") format(\"woff\"), url(\"https://at.alicdn.com/t/font_afw1mj420y919k9.ttf\") format(\"truetype\"), url(\"https://at.alicdn.com/t/font_afw1mj420y919k9.svg#dxicon\") format(\"svg\"); }\n\n.docicon {\n  display: inline-block;\n  font-style: normal;\n  vertical-align: middle;\n  text-align: center;\n  text-transform: none;\n  text-rendering: auto;\n  line-height: 1;\n  font-size: 14px;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale; }\n  .docicon:before {\n    display: block;\n    font-family: \"docicon\" !important; }\n\n.docicon-undo:before {\n  content: \"\\E697\"; }\n\n.docicon-redo:before {\n  content: \"\\E688\"; }\n\n.docicon-ol:before {\n  content: \"\\E68F\"; }\n\n.docicon-ul:before {\n  content: \"\\E691\"; }\n\n.docicon-right-indent:before {\n  content: \"\\E690\"; }\n\n.docicon-left-indent:before {\n  content: \"\\E698\"; }\n\n.docicon-right-align:before {\n  content: \"\\E68D\"; }\n\n.docicon-left-align:before {\n  content: \"\\E68B\"; }\n\n.docicon-center-align:before {\n  content: \"\\E693\"; }\n\n.docicon-justify-align:before {\n  content: \"\\E696\"; }\n\n.docicon-strike:before {\n  content: \"\\E692\"; }\n\n.docicon-underline:before {\n  content: \"\\E68E\"; }\n\n.docicon-italic:before {\n  content: \"\\E694\"; }\n\n.docicon-clear:before {\n  content: \"\\E68A\"; }\n\n.docicon-bold:before {\n  content: \"\\E686\"; }\n\n.docicon-format:before {\n  content: \"\\E687\"; }\n\n.docicon-max:before {\n  content: \"\\E60E\"; }\n\n.docicon-zoom-out:before {\n  content: \"\\E69E\"; }\n\n.docicon-zoom-in:before {\n  content: \"\\E69A\"; }\n\n.docicon-close:before {\n  content: \"\\E631\"; }\n\n.docicon-min:before {\n  content: \"\\E699\"; }\n\n.docicon-vertical:before {\n  content: \"\\E625\"; }\n\n.docicon-color:before {\n  content: \"\\E68C\"; }\n\n.docicon-background:before {\n  content: \"\\E695\"; }\n\n.docicon-image:before {\n  content: \"\\E674\"; }\n\n.docicon-link:before {\n  content: \"\\E602\"; }\n\n.docicon-quote:before {\n  content: \"\\E626\"; }\n\n.docicon-code:before {\n  content: \"\\E627\"; }\n\n.docicon-h1:before {\n  content: \"\\E93A\"; }\n\n.docicon-h3:before {\n  content: \"\\E93B\"; }\n\n.docicon-h2:before {\n  content: \"\\E628\"; }\n\n.mdeditor-wrapper {\n  /*! normalize.css v7.0.0 | MIT License | github.com/necolas/normalize.css */\n  /* Document\n       ========================================================================== */\n  /**\n     * 1. Correct the line height in all browsers.\n     * 2. Prevent adjustments of font size after orientation changes in\n     *    IE on Windows Phone and in iOS.\n     */\n  /* Sections\n       ========================================================================== */\n  /**\n     * Remove the margin in all browsers (opinionated).\n     */\n  /**\n     * Add the correct display in IE 9-.\n     */\n  /**\n     * Correct the font size and margin on `h1` elements within `section` and\n     * `article` contexts in Chrome, Firefox, and Safari.\n     */\n  /* Grouping content\n       ========================================================================== */\n  /**\n     * Add the correct display in IE 9-.\n     * 1. Add the correct display in IE.\n     */\n  /**\n     * Add the correct margin in IE 8.\n     */\n  /**\n     * 1. Add the correct box sizing in Firefox.\n     * 2. Show the overflow in Edge and IE.\n     */\n  /**\n     * 1. Correct the inheritance and scaling of font size in all browsers.\n     * 2. Correct the odd `em` font sizing in all browsers.\n     */\n  /* Text-level semantics\n       ========================================================================== */\n  /**\n     * 1. Remove the gray background on active links in IE 10.\n     * 2. Remove gaps in links underline in iOS 8+ and Safari 8+.\n     */\n  /**\n     * 1. Remove the bottom border in Chrome 57- and Firefox 39-.\n     * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.\n     */\n  /**\n     * Prevent the duplicate application of `bolder` by the next rule in Safari 6.\n     */\n  /**\n     * Add the correct font weight in Chrome, Edge, and Safari.\n     */\n  /**\n     * 1. Correct the inheritance and scaling of font size in all browsers.\n     * 2. Correct the odd `em` font sizing in all browsers.\n     */\n  /**\n     * Add the correct font style in Android 4.3-.\n     */\n  /**\n     * Add the correct background and color in IE 9-.\n     */\n  /**\n     * Add the correct font size in all browsers.\n     */\n  /**\n     * Prevent `sub` and `sup` elements from affecting the line height in\n     * all browsers.\n     */\n  /* Embedded content\n       ========================================================================== */\n  /**\n     * Add the correct display in IE 9-.\n     */\n  /**\n     * Add the correct display in iOS 4-7.\n     */\n  /**\n     * Remove the border on images inside links in IE 10-.\n     */\n  /**\n     * Hide the overflow in IE.\n     */\n  /* Forms\n       ========================================================================== */\n  /**\n     * 1. Change the font styles in all browsers (opinionated).\n     * 2. Remove the margin in Firefox and Safari.\n     */\n  /**\n     * Remove the inheritance of text transform in Edge, Firefox, and IE.\n     * 1. Remove the inheritance of text transform in Firefox.\n     */\n  /**\n     * 1. Prevent a WebKit bug where (2) destroys native `audio` and `video`\n     *    controls in Android 4.\n     * 2. Correct the inability to style clickable types in iOS and Safari.\n     */\n  /**\n     * Remove the inner border and padding in Firefox.\n     */\n  /**\n     * Restore the focus styles unset by the previous rule.\n     */\n  /**\n     * Correct the padding in Firefox.\n     */\n  /**\n     * 1. Correct the text wrapping in Edge and IE.\n     * 2. Correct the color inheritance from `fieldset` elements in IE.\n     * 3. Remove the padding so developers are not caught out when they zero out\n     *    `fieldset` elements in all browsers.\n     */\n  /**\n     * 1. Add the correct display in IE 9-.\n     * 2. Add the correct vertical alignment in Chrome, Firefox, and Opera.\n     */\n  /**\n     * 1. Add the correct box sizing in IE 10-.\n     * 2. Remove the padding in IE 10-.\n     */\n  /**\n     * Correct the cursor style of increment and decrement buttons in Chrome.\n     */\n  /**\n     * 1. Correct the odd appearance in Chrome and Safari.\n     * 2. Correct the outline style in Safari.\n     */\n  /**\n     * Remove the inner padding and cancel buttons in Chrome and Safari on macOS.\n     */\n  /**\n     * 1. Correct the inability to style clickable types in iOS and Safari.\n     * 2. Change font properties to `inherit` in Safari.\n     */\n  /* Interactive\n       ========================================================================== */\n  /*\n     * Add the correct display in IE 9-.\n     * 1. Add the correct display in Edge, IE, and Firefox.\n     */\n  /*\n     * Add the correct display in all browsers.\n     */\n  /* Scripting\n       ========================================================================== */\n  /**\n     * Add the correct display in IE 9-.\n     */\n  /**\n     * Add the correct display in IE.\n     */\n  /* Hidden\n       ========================================================================== */\n  /**\n     * Add the correct display in IE 10-.\n     */ }\n  .mdeditor-wrapper html {\n    line-height: 1.15;\n    /* 1 */\n    -ms-text-size-adjust: 100%;\n    /* 2 */\n    -webkit-text-size-adjust: 100%;\n    /* 2 */ }\n  .mdeditor-wrapper body {\n    margin: 0; }\n  .mdeditor-wrapper article,\n  .mdeditor-wrapper aside,\n  .mdeditor-wrapper footer,\n  .mdeditor-wrapper header,\n  .mdeditor-wrapper nav,\n  .mdeditor-wrapper section {\n    display: block; }\n  .mdeditor-wrapper h1 {\n    font-size: 2em;\n    margin: 0.67em 0; }\n  .mdeditor-wrapper figcaption,\n  .mdeditor-wrapper figure,\n  .mdeditor-wrapper main {\n    /* 1 */\n    display: block; }\n  .mdeditor-wrapper figure {\n    margin: 1em 40px; }\n  .mdeditor-wrapper hr {\n    box-sizing: content-box;\n    /* 1 */\n    height: 0;\n    /* 1 */\n    overflow: visible;\n    /* 2 */ }\n  .mdeditor-wrapper pre {\n    font-family: monospace, monospace;\n    /* 1 */\n    font-size: 1em;\n    /* 2 */ }\n  .mdeditor-wrapper a {\n    background-color: transparent;\n    /* 1 */\n    -webkit-text-decoration-skip: objects;\n    /* 2 */ }\n  .mdeditor-wrapper abbr[title] {\n    border-bottom: none;\n    /* 1 */\n    text-decoration: underline;\n    /* 2 */\n    text-decoration: underline dotted;\n    /* 2 */ }\n  .mdeditor-wrapper b,\n  .mdeditor-wrapper strong {\n    font-weight: inherit; }\n  .mdeditor-wrapper b,\n  .mdeditor-wrapper strong {\n    font-weight: bolder; }\n  .mdeditor-wrapper code,\n  .mdeditor-wrapper kbd,\n  .mdeditor-wrapper samp {\n    font-family: monospace, monospace;\n    /* 1 */\n    font-size: 1em;\n    /* 2 */ }\n  .mdeditor-wrapper dfn {\n    font-style: italic; }\n  .mdeditor-wrapper mark {\n    background-color: #ff0;\n    color: #000; }\n  .mdeditor-wrapper small {\n    font-size: 80%; }\n  .mdeditor-wrapper sub,\n  .mdeditor-wrapper sup {\n    font-size: 75%;\n    line-height: 0;\n    position: relative;\n    vertical-align: baseline; }\n  .mdeditor-wrapper sub {\n    bottom: -0.25em; }\n  .mdeditor-wrapper sup {\n    top: -0.5em; }\n  .mdeditor-wrapper audio,\n  .mdeditor-wrapper video {\n    display: inline-block; }\n  .mdeditor-wrapper audio:not([controls]) {\n    display: none;\n    height: 0; }\n  .mdeditor-wrapper img {\n    border-style: none; }\n  .mdeditor-wrapper svg:not(:root) {\n    overflow: hidden; }\n  .mdeditor-wrapper button,\n  .mdeditor-wrapper input,\n  .mdeditor-wrapper optgroup,\n  .mdeditor-wrapper select,\n  .mdeditor-wrapper button,\n  .mdeditor-wrapper input {\n    /* 1 */\n    overflow: visible; }\n  .mdeditor-wrapper button,\n  .mdeditor-wrapper select {\n    /* 1 */\n    text-transform: none; }\n  .mdeditor-wrapper button,\n  .mdeditor-wrapper html [type=\"button\"],\n  .mdeditor-wrapper [type=\"reset\"],\n  .mdeditor-wrapper [type=\"submit\"] {\n    -webkit-appearance: button;\n    /* 2 */ }\n  .mdeditor-wrapper button::-moz-focus-inner,\n  .mdeditor-wrapper [type=\"button\"]::-moz-focus-inner,\n  .mdeditor-wrapper [type=\"reset\"]::-moz-focus-inner,\n  .mdeditor-wrapper [type=\"submit\"]::-moz-focus-inner {\n    border-style: none;\n    padding: 0; }\n  .mdeditor-wrapper button:-moz-focusring,\n  .mdeditor-wrapper [type=\"button\"]:-moz-focusring,\n  .mdeditor-wrapper [type=\"reset\"]:-moz-focusring,\n  .mdeditor-wrapper [type=\"submit\"]:-moz-focusring {\n    outline: 1px dotted ButtonText; }\n  .mdeditor-wrapper fieldset {\n    padding: 0.35em 0.75em 0.625em; }\n  .mdeditor-wrapper legend {\n    box-sizing: border-box;\n    /* 1 */\n    color: inherit;\n    /* 2 */\n    display: table;\n    /* 1 */\n    max-width: 100%;\n    /* 1 */\n    padding: 0;\n    /* 3 */\n    white-space: normal;\n    /* 1 */ }\n  .mdeditor-wrapper progress {\n    display: inline-block;\n    /* 1 */\n    vertical-align: baseline;\n    /* 2 */ }\n  .mdeditor-wrapper [type=\"checkbox\"],\n  .mdeditor-wrapper [type=\"radio\"] {\n    box-sizing: border-box;\n    /* 1 */\n    padding: 0;\n    /* 2 */ }\n  .mdeditor-wrapper [type=\"number\"]::-webkit-inner-spin-button,\n  .mdeditor-wrapper [type=\"number\"]::-webkit-outer-spin-button {\n    height: auto; }\n  .mdeditor-wrapper [type=\"search\"] {\n    -webkit-appearance: textfield;\n    /* 1 */\n    outline-offset: -2px;\n    /* 2 */ }\n  .mdeditor-wrapper [type=\"search\"]::-webkit-search-cancel-button,\n  .mdeditor-wrapper [type=\"search\"]::-webkit-search-decoration {\n    -webkit-appearance: none; }\n  .mdeditor-wrapper ::-webkit-file-upload-button {\n    -webkit-appearance: button;\n    /* 1 */\n    font: inherit;\n    /* 2 */ }\n  .mdeditor-wrapper details,\n  .mdeditor-wrapper menu {\n    display: block; }\n  .mdeditor-wrapper summary {\n    display: list-item; }\n  .mdeditor-wrapper canvas {\n    display: inline-block; }\n  .mdeditor-wrapper template {\n    display: none; }\n  .mdeditor-wrapper [hidden] {\n    display: none; }\n  .mdeditor-wrapper .CodeMirror pre {\n    line-height: 1.5; }\n\n/* font */\n.weditor-header {\n  width: 100%;\n  margin: 0;\n  padding: 0;\n  border-bottom: 1px solid #ddd;\n  position: relative;\n  z-index: 110;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  background: #FFFFFF;\n  box-shadow: 0 1px 0 0 #DDDDDD;\n  box-sizing: border-box;\n  height: 69px; }\n  .weditor-header button {\n    outline: none; }\n  .weditor-header .menu-bar {\n    height: 35px;\n    line-height: 35px;\n    position: absolute;\n    bottom: 0px;\n    left: 0px;\n    padding-left: 10px; }\n    .weditor-header .menu-bar span {\n      padding: 0 10px;\n      -webkit-user-select: none;\n         -moz-user-select: none;\n          -ms-user-select: none;\n              user-select: none;\n      font-size: 14px;\n      cursor: pointer;\n      color: #333333; }\n    .weditor-header .menu-bar span.active {\n      color: #2374d1;\n      background: #f6f6f6; }\n  .weditor-header .header-left-box {\n    line-height: 35px;\n    height: 35px;\n    position: absolute;\n    top: 0;\n    left: 0;\n    padding-left: 20px; }\n    .weditor-header .header-left-box .header-back-up {\n      float: left;\n      width: 40px;\n      height: 60px;\n      cursor: pointer;\n      background-color: #4285f4; }\n      .weditor-header .header-left-box .header-back-up .header-back-icon {\n        display: block;\n        background: url(//mss.sankuai.com/v1/mss_814dc1610cda4b2e8febd6ea2c809db5/image/1489546222140.svg) center no-repeat;\n        height: 60px;\n        position: absolute;\n        width: 40px;\n        -webkit-transition: all 125ms linear;\n        transition: all 125ms linear; }\n    .weditor-header .header-left-box .team-sprite {\n      background-image: url(https://assets-cdn.shimo.im/assets/images/teams-31aea6334f.png);\n      background-size: 499px 310px;\n      background-repeat: no-repeat; }\n    .weditor-header .header-left-box .s-header-text {\n      display: inline-block;\n      height: 35px;\n      line-height: 35px;\n      vertical-align: top; }\n      .weditor-header .header-left-box .s-header-text .title-input-pre {\n        font-size: 14px;\n        font-family: -apple-system, system-ui, \"PingFang SC\", Helvetica, Tahoma, Arial, \"Hiragino Sans GB\", \"Microsoft YaHei\", \"\\\\5FAE\\8F6F\\96C5\\9ED1\", SimSun, \"\\\\5B8B\\4F53\", Heiti, \"\\\\9ED1\\4F53\", sans-serif;\n        font-weight: bold;\n        font-style: normal;\n        letter-spacing: normal; }\n  .weditor-header .header-right-box {\n    position: relative;\n    height: 69px;\n    float: right;\n    line-height: 69px; }\n    .weditor-header .header-right-box .header-item-wrap {\n      display: inline-block;\n      height: 40px;\n      width: 40px; }\n      .weditor-header .header-right-box .header-item-wrap .header-item-inner {\n        border: 1px solid #eee;\n        height: 35px;\n        width: 35px;\n        border-radius: 50%;\n        text-align: center;\n        display: inline-block;\n        position: relative;\n        line-height: 0px; }\n        .weditor-header .header-right-box .header-item-wrap .header-item-inner:before {\n          content: '';\n          display: inline-block;\n          vertical-align: middle;\n          width: 0;\n          height: 100%;\n          font-size: 0; }\n        .weditor-header .header-right-box .header-item-wrap .header-item-inner img {\n          height: 25px;\n          width: 25px;\n          border-radius: 50%;\n          vertical-align: middle; }\n  .weditor-header .opver-icon {\n    background-image: url(https://s3.meituan.net/v1/mss_814dc1610cda4b2e8febd6ea2c809db5/image/1489914204976.png);\n    background-repeat: no-repeat;\n    height: 20px;\n    width: 20px;\n    display: inline-block; }\n  .weditor-header .opver-area span {\n    vertical-align: middle;\n    font-size: 12px; }\n  .weditor-header .opver-area:hover {\n    border: 1px solid #b6b6b6; }\n\n.editor-toolbar .ql-toolbar.ql-snow {\n  border: none;\n  background-color: #f6f6f6;\n  height: 40px;\n  line-height: 35px;\n  padding: 0;\n  border-bottom: solid 1px #e2e2e2; }\n  .editor-toolbar .ql-toolbar.ql-snow .ql-formats {\n    margin-right: 0px; }\n\n.editor-toolbar .docicon-vertical {\n  display: inline-block;\n  margin: 0 5px; }\n\n.toolbar-opver {\n  padding-left: 30px !important;\n  background: #F0F0F0;\n  border-bottom: 1px solid #ddd;\n  box-shadow: 0 1px 0 0 rgba(221, 221, 221, 0.5);\n  line-height: 40px;\n  height: 40px;\n  box-sizing: border-box;\n  font-size: 0; }\n  .toolbar-opver button {\n    background: none;\n    cursor: pointer;\n    display: inline-block;\n    height: 26px;\n    width: 26px;\n    padding: 0;\n    outline: none;\n    margin-right: 10px;\n    border: 1px solid transparent;\n    border-radius: 2px;\n    vertical-align: middle; }\n    .toolbar-opver button:hover {\n      border: 1px solid #CCCCCC; }\n    .toolbar-opver button:active {\n      background: #DDDDDD;\n      border: 1px solid #CCCCCC; }\n\nbody {\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  margin: 0;\n  overflow: hidden;\n  background-color: #ffffff; }\n\n.mdeditor-wrapper {\n  overflow: hidden;\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0; }\n  .mdeditor-wrapper div {\n    box-sizing: border-box; }\n  .mdeditor-wrapper h1, .mdeditor-wrapper h2, .mdeditor-wrapper h3 {\n    line-height: 40px; }\n  .mdeditor-wrapper h1, .mdeditor-wrapper h2, .mdeditor-wrapper h3, .mdeditor-wrapper h4, .mdeditor-wrapper h5, .mdeditor-wrapper h6 {\n    margin: 10px 0;\n    font-family: inherit;\n    font-weight: 700;\n    line-height: 20px;\n    color: #111;\n    text-rendering: optimizelegibility; }\n  .mdeditor-wrapper h1 {\n    margin: 50px 0 20px;\n    font-size: 30px; }\n  .mdeditor-wrapper h2 {\n    margin: 35px 0 20px;\n    font-size: 26px; }\n  .mdeditor-wrapper h3 {\n    margin: 20px 0;\n    font-size: 21px; }\n  .mdeditor-wrapper h4 {\n    font-size: 18px; }\n  .mdeditor-wrapper h5 {\n    font-size: 16px; }\n  .mdeditor-wrapper h6 {\n    font-size: 16px; }\n  .mdeditor-wrapper blockquote {\n    padding: 10px 15px;\n    border-left-style: solid;\n    border-left-width: 10px;\n    margin: 0 0 20px;\n    border-color: #D6DBDF;\n    background: none repeat scroll 0 0 rgba(102, 128, 153, 0.05); }\n  .mdeditor-wrapper hr {\n    display: block;\n    height: 2px;\n    border: 0;\n    border-top: 1px solid #aaa;\n    border-bottom: 1px solid #eee;\n    margin: 1em 0;\n    padding: 0; }\n  .mdeditor-wrapper pre, .mdeditor-wrapper code {\n    color: #000;\n    font-family: Consolas, \"Liberation Mono\", Menlo, Courier, monospace;\n    font-size: 0.94em;\n    /* 0.94 = 0.88 + (1.00 - 0.88) / 2 */\n    border-radius: 3px;\n    background-color: #F8F8F8;\n    border: 1px solid #CCC; }\n  .mdeditor-wrapper pre {\n    white-space: pre;\n    white-space: pre-wrap;\n    word-wrap: break-word;\n    padding: 5px; }\n  .mdeditor-wrapper pre code {\n    border: 0px !important;\n    background: transparent !important;\n    line-height: 1.3em; }\n  .mdeditor-wrapper code {\n    padding: 0 3px 0 3px; }\n  .mdeditor-wrapper sub, .mdeditor-wrapper sup {\n    font-size: 75%;\n    line-height: 0;\n    position: relative;\n    vertical-align: baseline; }\n  .mdeditor-wrapper sup {\n    top: -0.5em; }\n  .mdeditor-wrapper sub {\n    bottom: -0.25em; }\n  .mdeditor-wrapper ul, .mdeditor-wrapper ol {\n    margin: 1em 0;\n    padding: 0 0 0 2em; }\n  .mdeditor-wrapper li p:last-child {\n    margin: 0; }\n  .mdeditor-wrapper dd {\n    margin: 0 0 0 2em; }\n  .mdeditor-wrapper img {\n    border: 0;\n    -ms-interpolation-mode: bicubic;\n    vertical-align: middle; }\n  .mdeditor-wrapper table {\n    border-bottom: 1px solid #ddd;\n    border-right: 1px solid #ddd;\n    border-collapse: separate;\n    border-left: 0;\n    border-radius: 4px;\n    width: 100%;\n    margin-bottom: 20px;\n    max-width: 100%;\n    background-color: transparent;\n    border-spacing: 0; }\n  .mdeditor-wrapper thead {\n    display: table-header-group;\n    vertical-align: middle;\n    border-color: inherit; }\n  .mdeditor-wrapper tr {\n    display: table-row;\n    vertical-align: inherit;\n    border-color: inherit;\n    border: none; }\n  .mdeditor-wrapper td, .mdeditor-wrapper th {\n    vertical-align: top;\n    padding: 4px 10px;\n    border: none; }\n  .mdeditor-wrapper tr:nth-child(even) td, .mdeditor-wrapper tr:nth-child(even) th {\n    background-color: rgba(102, 128, 153, 0.05); }\n  .mdeditor-wrapper table th, .mdeditor-wrapper table td {\n    border-left: 1px solid #ddd;\n    padding: 8px;\n    line-height: 20px;\n    text-align: left;\n    vertical-align: top;\n    border-top: 1px solid #ddd; }\n  .mdeditor-wrapper blockquote p:last-child {\n    margin: 0px; }\n  .mdeditor-wrapper p {\n    line-height: 1.2;\n    margin-bottom: 20px; }\n  .mdeditor-wrapper li {\n    margin: 10px 0; }\n\n.weditor-body {\n  padding: 0;\n  position: absolute;\n  left: 0;\n  top: 40px;\n  right: 0px;\n  bottom: 0px;\n  overflow: hidden;\n  background-color: #ffffff; }\n  .weditor-body .content-container {\n    position: absolute;\n    left: 0;\n    bottom: 0;\n    top: 0;\n    width: 50%;\n    box-sizing: border-box;\n    background-color: #ffffff;\n    box-shadow: 0 0 0 0.1px #d1d1d1, 0 0 1px 0.1px #ccc;\n    border: 0;\n    padding: 10px 10px;\n    margin: 0; }\n    .weditor-body .content-container .ace_editor {\n      border: none;\n      background-color: #ffffff;\n      font-size: 14px;\n      height: 100%; }\n      .weditor-body .content-container .ace_editor.ace-github .ace_marker-layer .ace_active-line {\n        background: #FFFFFF !important; }\n      .weditor-body .content-container .ace_editor * {\n        font-family: \"Monaco\", \"Menlo\", \"Ubuntu Mono\", \"Droid Sans Mono\", \"Consolas\", monospace !important; }\n      .weditor-body .content-container .ace_editor .cm-header-1 {\n        font-size: 2em; }\n      .weditor-body .content-container .ace_editor .cm-header-2 {\n        font-size: 1.75em; }\n      .weditor-body .content-container .ace_editor .cm-header-3 {\n        font-size: 1.5em; }\n      .weditor-body .content-container .ace_editor .cm-header-4 {\n        font-size: 1.3em; }\n      .weditor-body .content-container .ace_editor .cm-header-5 {\n        font-size: 1.2em; }\n      .weditor-body .content-container .ace_editor .cm-header-6 {\n        font-size: 1.15em; }\n      .weditor-body .content-container .ace_editor .cm-quote {\n        color: #90a959;\n        font-style: italic; }\n      .weditor-body .content-container .ace_editor a {\n        color: #0645ad;\n        text-decoration: none; }\n      .weditor-body .content-container .ace_editor a:visited {\n        color: #0b0080; }\n      .weditor-body .content-container .ace_editor a:hover {\n        color: #06e; }\n      .weditor-body .content-container .ace_editor a:active {\n        color: #faa700; }\n      .weditor-body .content-container .ace_editor a:focus {\n        outline: thin dotted; }\n      .weditor-body .content-container .ace_editor a:hover, .weditor-body .content-container .ace_editor a:active {\n        outline: 0; }\n      .weditor-body .content-container .ace_editor .ace_gutter {\n        background-color: #FFFFFF; }\n  .weditor-body .mdeditor-preview {\n    position: absolute;\n    right: 0;\n    width: 50%;\n    bottom: 0;\n    top: 0;\n    box-sizing: border-box;\n    font-size: 14px;\n    background-color: #ffffff;\n    border-left: 1px solid #dddddd;\n    margin: 0;\n    padding: 10px 20px;\n    overflow: hidden;\n    overflow-y: auto; }\n    .weditor-body .mdeditor-preview img {\n      max-width: 100%; }\n  .weditor-body .editormd-toolbar {\n    width: 100%;\n    min-height: 37px;\n    background: #f0f0f0;\n    display: none;\n    position: fixed;\n    top: 55px;\n    left: 0;\n    z-index: 10;\n    border: none; }\n    .weditor-body .editormd-toolbar.scroll {\n      box-shadow: 0 2px 4px rgba(20, 20, 20, 0.15); }\n    .weditor-body .editormd-toolbar .editormd-menu {\n      width: 910px;\n      margin: 0 auto; }\n    .weditor-body .editormd-toolbar .editormd-menu > li > a {\n      border: none; }\n      .weditor-body .editormd-toolbar .editormd-menu > li > a i {\n        font-weight: 200; }\n\n.rc-dropdown {\n  background: #FFFFFF;\n  box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.1);\n  border: none !important; }\n  .rc-dropdown .rc-dropdown-menu {\n    border: none !important;\n    border-radius: 2px; }\n\n.rc-dropdown-menu-item {\n  width: 150px;\n  cursor: pointer;\n  height: 40px;\n  line-height: 40px;\n  padding: 0 !important;\n  padding-left: 20px !important;\n  border: none !important; }\n\n::-webkit-scrollbar-thumb {\n  background-color: rgba(0, 0, 0, 0.2);\n  background-clip: padding-box;\n  border: solid transparent;\n  border-width: 1px 1px 1px 6px;\n  min-height: 28px;\n  padding: 100px 0 0;\n  box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.1), inset 0 -1px 0 rgba(0, 0, 0, 0.07); }\n\n::-webkit-scrollbar-corner {\n  background: transparent; }\n\n::-webkit-scrollbar-button {\n  height: 0;\n  width: 0; }\n\n::-webkit-scrollbar {\n  height: 16px;\n  overflow: visible;\n  width: 16px; }\n\n.bar {\n  position: absolute;\n  background: rgba(100, 100, 200, 0.5);\n  z-index: 40;\n  width: 2px !important; }\n\n.bar::before {\n  position: absolute;\n  background: rgba(100, 100, 200, 0.5);\n  z-index: 999;\n  top: -100%;\n  content: 'Khoa Ma';\n  left: 0px;\n  font-family: Arial;\n  padding: 1px 2px; }\n", ""]);
 
 // exports
 
@@ -26451,6 +26575,391 @@ module.exports = assign;
 
 /***/ }),
 
+/***/ "./node_modules/lodash.debounce/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {/**
+ * lodash (Custom Build) <https://lodash.com/>
+ * Build: `lodash modularize exports="npm" -o ./`
+ * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+
+/** Used as the `TypeError` message for "Functions" methods. */
+var FUNC_ERROR_TEXT = 'Expected a function';
+
+/** Used as references for various `Number` constants. */
+var NAN = 0 / 0;
+
+/** `Object#toString` result references. */
+var symbolTag = '[object Symbol]';
+
+/** Used to match leading and trailing whitespace. */
+var reTrim = /^\s+|\s+$/g;
+
+/** Used to detect bad signed hexadecimal string values. */
+var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
+
+/** Used to detect binary string values. */
+var reIsBinary = /^0b[01]+$/i;
+
+/** Used to detect octal string values. */
+var reIsOctal = /^0o[0-7]+$/i;
+
+/** Built-in method references without a dependency on `root`. */
+var freeParseInt = parseInt;
+
+/** Detect free variable `global` from Node.js. */
+var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
+
+/** Detect free variable `self`. */
+var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+
+/** Used as a reference to the global object. */
+var root = freeGlobal || freeSelf || Function('return this')();
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var objectToString = objectProto.toString;
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeMax = Math.max,
+    nativeMin = Math.min;
+
+/**
+ * Gets the timestamp of the number of milliseconds that have elapsed since
+ * the Unix epoch (1 January 1970 00:00:00 UTC).
+ *
+ * @static
+ * @memberOf _
+ * @since 2.4.0
+ * @category Date
+ * @returns {number} Returns the timestamp.
+ * @example
+ *
+ * _.defer(function(stamp) {
+ *   console.log(_.now() - stamp);
+ * }, _.now());
+ * // => Logs the number of milliseconds it took for the deferred invocation.
+ */
+var now = function() {
+  return root.Date.now();
+};
+
+/**
+ * Creates a debounced function that delays invoking `func` until after `wait`
+ * milliseconds have elapsed since the last time the debounced function was
+ * invoked. The debounced function comes with a `cancel` method to cancel
+ * delayed `func` invocations and a `flush` method to immediately invoke them.
+ * Provide `options` to indicate whether `func` should be invoked on the
+ * leading and/or trailing edge of the `wait` timeout. The `func` is invoked
+ * with the last arguments provided to the debounced function. Subsequent
+ * calls to the debounced function return the result of the last `func`
+ * invocation.
+ *
+ * **Note:** If `leading` and `trailing` options are `true`, `func` is
+ * invoked on the trailing edge of the timeout only if the debounced function
+ * is invoked more than once during the `wait` timeout.
+ *
+ * If `wait` is `0` and `leading` is `false`, `func` invocation is deferred
+ * until to the next tick, similar to `setTimeout` with a timeout of `0`.
+ *
+ * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
+ * for details over the differences between `_.debounce` and `_.throttle`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Function
+ * @param {Function} func The function to debounce.
+ * @param {number} [wait=0] The number of milliseconds to delay.
+ * @param {Object} [options={}] The options object.
+ * @param {boolean} [options.leading=false]
+ *  Specify invoking on the leading edge of the timeout.
+ * @param {number} [options.maxWait]
+ *  The maximum time `func` is allowed to be delayed before it's invoked.
+ * @param {boolean} [options.trailing=true]
+ *  Specify invoking on the trailing edge of the timeout.
+ * @returns {Function} Returns the new debounced function.
+ * @example
+ *
+ * // Avoid costly calculations while the window size is in flux.
+ * jQuery(window).on('resize', _.debounce(calculateLayout, 150));
+ *
+ * // Invoke `sendMail` when clicked, debouncing subsequent calls.
+ * jQuery(element).on('click', _.debounce(sendMail, 300, {
+ *   'leading': true,
+ *   'trailing': false
+ * }));
+ *
+ * // Ensure `batchLog` is invoked once after 1 second of debounced calls.
+ * var debounced = _.debounce(batchLog, 250, { 'maxWait': 1000 });
+ * var source = new EventSource('/stream');
+ * jQuery(source).on('message', debounced);
+ *
+ * // Cancel the trailing debounced invocation.
+ * jQuery(window).on('popstate', debounced.cancel);
+ */
+function debounce(func, wait, options) {
+  var lastArgs,
+      lastThis,
+      maxWait,
+      result,
+      timerId,
+      lastCallTime,
+      lastInvokeTime = 0,
+      leading = false,
+      maxing = false,
+      trailing = true;
+
+  if (typeof func != 'function') {
+    throw new TypeError(FUNC_ERROR_TEXT);
+  }
+  wait = toNumber(wait) || 0;
+  if (isObject(options)) {
+    leading = !!options.leading;
+    maxing = 'maxWait' in options;
+    maxWait = maxing ? nativeMax(toNumber(options.maxWait) || 0, wait) : maxWait;
+    trailing = 'trailing' in options ? !!options.trailing : trailing;
+  }
+
+  function invokeFunc(time) {
+    var args = lastArgs,
+        thisArg = lastThis;
+
+    lastArgs = lastThis = undefined;
+    lastInvokeTime = time;
+    result = func.apply(thisArg, args);
+    return result;
+  }
+
+  function leadingEdge(time) {
+    // Reset any `maxWait` timer.
+    lastInvokeTime = time;
+    // Start the timer for the trailing edge.
+    timerId = setTimeout(timerExpired, wait);
+    // Invoke the leading edge.
+    return leading ? invokeFunc(time) : result;
+  }
+
+  function remainingWait(time) {
+    var timeSinceLastCall = time - lastCallTime,
+        timeSinceLastInvoke = time - lastInvokeTime,
+        result = wait - timeSinceLastCall;
+
+    return maxing ? nativeMin(result, maxWait - timeSinceLastInvoke) : result;
+  }
+
+  function shouldInvoke(time) {
+    var timeSinceLastCall = time - lastCallTime,
+        timeSinceLastInvoke = time - lastInvokeTime;
+
+    // Either this is the first call, activity has stopped and we're at the
+    // trailing edge, the system time has gone backwards and we're treating
+    // it as the trailing edge, or we've hit the `maxWait` limit.
+    return (lastCallTime === undefined || (timeSinceLastCall >= wait) ||
+      (timeSinceLastCall < 0) || (maxing && timeSinceLastInvoke >= maxWait));
+  }
+
+  function timerExpired() {
+    var time = now();
+    if (shouldInvoke(time)) {
+      return trailingEdge(time);
+    }
+    // Restart the timer.
+    timerId = setTimeout(timerExpired, remainingWait(time));
+  }
+
+  function trailingEdge(time) {
+    timerId = undefined;
+
+    // Only invoke if we have `lastArgs` which means `func` has been
+    // debounced at least once.
+    if (trailing && lastArgs) {
+      return invokeFunc(time);
+    }
+    lastArgs = lastThis = undefined;
+    return result;
+  }
+
+  function cancel() {
+    if (timerId !== undefined) {
+      clearTimeout(timerId);
+    }
+    lastInvokeTime = 0;
+    lastArgs = lastCallTime = lastThis = timerId = undefined;
+  }
+
+  function flush() {
+    return timerId === undefined ? result : trailingEdge(now());
+  }
+
+  function debounced() {
+    var time = now(),
+        isInvoking = shouldInvoke(time);
+
+    lastArgs = arguments;
+    lastThis = this;
+    lastCallTime = time;
+
+    if (isInvoking) {
+      if (timerId === undefined) {
+        return leadingEdge(lastCallTime);
+      }
+      if (maxing) {
+        // Handle invocations in a tight loop.
+        timerId = setTimeout(timerExpired, wait);
+        return invokeFunc(lastCallTime);
+      }
+    }
+    if (timerId === undefined) {
+      timerId = setTimeout(timerExpired, wait);
+    }
+    return result;
+  }
+  debounced.cancel = cancel;
+  debounced.flush = flush;
+  return debounced;
+}
+
+/**
+ * Checks if `value` is the
+ * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+ * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(_.noop);
+ * // => true
+ *
+ * _.isObject(null);
+ * // => false
+ */
+function isObject(value) {
+  var type = typeof value;
+  return !!value && (type == 'object' || type == 'function');
+}
+
+/**
+ * Checks if `value` is object-like. A value is object-like if it's not `null`
+ * and has a `typeof` result of "object".
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ * @example
+ *
+ * _.isObjectLike({});
+ * // => true
+ *
+ * _.isObjectLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isObjectLike(_.noop);
+ * // => false
+ *
+ * _.isObjectLike(null);
+ * // => false
+ */
+function isObjectLike(value) {
+  return !!value && typeof value == 'object';
+}
+
+/**
+ * Checks if `value` is classified as a `Symbol` primitive or object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
+ * @example
+ *
+ * _.isSymbol(Symbol.iterator);
+ * // => true
+ *
+ * _.isSymbol('abc');
+ * // => false
+ */
+function isSymbol(value) {
+  return typeof value == 'symbol' ||
+    (isObjectLike(value) && objectToString.call(value) == symbolTag);
+}
+
+/**
+ * Converts `value` to a number.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to process.
+ * @returns {number} Returns the number.
+ * @example
+ *
+ * _.toNumber(3.2);
+ * // => 3.2
+ *
+ * _.toNumber(Number.MIN_VALUE);
+ * // => 5e-324
+ *
+ * _.toNumber(Infinity);
+ * // => Infinity
+ *
+ * _.toNumber('3.2');
+ * // => 3.2
+ */
+function toNumber(value) {
+  if (typeof value == 'number') {
+    return value;
+  }
+  if (isSymbol(value)) {
+    return NAN;
+  }
+  if (isObject(value)) {
+    var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
+    value = isObject(other) ? (other + '') : other;
+  }
+  if (typeof value != 'string') {
+    return value === 0 ? value : +value;
+  }
+  value = value.replace(reTrim, '');
+  var isBinary = reIsBinary.test(value);
+  return (isBinary || reIsOctal.test(value))
+    ? freeParseInt(value.slice(2), isBinary ? 2 : 8)
+    : (reIsBadHex.test(value) ? NAN : +value);
+}
+
+module.exports = debounce;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
 /***/ "./node_modules/markdown-it-emoji/index.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -42064,6 +42573,394 @@ Notification.newInstance = function newNotificationInstance(properties) {
 
 /***/ }),
 
+/***/ "./node_modules/rc-progress/es/Circle.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__("./node_modules/babel-runtime/helpers/extends.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_objectWithoutProperties__ = __webpack_require__("./node_modules/babel-runtime/helpers/objectWithoutProperties.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_objectWithoutProperties___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_objectWithoutProperties__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck__ = __webpack_require__("./node_modules/babel-runtime/helpers/classCallCheck.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass__ = __webpack_require__("./node_modules/babel-runtime/helpers/createClass.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__("./node_modules/babel-runtime/helpers/possibleConstructorReturn.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits__ = __webpack_require__("./node_modules/babel-runtime/helpers/inherits.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_prop_types__ = __webpack_require__("./node_modules/prop-types/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_prop_types__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__enhancer__ = __webpack_require__("./node_modules/rc-progress/es/enhancer.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__types__ = __webpack_require__("./node_modules/rc-progress/es/types.js");
+
+
+
+
+
+
+/* eslint react/prop-types: 0 */
+
+
+
+
+
+var Circle = function (_Component) {
+  __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits___default()(Circle, _Component);
+
+  function Circle() {
+    __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default()(this, Circle);
+
+    return __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn___default()(this, (Circle.__proto__ || Object.getPrototypeOf(Circle)).apply(this, arguments));
+  }
+
+  __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default()(Circle, [{
+    key: 'getPathStyles',
+    value: function getPathStyles() {
+      var _props = this.props,
+          percent = _props.percent,
+          strokeWidth = _props.strokeWidth,
+          _props$gapDegree = _props.gapDegree,
+          gapDegree = _props$gapDegree === undefined ? 0 : _props$gapDegree,
+          gapPosition = _props.gapPosition;
+
+      var radius = 50 - strokeWidth / 2;
+      var beginPositionX = 0;
+      var beginPositionY = -radius;
+      var endPositionX = 0;
+      var endPositionY = -2 * radius;
+      switch (gapPosition) {
+        case 'left':
+          beginPositionX = -radius;
+          beginPositionY = 0;
+          endPositionX = 2 * radius;
+          endPositionY = 0;
+          break;
+        case 'right':
+          beginPositionX = radius;
+          beginPositionY = 0;
+          endPositionX = -2 * radius;
+          endPositionY = 0;
+          break;
+        case 'bottom':
+          beginPositionY = radius;
+          endPositionY = 2 * radius;
+          break;
+        default:
+      }
+      var pathString = 'M 50,50 m ' + beginPositionX + ',' + beginPositionY + '\n     a ' + radius + ',' + radius + ' 0 1 1 ' + endPositionX + ',' + -endPositionY + '\n     a ' + radius + ',' + radius + ' 0 1 1 ' + -endPositionX + ',' + endPositionY;
+      var len = Math.PI * 2 * radius;
+      var trailPathStyle = {
+        strokeDasharray: len - gapDegree + 'px ' + len + 'px',
+        strokeDashoffset: '-' + gapDegree / 2 + 'px',
+        transition: 'stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s'
+      };
+      var strokePathStyle = {
+        strokeDasharray: percent / 100 * (len - gapDegree) + 'px ' + len + 'px',
+        strokeDashoffset: '-' + gapDegree / 2 + 'px',
+        transition: 'stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s'
+      };
+      return { pathString: pathString, trailPathStyle: trailPathStyle, strokePathStyle: strokePathStyle };
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var _props2 = this.props,
+          prefixCls = _props2.prefixCls,
+          strokeWidth = _props2.strokeWidth,
+          trailWidth = _props2.trailWidth,
+          strokeColor = _props2.strokeColor,
+          trailColor = _props2.trailColor,
+          strokeLinecap = _props2.strokeLinecap,
+          style = _props2.style,
+          className = _props2.className,
+          restProps = __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_objectWithoutProperties___default()(_props2, ['prefixCls', 'strokeWidth', 'trailWidth', 'strokeColor', 'trailColor', 'strokeLinecap', 'style', 'className']);
+
+      var _getPathStyles = this.getPathStyles(),
+          pathString = _getPathStyles.pathString,
+          trailPathStyle = _getPathStyles.trailPathStyle,
+          strokePathStyle = _getPathStyles.strokePathStyle;
+
+      var showCirclePath = restProps.percent > 0;
+      delete restProps.percent;
+      delete restProps.gapDegree;
+      delete restProps.gapPosition;
+      return __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(
+        'svg',
+        __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({
+          className: prefixCls + '-circle ' + className,
+          viewBox: '0 0 100 100',
+          style: style
+        }, restProps),
+        __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement('path', {
+          className: prefixCls + '-circle-trail',
+          d: pathString,
+          stroke: trailColor,
+          strokeWidth: trailWidth || strokeWidth,
+          fillOpacity: '0',
+          style: trailPathStyle
+        }),
+        showCirclePath && __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement('path', {
+          className: prefixCls + '-circle-path',
+          d: pathString,
+          strokeLinecap: strokeLinecap,
+          stroke: strokeColor,
+          strokeWidth: strokeWidth,
+          fillOpacity: '0',
+          ref: function ref(path) {
+            _this2.path = path;
+          },
+          style: strokePathStyle
+        })
+      );
+    }
+  }]);
+
+  return Circle;
+}(__WEBPACK_IMPORTED_MODULE_6_react__["Component"]);
+
+Circle.propTypes = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, __WEBPACK_IMPORTED_MODULE_9__types__["a" /* propTypes */], {
+  gapPosition: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.oneOf(['top', 'bottom', 'left', 'right'])
+});
+
+Circle.defaultProps = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, __WEBPACK_IMPORTED_MODULE_9__types__["b" /* defaultProps */], {
+  gapPosition: 'top'
+});
+
+/* harmony default export */ __webpack_exports__["a"] = (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_8__enhancer__["a" /* default */])(Circle));
+
+/***/ }),
+
+/***/ "./node_modules/rc-progress/es/Line.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__("./node_modules/babel-runtime/helpers/extends.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_objectWithoutProperties__ = __webpack_require__("./node_modules/babel-runtime/helpers/objectWithoutProperties.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_objectWithoutProperties___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_objectWithoutProperties__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck__ = __webpack_require__("./node_modules/babel-runtime/helpers/classCallCheck.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass__ = __webpack_require__("./node_modules/babel-runtime/helpers/createClass.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__("./node_modules/babel-runtime/helpers/possibleConstructorReturn.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits__ = __webpack_require__("./node_modules/babel-runtime/helpers/inherits.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__enhancer__ = __webpack_require__("./node_modules/rc-progress/es/enhancer.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__types__ = __webpack_require__("./node_modules/rc-progress/es/types.js");
+
+
+
+
+
+
+
+
+
+
+var Line = function (_Component) {
+  __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits___default()(Line, _Component);
+
+  function Line() {
+    __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default()(this, Line);
+
+    return __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn___default()(this, (Line.__proto__ || Object.getPrototypeOf(Line)).apply(this, arguments));
+  }
+
+  __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default()(Line, [{
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var _props = this.props,
+          className = _props.className,
+          percent = _props.percent,
+          prefixCls = _props.prefixCls,
+          strokeColor = _props.strokeColor,
+          strokeLinecap = _props.strokeLinecap,
+          strokeWidth = _props.strokeWidth,
+          style = _props.style,
+          trailColor = _props.trailColor,
+          trailWidth = _props.trailWidth,
+          restProps = __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_objectWithoutProperties___default()(_props, ['className', 'percent', 'prefixCls', 'strokeColor', 'strokeLinecap', 'strokeWidth', 'style', 'trailColor', 'trailWidth']);
+
+      delete restProps.gapPosition;
+
+      var pathStyle = {
+        strokeDasharray: '100px, 100px',
+        strokeDashoffset: 100 - percent + 'px',
+        transition: 'stroke-dashoffset 0.3s ease 0s, stroke 0.3s linear'
+      };
+
+      var center = strokeWidth / 2;
+      var right = 100 - strokeWidth / 2;
+      var pathString = 'M ' + (strokeLinecap === 'round' ? center : 0) + ',' + center + '\n           L ' + (strokeLinecap === 'round' ? right : 100) + ',' + center;
+      var viewBoxString = '0 0 100 ' + strokeWidth;
+
+      return __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement(
+        'svg',
+        __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({
+          className: prefixCls + '-line ' + className,
+          viewBox: viewBoxString,
+          preserveAspectRatio: 'none',
+          style: style
+        }, restProps),
+        __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement('path', {
+          className: prefixCls + '-line-trail',
+          d: pathString,
+          strokeLinecap: strokeLinecap,
+          stroke: trailColor,
+          strokeWidth: trailWidth || strokeWidth,
+          fillOpacity: '0'
+        }),
+        __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement('path', {
+          className: prefixCls + '-line-path',
+          d: pathString,
+          strokeLinecap: strokeLinecap,
+          stroke: strokeColor,
+          strokeWidth: strokeWidth,
+          fillOpacity: '0',
+          ref: function ref(path) {
+            _this2.path = path;
+          },
+          style: pathStyle
+        })
+      );
+    }
+  }]);
+
+  return Line;
+}(__WEBPACK_IMPORTED_MODULE_6_react__["Component"]);
+
+Line.propTypes = __WEBPACK_IMPORTED_MODULE_8__types__["a" /* propTypes */];
+
+Line.defaultProps = __WEBPACK_IMPORTED_MODULE_8__types__["b" /* defaultProps */];
+
+/* harmony default export */ __webpack_exports__["a"] = (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__enhancer__["a" /* default */])(Line));
+
+/***/ }),
+
+/***/ "./node_modules/rc-progress/es/enhancer.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__ = __webpack_require__("./node_modules/babel-runtime/helpers/classCallCheck.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass__ = __webpack_require__("./node_modules/babel-runtime/helpers/createClass.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__("./node_modules/babel-runtime/helpers/possibleConstructorReturn.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_get__ = __webpack_require__("./node_modules/babel-runtime/helpers/get.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_get___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_get__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__ = __webpack_require__("./node_modules/babel-runtime/helpers/inherits.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__);
+
+
+
+
+
+var enhancer = function enhancer(WrappedComponent) {
+  return function (_WrappedComponent) {
+    __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default()(Progress, _WrappedComponent);
+
+    function Progress() {
+      __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_classCallCheck___default()(this, Progress);
+
+      return __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_possibleConstructorReturn___default()(this, (Progress.__proto__ || Object.getPrototypeOf(Progress)).apply(this, arguments));
+    }
+
+    __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_createClass___default()(Progress, [{
+      key: 'componentDidUpdate',
+      value: function componentDidUpdate() {
+        if (!this.path) {
+          return;
+        }
+        var pathStyle = this.path.style;
+        pathStyle.transitionDuration = '0.3s, 0.3s';
+        var now = Date.now();
+        if (this.prevTimeStamp && now - this.prevTimeStamp < 100) {
+          pathStyle.transitionDuration = '0s, 0s';
+        }
+        this.prevTimeStamp = Date.now();
+      }
+    }, {
+      key: 'render',
+      value: function render() {
+        return __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_get___default()(Progress.prototype.__proto__ || Object.getPrototypeOf(Progress.prototype), 'render', this).call(this);
+      }
+    }]);
+
+    return Progress;
+  }(WrappedComponent);
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (enhancer);
+
+/***/ }),
+
+/***/ "./node_modules/rc-progress/es/index.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Line__ = __webpack_require__("./node_modules/rc-progress/es/Line.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Circle__ = __webpack_require__("./node_modules/rc-progress/es/Circle.js");
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__Line__["a"]; });
+/* unused harmony reexport Circle */
+
+
+
+
+
+/* unused harmony default export */ var _unused_webpack_default_export = ({
+  Line: __WEBPACK_IMPORTED_MODULE_0__Line__["a" /* default */],
+  Circle: __WEBPACK_IMPORTED_MODULE_1__Circle__["a" /* default */]
+});
+
+/***/ }),
+
+/***/ "./node_modules/rc-progress/es/types.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return defaultProps; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return propTypes; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_prop_types__ = __webpack_require__("./node_modules/prop-types/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_prop_types__);
+
+
+var defaultProps = {
+  className: '',
+  percent: 0,
+  prefixCls: 'rc-progress',
+  strokeColor: '#2db7f5',
+  strokeLinecap: 'round',
+  strokeWidth: 1,
+  style: {},
+  trailColor: '#D9D9D9',
+  trailWidth: 1
+};
+
+var propTypes = {
+  className: __WEBPACK_IMPORTED_MODULE_0_prop_types___default.a.string,
+  percent: __WEBPACK_IMPORTED_MODULE_0_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_0_prop_types___default.a.number, __WEBPACK_IMPORTED_MODULE_0_prop_types___default.a.string]),
+  prefixCls: __WEBPACK_IMPORTED_MODULE_0_prop_types___default.a.string,
+  strokeColor: __WEBPACK_IMPORTED_MODULE_0_prop_types___default.a.string,
+  strokeLinecap: __WEBPACK_IMPORTED_MODULE_0_prop_types___default.a.oneOf(['butt', 'round', 'square']),
+  strokeWidth: __WEBPACK_IMPORTED_MODULE_0_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_0_prop_types___default.a.number, __WEBPACK_IMPORTED_MODULE_0_prop_types___default.a.string]),
+  style: __WEBPACK_IMPORTED_MODULE_0_prop_types___default.a.object,
+  trailColor: __WEBPACK_IMPORTED_MODULE_0_prop_types___default.a.string,
+  trailWidth: __WEBPACK_IMPORTED_MODULE_0_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_0_prop_types___default.a.number, __WEBPACK_IMPORTED_MODULE_0_prop_types___default.a.string])
+};
+
+/***/ }),
+
 /***/ "./node_modules/rc-tabs/assets/index.css":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -45416,7 +46313,7 @@ var _default = (_temp = _class = function (_Component) {
                 type = _props2.type;
 
             var otherProps = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2_omit_js__["a" /* default */])(this.props, ['prefixCls', 'color', 'type', 'children']);
-            var classes = __WEBPACK_IMPORTED_MODULE_1_classnames___default()((_classNames = {}, _defineProperty(_classNames, prefixCls, true), _defineProperty(_classNames, prefixCls + '-' + color, color), _classNames));
+            var classes = __WEBPACK_IMPORTED_MODULE_1_classnames___default()((_classNames = {}, _defineProperty(_classNames, prefixCls, true), _defineProperty(_classNames, prefixCls + '-' + color, color), _defineProperty(_classNames, prefixCls + '-' + type, type), _classNames));
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', _extends({ type: 'button',
                 value: this.props.children,
                 onClick: this.onClick,
@@ -45588,6 +46485,7 @@ var Dialog = (_temp = _class = function (_Component) {
                                     __WEBPACK_IMPORTED_MODULE_2__button__["a" /* default */],
                                     {
                                         key: i,
+                                        type: type,
                                         cls: 'nx_button',
                                         onClick: action || onClose
                                     },
@@ -46670,27 +47568,31 @@ if(false) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_mobx_react__ = __webpack_require__("./node_modules/mobx-react/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_mobx_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_mobx_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rc_tabs_assets_index_css__ = __webpack_require__("./node_modules/rc-tabs/assets/index.css");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rc_tabs_assets_index_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rc_tabs_assets_index_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rc_tabs__ = __webpack_require__("./node_modules/rc-tabs/es/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rc_tabs_lib_ScrollableInkTabBar_js__ = __webpack_require__("./node_modules/rc-tabs/lib/ScrollableInkTabBar.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rc_tabs_lib_ScrollableInkTabBar_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rc_tabs_lib_ScrollableInkTabBar_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rc_tabs_lib_TabContent_js__ = __webpack_require__("./node_modules/rc-tabs/lib/TabContent.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rc_tabs_lib_TabContent_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rc_tabs_lib_TabContent_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__dialog__ = __webpack_require__("./src/components/dialog/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__lib_util__ = __webpack_require__("./src/lib/util.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__uploader_index__ = __webpack_require__("./src/components/uploader/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__button__ = __webpack_require__("./src/components/button/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__input__ = __webpack_require__("./src/components/input/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__toast__ = __webpack_require__("./src/components/toast/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rc_tabs_assets_index_css__ = __webpack_require__("./node_modules/rc-tabs/assets/index.css");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rc_tabs_assets_index_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rc_tabs_assets_index_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rc_tabs__ = __webpack_require__("./node_modules/rc-tabs/es/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rc_tabs_lib_ScrollableInkTabBar_js__ = __webpack_require__("./node_modules/rc-tabs/lib/ScrollableInkTabBar.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rc_tabs_lib_ScrollableInkTabBar_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rc_tabs_lib_ScrollableInkTabBar_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rc_tabs_lib_TabContent_js__ = __webpack_require__("./node_modules/rc-tabs/lib/TabContent.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rc_tabs_lib_TabContent_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rc_tabs_lib_TabContent_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__dialog__ = __webpack_require__("./src/components/dialog/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__lib_util__ = __webpack_require__("./src/lib/util.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__uploader_index__ = __webpack_require__("./src/components/uploader/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__button__ = __webpack_require__("./src/components/button/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__model_insert__ = __webpack_require__("./src/model/insert.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__lib_aceEditor__ = __webpack_require__("./src/lib/aceEditor.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_rc_progress__ = __webpack_require__("./node_modules/rc-progress/es/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__toast__ = __webpack_require__("./src/components/toast/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__input__ = __webpack_require__("./src/components/input/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__lib_aceUtil__ = __webpack_require__("./src/lib/aceUtil.js");
 /**
  * Created by yeanzhi on 17/3/27.
  */
 
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -46712,13 +47614,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
+
 var $ = window.jQuery;
+
 
 var InsertImage = function (_Component) {
     _inherits(InsertImage, _Component);
 
     function InsertImage() {
-        var _ref;
+        var _ref,
+            _this2 = this;
 
         var _temp, _this, _ret;
 
@@ -46730,22 +47635,81 @@ var InsertImage = function (_Component) {
 
         return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = InsertImage.__proto__ || Object.getPrototypeOf(InsertImage)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
             activeKey: '1',
-            linkUrl: ''
+            linkUrl: '',
+            progress: 0
         }, _this.onLinkUrlChange = function (e) {
             _this.setState({
                 linkUrl: e.target.value
             });
-        }, _this.insertLink = function () {
-            if (_this.state.linkUrl) {}
+        }, _this.onLoad = function () {
+            var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee(url) {
+                return regeneratorRuntime.wrap(function _callee$(_context) {
+                    while (1) {
+                        switch (_context.prev = _context.next) {
+                            case 0:
+                                return _context.abrupt('return', new Promise(function (res, rej) {
+                                    var elem = document.createElement("img");
+                                    elem.setAttribute("src", url);
+                                    elem.onload = function () {
+                                        res({
+                                            width: this.width,
+                                            height: this.height
+                                        });
+                                    };
+                                    elem.onerror = function () {
+                                        res({
+                                            code: 500
+                                        });
+                                    };
+                                }));
+
+                            case 1:
+                            case 'end':
+                                return _context.stop();
+                        }
+                    }
+                }, _callee, _this2);
+            }));
+
+            return function (_x) {
+                return _ref2.apply(this, arguments);
+            };
+        }(), _this.insertImage = function () {
+            var _ref3 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(url) {
+                return regeneratorRuntime.wrap(function _callee2$(_context2) {
+                    while (1) {
+                        switch (_context2.prev = _context2.next) {
+                            case 0:
+                                __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_15__lib_aceUtil__["a" /* insertAround */])('![' + url, '](' + url + ')\n');
+                                __WEBPACK_IMPORTED_MODULE_10__model_insert__["a" /* default */].openImageDialog = false;
+
+                            case 2:
+                            case 'end':
+                                return _context2.stop();
+                        }
+                    }
+                }, _callee2, _this2);
+            }));
+
+            return function (_x2) {
+                return _ref3.apply(this, arguments);
+            };
+        }(), _this.insertLink = function () {
+            if (_this.state.linkUrl) {
+                _this.insertImage(_this.state.linkUrl);
+            }
         }, _this.closeBubble = function () {
-            _this.props.insert.openImageDialog = false;
+            if (_this.file && _this.file.id) {
+                _this.uploader.removeFile(_this.file.id);
+            }
+            __WEBPACK_IMPORTED_MODULE_10__model_insert__["a" /* default */].openImageDialog = false;
         }, _this.otherDOMClick = function (e) {
             var node = e.target;
-            if (!insert.openImageDialog) {
+            if (!__WEBPACK_IMPORTED_MODULE_10__model_insert__["a" /* default */].openImageDialog) {
                 return false;
             }
             var target = _this.target;
-            if (insert.openImageDialog && !__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_8__lib_util__["a" /* contains */])(target, node)) {
+            if (__WEBPACK_IMPORTED_MODULE_10__model_insert__["a" /* default */].openImageDialog && !__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__lib_util__["a" /* contains */])(target, node)) {
                 _this.closeBubble();
             }
         }, _this.onChange = function (activeKey) {
@@ -46758,21 +47722,21 @@ var InsertImage = function (_Component) {
     _createClass(InsertImage, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
-            var _this2 = this;
+            var _this3 = this;
 
             setTimeout(function () {
-                window.document.addEventListener('click', _this2.otherDOMClick);
-            }, 100);
+                $(document).on('mousedown', _this3.otherDOMClick);
+            }, 10);
             this.initUploader();
         }
     }, {
         key: 'initUploader',
         value: function initUploader() {
-            var _this3 = this;
+            var _this4 = this;
 
             this.rootNode = __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.findDOMNode(this);
             this.target = this.rootNode.getElementsByClassName('weditor-insert-image-dialog')[0];
-            var uploader = this.uploader = new __WEBPACK_IMPORTED_MODULE_9__uploader_index__["a" /* Uploader */]({
+            var uploader = this.uploader = new __WEBPACK_IMPORTED_MODULE_8__uploader_index__["a" /* Uploader */]({
                 'dnd': '.weditor-uploader-wrapper',
                 'pick': '#weditorUploaderPick',
                 'auto': true,
@@ -46784,34 +47748,64 @@ var InsertImage = function (_Component) {
                 'multiple': false,
                 'method': 'post',
                 'withCredentials': true,
-                'server': this.props.uploadUrl || ''
-            });
-            uploader.on('uploadAccept', function (obj, res) {
-                res = JSON.parse(res);
-                if (res.errno === 0) {
-                    if (res.data.url) {
-                        var _props$insert$imageSe = _this3.props.insert.imageSelection,
-                            index = _props$insert$imageSe.index,
-                            length = _props$insert$imageSe.length;
-
-                        _this3.props.insert.openImageDialog = false;
-                    }
-                } else {
-                    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_12__toast__["a" /* error */])('上传服务错误');
+                'server': this.props.uploadUrl || '',
+                accept: {
+                    title: 'Images',
+                    extensions: 'jpg,jpeg,bmp,png,gif',
+                    mimeTypes: 'image/*'
                 }
             });
+
+            uploader.on('beforeFileQueued', function (wuFile) {
+                if (wuFile.size > 1024 * 1024 * 20) {
+                    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_13__toast__["a" /* error */])('图片大小不能超过20M');
+                    uploader.reset();
+                    return false;
+                }
+                return true;
+            });
+
+            uploader.on('fileQueued', function (wuFile) {
+                _this4.file = wuFile;
+            });
+
+            uploader.on('uploadProgress', function (file, currentProgress, loaded, total) {
+                console.log('uploadProgress'.repeat(10));
+                console.log(currentProgress, loaded, total);
+                _this4.setState({
+                    progress: currentProgress / total * 100
+                });
+            });
+
+            uploader.on('uploadAccept', function (obj, res) {
+                _this4.file = null;
+                if (typeof res === 'string') {
+                    res = JSON.parse(res);
+                }
+                console.log('uploadAccept', res, res.errno === 0, __WEBPACK_IMPORTED_MODULE_10__model_insert__["a" /* default */]);
+                if (res.errno === 0) {
+                    if (res.data.url) {
+                        _this4.insertImage(res.data.url);
+                    }
+                } else {
+                    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_13__toast__["a" /* error */])('上传服务错误');
+                }
+            });
+
             uploader.on('uploadComplete', function () {
                 uploader.reset();
             });
-            uploader.on('uploadError', function () {
+
+            uploader.on('uploadError', function (file, err) {
+                console.error(err);
                 uploader.reset();
-                __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_12__toast__["a" /* error */])('上传服务错误');
+                __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_13__toast__["a" /* error */])('上传服务错误!');
             });
         }
     }, {
         key: 'componentWillUnmount',
         value: function componentWillUnmount() {
-            window.document.removeEventListener('click', this.otherDOMClick);
+            $(document).off('mousedown', this.otherDOMClick);
             this.uploader.removeEvent('uploadAccept');
             this.uploader.removeEvent('uploadComplete');
             this.uploader.removeEvent('uploadError');
@@ -46820,9 +47814,11 @@ var InsertImage = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _this4 = this;
+            var _this5 = this;
 
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__dialog__["a" /* default */], {
+            var progress = this.state.progress;
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__dialog__["a" /* default */], {
                 title: '\u63D2\u5165\u56FE\u7247',
                 className: 'weditor-insert-image-dialog',
                 content: __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -46832,37 +47828,41 @@ var InsertImage = function (_Component) {
                         'div',
                         { className: 'weditor-uploader-wrapper' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            __WEBPACK_IMPORTED_MODULE_4_rc_tabs__["a" /* default */],
+                            __WEBPACK_IMPORTED_MODULE_3_rc_tabs__["a" /* default */],
                             {
                                 renderTabBar: function renderTabBar() {
-                                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_rc_tabs_lib_ScrollableInkTabBar_js___default.a, { onTabClick: _this4.onTabClick });
+                                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_rc_tabs_lib_ScrollableInkTabBar_js___default.a, { onTabClick: _this5.onTabClick });
                                 },
                                 renderTabContent: function renderTabContent() {
-                                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6_rc_tabs_lib_TabContent_js___default.a, { animatedWithMargin: true });
+                                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_rc_tabs_lib_TabContent_js___default.a, { animatedWithMargin: true });
                                 },
                                 activeKey: this.state.activeKey,
                                 onChange: this.onChange
                             },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                __WEBPACK_IMPORTED_MODULE_4_rc_tabs__["b" /* TabPane */],
+                                __WEBPACK_IMPORTED_MODULE_3_rc_tabs__["b" /* TabPane */],
                                 { tab: '本地上传', key: '1' },
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     'div',
                                     { className: 'weditor-uploader-file-inner' },
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                         'p',
-                                        { className: 'weditor-image-tips' },
+                                        { className: 'weditor-image-tips',
+                                            style: { display: progress === 0 || progress === 100 ? 'block' : 'none' } },
                                         '\u6700\u5927\u4E0A\u4F2020M\u7684\u56FE\u7247'
                                     ),
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        __WEBPACK_IMPORTED_MODULE_10__button__["a" /* default */],
-                                        { id: 'weditorUploaderPick' },
+                                        __WEBPACK_IMPORTED_MODULE_9__button__["a" /* default */],
+                                        { id: 'weditorUploaderPick',
+                                            style: { display: progress === 0 || progress === 100 ? 'block' : 'none' } },
                                         '\u70B9\u51FB\u4E0A\u4F20'
-                                    )
+                                    ),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_12_rc_progress__["a" /* Line */], { percent: progress, trailWidth: '2', strokeWidth: '2', strokeColor: '#118bfb',
+                                        style: { display: progress > 0 && progress < 100 ? 'block' : 'none' } })
                                 )
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                __WEBPACK_IMPORTED_MODULE_4_rc_tabs__["b" /* TabPane */],
+                                __WEBPACK_IMPORTED_MODULE_3_rc_tabs__["b" /* TabPane */],
                                 { tab: '插入外链', key: '2' },
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     'div',
@@ -46870,9 +47870,9 @@ var InsertImage = function (_Component) {
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                         'div',
                                         null,
-                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_11__input__["a" /* default */], { onChange: this.onLinkUrlChange }),
+                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_14__input__["a" /* default */], { onChange: this.onLinkUrlChange }),
                                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                            __WEBPACK_IMPORTED_MODULE_10__button__["a" /* default */],
+                                            __WEBPACK_IMPORTED_MODULE_9__button__["a" /* default */],
                                             { onClick: this.insertLink },
                                             '\u63D2\u5165'
                                         )
@@ -46918,11 +47918,14 @@ var _temp2 = function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_dom__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_dom__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_mobx_react__ = __webpack_require__("./node_modules/mobx-react/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_mobx_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_mobx_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__input_index__ = __webpack_require__("./src/components/input/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__button_index__ = __webpack_require__("./src/components/button/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__lib_util__ = __webpack_require__("./src/lib/util.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__input_index__ = __webpack_require__("./src/components/input/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__button_index__ = __webpack_require__("./src/components/button/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__lib_util__ = __webpack_require__("./src/lib/util.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__lib_aceUtil__ = __webpack_require__("./src/lib/aceUtil.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__model_insert__ = __webpack_require__("./src/model/insert.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__dialog__ = __webpack_require__("./src/components/dialog/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_mobx_react__ = __webpack_require__("./node_modules/mobx-react/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_mobx_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_mobx_react__);
 /**
  * Created by yeanzhi on 17/3/26.
  */
@@ -46930,7 +47933,7 @@ var _temp2 = function () {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _class, _temp2;
+var _class, _class2, _temp2;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -46947,7 +47950,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
-var LinkBubble = (_temp2 = _class = function (_Component) {
+
+
+var $ = window.jQuery;
+
+
+
+var LinkBubble = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_9_mobx_react__["observer"])(_class = (_temp2 = _class2 = function (_Component) {
     _inherits(LinkBubble, _Component);
 
     function LinkBubble() {
@@ -46961,41 +47970,39 @@ var LinkBubble = (_temp2 = _class = function (_Component) {
             args[_key] = arguments[_key];
         }
 
-        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = LinkBubble.__proto__ || Object.getPrototypeOf(LinkBubble)).call.apply(_ref, [this].concat(args))), _this), _this.closeBubble = function (e) {
-            _this.props.insert.openLinkDialog = false;
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = LinkBubble.__proto__ || Object.getPrototypeOf(LinkBubble)).call.apply(_ref, [this].concat(args))), _this), _this.onWindowResize = function () {
+            _this.closeBubble();
+        }, _this.closeBubble = function () {
+            __WEBPACK_IMPORTED_MODULE_7__model_insert__["a" /* default */].openLinkDialog = false;
+            __WEBPACK_IMPORTED_MODULE_7__model_insert__["a" /* default */].isReadOnlyLink = false;
         }, _this.otherDOMClick = function (e) {
             var node = e.target;
-            if (!insert.openLinkDialog) {
+            if (!__WEBPACK_IMPORTED_MODULE_7__model_insert__["a" /* default */].openLinkDialog) {
                 return false;
             }
             var target = _this.target;
-            if (insert.openLinkDialog && !__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__lib_util__["a" /* contains */])(target, node)) {
+            if (__WEBPACK_IMPORTED_MODULE_7__model_insert__["a" /* default */].openLinkDialog && !__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__lib_util__["a" /* contains */])(target, node)) {
                 _this.closeBubble();
             }
-        }, _this.changeTitle = function (e) {
-            _this.props.insert.linkTitle = e.target.value || '';
-        }, _this.changeUrl = function (e) {
-            _this.props.insert.linkUrl = e.target.value || '';
-        }, _this.apply = function () {
-            if (getEditor() && !!_this.props.insert.linkUrl) {
-                var editor = getEditor();
-                var selection = _this.props.insert.linkSelection;
-                if (selection) {
-                    if (editor.getText(selection.index, selection.length) === _this.props.insert.linkTitle) {
-                        getEditor().format('link', _this.props.insert.linkUrl, 'user');
-                    } else {
-                        var index = selection.index,
-                            length = selection.length;
-
-                        editor.deleteText(index, length, 'user');
-                        var linkTitle = _this.props.insert.linkTitle || _this.props.insert.linkUrl;
-                        editor.insertText(index, linkTitle, 'user');
-                        editor.setSelection(index, linkTitle.length, 'user');
-                        getEditor().format('link', _this.props.insert.linkUrl, 'user');
-                    }
+        }, _this.onLinkUrlChange = function (e) {
+            _this.setState({
+                linkUrl: e.target.value
+            });
+        }, _this.onTitleChange = function (e) {
+            _this.setState({
+                linkTitle: e.target.value
+            });
+        }, _this.insertLink = function () {
+            if (_this.state.linkUrl) {
+                if (_this.state.linkUrl.indexOf('http') !== 0) {
+                    _this.state.linkUrl = 'http://' + _this.state.linkUrl;
                 }
-                _this.props.insert.openLinkDialog = false;
+                if (!_this.state.linkTitle) {
+                    _this.state.linkTitle = _this.state.linkUrl;
+                }
+                __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__lib_aceUtil__["b" /* insert */])('[' + _this.state.linkTitle + '](' + _this.state.linkUrl + ')');
             }
+            _this.closeBubble();
         }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
@@ -47005,66 +48012,59 @@ var LinkBubble = (_temp2 = _class = function (_Component) {
             var _this2 = this;
 
             setTimeout(function () {
-                window.document.addEventListener('click', _this2.otherDOMClick);
-            }, 100);
+                $(document).on('mousedown', _this2.otherDOMClick);
+            }, 10);
             this.target = __WEBPACK_IMPORTED_MODULE_2_react_dom___default.a.findDOMNode(this);
+            $(window).on('resize', this.onWindowResize);
         }
     }, {
         key: 'componentWillUnmount',
         value: function componentWillUnmount() {
-            window.document.removeEventListener('click', this.otherDOMClick, false);
+            $(document).off('mousedown', this.otherDOMClick);
+            $(window).off('resize', this.onWindowResize);
         }
     }, {
         key: 'render',
         value: function render() {
-            // const {linkPosition,openLinkDialog} = this.props.insert;
-            return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                'section',
-                { className: 'weditor-bubble', style: {
-                        top: this.props.insert.linkPosition.top,
-                        left: this.props.insert.linkPosition.left,
-                        display: this.props.insert.openLinkDialog ? 'block' : 'none'
-                    } },
-                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+            return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__dialog__["a" /* default */], {
+                title: '\u63D2\u5165\u94FE\u63A5',
+                className: 'mdeditor-insert-link-dialog',
+                content: __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
                     'div',
-                    { className: 'weditor-bubble-item' },
+                    { className: 'mdeditor-insert-link' },
                     __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                        'span',
-                        null,
-                        '\u6587\u672C\uFF1A'
+                        'div',
+                        { className: 'mdeditor-form-item' },
+                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                            'span',
+                            { className: 'mdeditor-form-title' },
+                            'Title'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__input_index__["a" /* default */], { className: 'mdeditor-form-content', onChange: this.onTitleChange })
                     ),
-                    ' ',
-                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__input_index__["a" /* default */], { className: 'weditor-insert-input',
-                        value: this.props.insert.linkTitle,
-                        onChange: this.changeTitle })
-                ),
-                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                    'div',
-                    { className: 'weditor-bubble-item' },
                     __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                        'span',
-                        null,
-                        '\u94FE\u63A5\uFF1A'
-                    ),
-                    ' ',
-                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__input_index__["a" /* default */], { className: 'weditor-insert-input',
-                        value: this.props.insert.linkUrl,
-                        onChange: this.changeUrl }),
-                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_5__button_index__["a" /* default */],
-                        { onClick: this.apply },
-                        '\u5E94\u7528'
+                        'div',
+                        { className: 'mdeditor-form-item' },
+                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                            'span',
+                            { className: 'mdeditor-form-title' },
+                            'URL'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__input_index__["a" /* default */], { className: 'mdeditor-form-content', onChange: this.onLinkUrlChange })
                     )
-                )
-            );
+                ),
+                buttons: [{ text: '取消', type: 'white', action: this.closeBubble }, { text: '插入', action: this.insertLink }],
+                onClose: this.closeBubble
+            });
         }
     }]);
 
     return LinkBubble;
-}(__WEBPACK_IMPORTED_MODULE_1_react__["Component"]), _class.defaultProps = {
+}(__WEBPACK_IMPORTED_MODULE_1_react__["Component"]), _class2.defaultProps = {
     linkTitle: '',
     linkUrl: ''
-}, _temp2);
+}, _temp2)) || _class;
+
 
 ;
 
@@ -47074,6 +48074,8 @@ var _temp3 = function () {
     }
 
     __REACT_HOT_LOADER__.register(LinkBubble, 'LinkBubble', '/Users/yeanzhi/project/mygithub/mdeditor/src/components/linkBubble/index.js');
+
+    __REACT_HOT_LOADER__.register($, '$', '/Users/yeanzhi/project/mygithub/mdeditor/src/components/linkBubble/index.js');
 }();
 
 ;
@@ -49783,6 +50785,102 @@ var _temp = function () {
 
 /***/ }),
 
+/***/ "./src/lib/aceUtil.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return insert; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return insertAround; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return insertBefore; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__aceEditor__ = __webpack_require__("./src/lib/aceEditor.js");
+/**
+ * Created by yeanzhi on 17/7/23.
+ */
+
+
+
+/**
+ * Insert a string at cursor position
+ * @param  {String} insertion
+ * @param {int} cursorOffset
+ */
+var insert = function insert(insertion, cursorOffset) {
+    var aceEditor = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__aceEditor__["a" /* getEditor */])();
+    aceEditor.getSession().replace(aceEditor.getSelectionRange(), insertion);
+    if (cursorOffset) {
+        aceEditor.gotoLine(aceEditor.getSelectionRange().end.row + 1, aceEditor.getSelectionRange().end.column - insertion.length + cursorOffset - 1);
+    }
+};
+
+/**
+ * Insert a string at the start and end of a selection
+ * @param  {String} start
+ * @param  {String} end
+ */
+var insertAround = function insertAround(start, end) {
+    //const quillEditor = getEditor();
+    // var doc = quillEditor.getDoc();
+    // var cursor = doc.getCursor();
+    //
+    // if (doc.somethingSelected()) {
+    //     var selection = doc.getSelection();
+    //     doc.replaceSelection(start + selection + end);
+    // } else {
+    //     doc.replaceRange(start + end, { line: cursor.line, ch: cursor.ch });
+    //     doc.setCursor({ line: cursor.line, ch: cursor.ch + start.length })
+    // }
+    var aceEditor = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__aceEditor__["a" /* getEditor */])();
+    insert('' + start + aceEditor.getSession().getTextRange() + end);
+};
+
+/**
+ * Insert a string before a selection
+ * @param  {String} insertion
+ */
+var insertBefore = function insertBefore(insertion) {
+    var cursorOffset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+    // const quillEditor = getEditor();
+    // var doc = quillEditor.getDoc();
+    // var cursor = doc.getCursor();
+    //
+    // if (doc.somethingSelected()) {
+    //     var selections = doc.listSelections();
+    //     selections.forEach(function(selection) {
+    //         var pos = [selection.head.line, selection.anchor.line].sort();
+    //
+    //         for (var i = pos[0]; i <= pos[1]; i++) {
+    //             doc.replaceRange(insertion, { line: i, ch: 0 });
+    //         }
+    //
+    //         doc.setCursor({ line: pos[0], ch: cursorOffset || 0 });
+    //     });
+    // } else {
+    //     doc.replaceRange(insertion, { line: cursor.line, ch: 0 });
+    //     doc.setCursor({ line: cursor.line, ch: cursorOffset || 0 })
+    // }
+    var aceEditor = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__aceEditor__["a" /* getEditor */])();
+    var position = aceEditor.getCursorPositionScreen();
+    aceEditor.getSession().insert({ row: position.row, column: 0 }, insertion);
+};
+;
+
+var _temp = function () {
+    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+        return;
+    }
+
+    __REACT_HOT_LOADER__.register(insert, 'insert', '/Users/yeanzhi/project/mygithub/mdeditor/src/lib/aceUtil.js');
+
+    __REACT_HOT_LOADER__.register(insertAround, 'insertAround', '/Users/yeanzhi/project/mygithub/mdeditor/src/lib/aceUtil.js');
+
+    __REACT_HOT_LOADER__.register(insertBefore, 'insertBefore', '/Users/yeanzhi/project/mygithub/mdeditor/src/lib/aceUtil.js');
+}();
+
+;
+
+/***/ }),
+
 /***/ "./src/lib/util.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -50313,6 +51411,7 @@ if(false) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_classnames__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__lib_aceEditor__ = __webpack_require__("./src/lib/aceEditor.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__lib_util__ = __webpack_require__("./src/lib/util.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__lib_aceUtil__ = __webpack_require__("./src/lib/aceUtil.js");
 /**
  * Created by yeanzhi on 17/5/20.
  */
@@ -50340,10 +51439,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
+
+
 var EditorToolbar = (_dec = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_mobx_react__["inject"])(function (state) {
     return {
         rangeFormat: state.editor.format,
-        editor: state.editor
+        editor: state.editor,
+        insert: state.insert
     };
 }), _dec(_class = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_mobx_react__["observer"])(_class = function (_Component) {
     _inherits(EditorToolbar, _Component);
@@ -50382,31 +51484,32 @@ var EditorToolbar = (_dec = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_mo
             var quillEditor = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__lib_aceEditor__["a" /* getEditor */])();
             if (quillEditor) {
                 if (type === 'bold') {
-                    _this.insertAround('**', '**');
+                    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__lib_aceUtil__["a" /* insertAround */])('**', '**');
                 } else if (type === 'italic') {
-                    _this.insertAround('*', '*');
+                    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__lib_aceUtil__["a" /* insertAround */])('*', '*');
                 } else if (type === 'code') {
-                    _this.insertAround('```\r\n', '\r\n```');
+                    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__lib_aceUtil__["a" /* insertAround */])('```\r\n', '\r\n```');
                 } else if (type === 'strike') {
-                    _this.insertAround('~', '~');
+                    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__lib_aceUtil__["a" /* insertAround */])('~', '~');
                 } else if (type === 'ordered') {
-                    _this.insertBefore('1. ', 3);
+                    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__lib_aceUtil__["c" /* insertBefore */])('1. ', 3);
                 } else if (type === 'bullet') {
-                    _this.insertBefore('* ', 3);
+                    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__lib_aceUtil__["c" /* insertBefore */])('* ', 3);
                 } else if (type === 'hr') {
                     _this.insert('---');
                 } else if (type === 'quote') {
-                    _this.insertBefore('> ', 2);
+                    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__lib_aceUtil__["c" /* insertBefore */])('> ', 2);
                 } else if (type === 'image') {
-                    _this.insertAround('[', '](http://)');
+                    //insertAround('![', '](http://)');
+                    _this.props.insert.openImageDialog = true;
                 } else if (type === 'link') {
-                    _this.insertBefore('![](http://)', 2);
+                    _this.props.insert.openLinkDialog = true;
                 } else if (type === 'h1') {
-                    _this.insertBefore('# ', 0);
+                    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__lib_aceUtil__["c" /* insertBefore */])('# ', 0);
                 } else if (type === 'h2') {
-                    _this.insertBefore('## ', 0);
+                    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__lib_aceUtil__["c" /* insertBefore */])('## ', 0);
                 } else if (type === 'h3') {
-                    _this.insertBefore('### ', 0);
+                    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7__lib_aceUtil__["c" /* insertBefore */])('### ', 0);
                 }
             }
         };
@@ -50436,39 +51539,39 @@ var EditorToolbar = (_dec = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_mo
                     var _getEditor$addKeyMap;
 
                     getEditor().addKeyMap((_getEditor$addKeyMap = {}, _defineProperty(_getEditor$addKeyMap, getCtrl() + '-B', function undefined(cm) {
-                        _this2.insertAround('**', '**');
+                        insertAround('**', '**');
                     }), _defineProperty(_getEditor$addKeyMap, getCtrl() + '-I', function undefined(cm) {
-                        _this2.insertAround('**', '**');
+                        insertAround('**', '**');
                     }), _defineProperty(_getEditor$addKeyMap, getCtrl() + '-shift-S', function undefined() {
-                        _this2.insertAround('~', '~');
+                        insertAround('~', '~');
                     }), _defineProperty(_getEditor$addKeyMap, getCtrl() + '-Alt-L', function undefined() {
-                        _this2.insertBefore('1. ', 3);
+                        insertBefore('1. ', 3);
                     }), _defineProperty(_getEditor$addKeyMap, getCtrl() + '-Alt-U', function undefined() {
-                        _this2.insertBefore('* ', 3);
+                        insertBefore('* ', 3);
                     }), _defineProperty(_getEditor$addKeyMap, getCtrl() + '-Alt-H', function undefined() {
                         _this2.insert('---');
                     }), _defineProperty(_getEditor$addKeyMap, getCtrl() + '-Alt-C', function undefined() {
-                        _this2.insertAround('```\r\n', '\r\n```');
+                        insertAround('```\r\n', '\r\n```');
                     }), _defineProperty(_getEditor$addKeyMap, getCtrl() + '-Alt-I', function undefined() {
-                        _this2.insertAround('[', '](http://)');
+                        insertAround('[', '](http://)');
                     }), _defineProperty(_getEditor$addKeyMap, getCtrl() + '-Alt-Q', function undefined() {
-                        _this2.insertBefore('> ', 2);
+                        insertBefore('> ', 2);
                     }), _defineProperty(_getEditor$addKeyMap, getCtrl() + '-Alt-L', function undefined() {
-                        _this2.insertBefore('![](http://)', 2);
+                        insertBefore('![](http://)', 2);
                     }), _defineProperty(_getEditor$addKeyMap, getCtrl() + '-Alt-0', function undefined() {
-                        _this2.insertBefore('![](http://)', 2);
+                        insertBefore('![](http://)', 2);
                     }), _defineProperty(_getEditor$addKeyMap, getCtrl() + '-Alt-1', function undefined() {
-                        _this2.insertBefore('# ', 0);
+                        insertBefore('# ', 0);
                     }), _defineProperty(_getEditor$addKeyMap, getCtrl() + '-Alt-2', function undefined() {
-                        _this2.insertBefore('## ', 0);
+                        insertBefore('## ', 0);
                     }), _defineProperty(_getEditor$addKeyMap, getCtrl() + '-Alt-3', function undefined() {
-                        _this2.insertBefore('### ', 0);
+                        insertBefore('### ', 0);
                     }), _defineProperty(_getEditor$addKeyMap, getCtrl() + '-Alt-4', function undefined() {
-                        _this2.insertBefore('#### ', 0);
+                        insertBefore('#### ', 0);
                     }), _defineProperty(_getEditor$addKeyMap, getCtrl() + '-Alt-5', function undefined() {
-                        _this2.insertBefore('##### ', 0);
+                        insertBefore('##### ', 0);
                     }), _defineProperty(_getEditor$addKeyMap, getCtrl() + '-Alt-6', function undefined() {
-                        _this2.insertBefore('###### ', 0);
+                        insertBefore('###### ', 0);
                     }), _getEditor$addKeyMap));
                 }
             }, 1000);
@@ -50503,78 +51606,6 @@ var EditorToolbar = (_dec = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_mo
          * @param {String} type
          */
 
-    }, {
-        key: 'insert',
-
-
-        /**
-         * Insert a string at cursor position
-         * @param  {String} insertion
-         */
-        value: function insert(insertion) {
-            var aceEditor = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__lib_aceEditor__["a" /* getEditor */])();
-            console.log(insertion);
-            aceEditor.getSession().replace(aceEditor.getSelectionRange(), insertion);
-        }
-
-        /**
-         * Insert a string at the start and end of a selection
-         * @param  {String} start
-         * @param  {String} end
-         */
-
-    }, {
-        key: 'insertAround',
-        value: function insertAround(start, end) {
-            //const quillEditor = getEditor();
-            // var doc = quillEditor.getDoc();
-            // var cursor = doc.getCursor();
-            //
-            // if (doc.somethingSelected()) {
-            //     var selection = doc.getSelection();
-            //     doc.replaceSelection(start + selection + end);
-            // } else {
-            //     doc.replaceRange(start + end, { line: cursor.line, ch: cursor.ch });
-            //     doc.setCursor({ line: cursor.line, ch: cursor.ch + start.length })
-            // }
-            console.log(start, end);
-            var aceEditor = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__lib_aceEditor__["a" /* getEditor */])();
-            this.insert('' + start + aceEditor.getSession().getTextRange() + end);
-        }
-
-        /**
-         * Insert a string before a selection
-         * @param  {String} insertion
-         */
-
-    }, {
-        key: 'insertBefore',
-        value: function insertBefore(insertion) {
-            var cursorOffset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-
-            // const quillEditor = getEditor();
-            // var doc = quillEditor.getDoc();
-            // var cursor = doc.getCursor();
-            //
-            // if (doc.somethingSelected()) {
-            //     var selections = doc.listSelections();
-            //     selections.forEach(function(selection) {
-            //         var pos = [selection.head.line, selection.anchor.line].sort();
-            //
-            //         for (var i = pos[0]; i <= pos[1]; i++) {
-            //             doc.replaceRange(insertion, { line: i, ch: 0 });
-            //         }
-            //
-            //         doc.setCursor({ line: pos[0], ch: cursorOffset || 0 });
-            //     });
-            // } else {
-            //     doc.replaceRange(insertion, { line: cursor.line, ch: 0 });
-            //     doc.setCursor({ line: cursor.line, ch: cursorOffset || 0 })
-            // }
-            var aceEditor = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__lib_aceEditor__["a" /* getEditor */])();
-            var position = aceEditor.getCursorPositionScreen();
-            aceEditor.getSession().insert({ row: position.row, column: 0 }, insertion);
-        }
     }, {
         key: 'render',
         value: function render() {
@@ -50877,6 +51908,8 @@ var _temp = function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_editor__ = __webpack_require__("./src/components/editor/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__model_editor__ = __webpack_require__("./src/model/editor.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__lib_aceEditor__ = __webpack_require__("./src/lib/aceEditor.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_lodash_debounce__ = __webpack_require__("./node_modules/lodash.debounce/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_lodash_debounce___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_lodash_debounce__);
 /**
  * Created by yeanzhi on 17/3/26.
  */
@@ -50925,9 +51958,14 @@ var WEditor = (_dec = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7_mobx_rea
             scrollTop: 0
         };
 
-        _this.onWindowResize = function () {};
+        _this.onWindowResize = function () {
+            _this.setState({
+                width: window.innerWidth
+            });
+        };
 
         __WEBPACK_IMPORTED_MODULE_9__model_editor__["a" /* default */].value = props.defaultValue;
+        _this.debounceWindowResize = __WEBPACK_IMPORTED_MODULE_11_lodash_debounce___default()(_this.onWindowResize);
         return _this;
     }
 
@@ -50952,12 +51990,12 @@ var WEditor = (_dec = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7_mobx_rea
                 }, 200);
             };
             $divs.on('scroll', sync);
-            $(window).on('resize', this.onWindowResize);
+            $(window).on('resize', this.debounceWindowResize);
         }
     }, {
         key: 'componentWillUnmount',
         value: function componentWillUnmount() {
-            $(window).off('resize', this.onWindowResize);
+            $(window).off('resize', this.debounceWindowResize);
         }
     }, {
         key: 'componentWillReceiveProps',
@@ -50983,14 +52021,14 @@ var WEditor = (_dec = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7_mobx_rea
                     { className: 'weditor-body' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
-                        { className: 'content-container' },
+                        { className: 'content-container', style: { width: this.state.width > 900 ? '50%' : '100%' } },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__components_editor__["a" /* default */], { readOnly: this.props.readOnly,
                             defaultValue: this.props.defaultValue,
                             onChange: this.onChange })
                     ),
-                    this.state.width > 900 && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
-                        { className: 'mdeditor-preview' },
+                        { className: 'mdeditor-preview', style: { display: this.state.width > 900 ? 'block' : 'none' } },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__components_preview_preview__["a" /* default */], null)
                     )
                 ),
