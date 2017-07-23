@@ -1,27 +1,21 @@
-.weditor-bubble {
-    position: absolute;
-    top: 0;
-    left: 0;
-    // display: none;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
-    background-color: #fff;
-    border: 1px solid;
-    border-color: #bbb #bbb #a8a8a8;
-    padding: 16px;
-    z-index: 1201;
-    .weditor-bubble-item {
-        line-height: 2;
-        &:first-child {
-            margin-bottom: 10px;
-        }
-    }
-    .weditor-insert-input {
-        width: 244px;
-        display: inline-block;
-        color: #a9a9a9;
-    }
-    .nx-btn {
-        margin-left: 10px;
-    }
 
+.mdeditor-insert-link-dialog{
+    .mdeditor-insert-link{
+        height: 80px;
+        width: 400px;
+    }
+    border: 1px solid #e6e6e6;
+}
+
+.mdeditor-form-item{
+    display: flex;
+    justify-content: flex-start;
+    align-items:center;
+    margin-bottom: 15px;
+    .mdeditor-form-title{
+        width: 30px;
+    }
+    .mdeditor-form-content{
+        flex: 1;
+    }
 }

@@ -12,9 +12,12 @@ import classnames from 'classnames';
 import {getEditor,getUndoManager} from './lib/aceEditor';
 import {getCtrl} from './lib/util';
 
+import {insertAround,insertBefore,insert} from './lib/aceUtil';
+
 @inject(state => ({
     rangeFormat: state.editor.format,
-    editor: state.editor
+    editor: state.editor,
+    insert: state.insert
 })) @observer
 export default class EditorToolbar extends Component {
     constructor() {
@@ -26,55 +29,55 @@ export default class EditorToolbar extends Component {
             if (false&&getEditor()) {
                 getEditor().addKeyMap({
                     [`${getCtrl()}-B`]: (cm) => {
-                        this.insertAround('**', '**');
+                        insertAround('**', '**');
                     },
                     [`${getCtrl()}-I`]: (cm) => {
-                        this.insertAround('**', '**');
+                        insertAround('**', '**');
                     },
                     [`${getCtrl()}-shift-S`]: () => {
-                        this.insertAround('~', '~')
+                        insertAround('~', '~')
                     },
                     [`${getCtrl()}-Alt-L`]: () => {
-                        this.insertBefore('1. ', 3);
+                        insertBefore('1. ', 3);
                     },
                     [`${getCtrl()}-Alt-U`]: () => {
-                        this.insertBefore('* ', 3);
+                        insertBefore('* ', 3);
                     },
                     [`${getCtrl()}-Alt-H`]: () => {
                         this.insert('---');
                     },
                     [`${getCtrl()}-Alt-C`]: () => {
-                        this.insertAround('```\r\n', '\r\n```')
+                        insertAround('```\r\n', '\r\n```')
                     },
                     [`${getCtrl()}-Alt-I`]: () => {
-                        this.insertAround('[', '](http://)');
+                        insertAround('[', '](http://)');
                     },
                     [`${getCtrl()}-Alt-Q`]: () => {
-                        this.insertBefore('> ', 2);
+                        insertBefore('> ', 2);
                     },
                     [`${getCtrl()}-Alt-L`]: () => {
-                        this.insertBefore('![](http://)', 2);
+                        insertBefore('![](http://)', 2);
                     },
                     [`${getCtrl()}-Alt-0`]: () => {
-                        this.insertBefore('![](http://)', 2);
+                        insertBefore('![](http://)', 2);
                     },
                     [`${getCtrl()}-Alt-1`]: () => {
-                        this.insertBefore('# ', 0);
+                        insertBefore('# ', 0);
                     },
                     [`${getCtrl()}-Alt-2`]: () => {
-                        this.insertBefore('## ', 0);
+                        insertBefore('## ', 0);
                     },
                     [`${getCtrl()}-Alt-3`]: () => {
-                        this.insertBefore('### ', 0);
+                        insertBefore('### ', 0);
                     },
                     [`${getCtrl()}-Alt-4`]: () => {
-                        this.insertBefore('#### ', 0);
+                        insertBefore('#### ', 0);
                     },
                     [`${getCtrl()}-Alt-5`]: () => {
-                        this.insertBefore('##### ', 0);
+                        insertBefore('##### ', 0);
                     },
                     [`${getCtrl()}-Alt-6`]: () => {
-                        this.insertBefore('###### ', 0);
+                        insertBefore('###### ', 0);
                     }
                 })
             }
@@ -140,95 +143,34 @@ export default class EditorToolbar extends Component {
         const quillEditor = getEditor();
         if (quillEditor) {
             if (type === 'bold') {
-                this.insertAround('**', '**')
+                insertAround('**', '**')
             } else if (type === 'italic') {
-                this.insertAround('*', '*')
+                insertAround('*', '*')
             } else if (type === 'code') {
-                this.insertAround('```\r\n', '\r\n```')
+                insertAround('```\r\n', '\r\n```')
             } else if (type === 'strike') {
-                this.insertAround('~', '~')
+                insertAround('~', '~')
             } else if (type === 'ordered') {
-                this.insertBefore('1. ', 3);
+                insertBefore('1. ', 3);
             } else if (type === 'bullet') {
-                this.insertBefore('* ', 3);
+                insertBefore('* ', 3);
             } else if (type === 'hr') {
                 this.insert('---');
             } else if (type === 'quote') {
-                this.insertBefore('> ', 2);
+                insertBefore('> ', 2);
             } else if (type === 'image') {
-                this.insertAround('[', '](http://)');
+                //insertAround('![', '](http://)');
+                this.props.insert.openImageDialog = true;
             } else if (type === 'link') {
-                this.insertBefore('![](http://)', 2);
+                this.props.insert.openLinkDialog = true;
             } else if (type === 'h1') {
-                this.insertBefore('# ', 0);
+                insertBefore('# ', 0);
             } else if (type === 'h2') {
-                this.insertBefore('## ', 0);
+                insertBefore('## ', 0);
             } else if (type === 'h3') {
-                this.insertBefore('### ', 0);
+                insertBefore('### ', 0);
             }
         }
-    }
-
-    /**
-     * Insert a string at cursor position
-     * @param  {String} insertion
-     */
-    insert(insertion) {
-        const aceEditor = getEditor();
-        console.log(insertion)
-        aceEditor.getSession().replace(aceEditor.getSelectionRange(), insertion)
-    }
-
-    /**
-     * Insert a string at the start and end of a selection
-     * @param  {String} start
-     * @param  {String} end
-     */
-    insertAround(start, end) {
-        //const quillEditor = getEditor();
-        // var doc = quillEditor.getDoc();
-        // var cursor = doc.getCursor();
-        //
-        // if (doc.somethingSelected()) {
-        //     var selection = doc.getSelection();
-        //     doc.replaceSelection(start + selection + end);
-        // } else {
-        //     doc.replaceRange(start + end, { line: cursor.line, ch: cursor.ch });
-        //     doc.setCursor({ line: cursor.line, ch: cursor.ch + start.length })
-        // }
-        console.log(start, end)
-        const aceEditor = getEditor();
-        this.insert(`${start}${aceEditor.getSession().getTextRange()}${end}`);
-    }
-
-    /**
-     * Insert a string before a selection
-     * @param  {String} insertion
-     */
-    insertBefore(insertion, cursorOffset = 0) {
-        // const quillEditor = getEditor();
-        // var doc = quillEditor.getDoc();
-        // var cursor = doc.getCursor();
-        //
-        // if (doc.somethingSelected()) {
-        //     var selections = doc.listSelections();
-        //     selections.forEach(function(selection) {
-        //         var pos = [selection.head.line, selection.anchor.line].sort();
-        //
-        //         for (var i = pos[0]; i <= pos[1]; i++) {
-        //             doc.replaceRange(insertion, { line: i, ch: 0 });
-        //         }
-        //
-        //         doc.setCursor({ line: pos[0], ch: cursorOffset || 0 });
-        //     });
-        // } else {
-        //     doc.replaceRange(insertion, { line: cursor.line, ch: 0 });
-        //     doc.setCursor({ line: cursor.line, ch: cursorOffset || 0 })
-        // }
-        const aceEditor = getEditor();
-        const position = aceEditor.getCursorPositionScreen();
-        aceEditor.getSession().insert({row: position.row, column: 0}, insertion)
-
     }
 
     undo = () => {

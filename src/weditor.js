@@ -14,7 +14,7 @@ import Editor from './components/editor';
 const $ = window.jQuery;
 import editor from './model/editor';
 import {getEditor} from './lib/aceEditor';
-
+import debounce from 'lodash.debounce';
 @inject(state => ({
     insert: state.insert,
     open: state.catalogue.open,
@@ -30,6 +30,7 @@ export default class WEditor extends Component {
     constructor(props) {
         super(props);
         editor.value = props.defaultValue;
+        this.debounceWindowResize = debounce(this.onWindowResize);
     }
 
     componentDidMount() {
@@ -41,9 +42,9 @@ export default class WEditor extends Component {
             let $other = $divs.not(this).off('scroll'),
                 other = $other.get(0);
             let percentage = this.scrollTop / (this.scrollHeight - this.offsetHeight);
-            if(this !== $aceScrollbar[0]){
+            if (this !== $aceScrollbar[0]) {
                 getEditor().getSession().setScrollTop(percentage * (other.scrollHeight - other.offsetHeight))
-            }else{
+            } else {
                 other.scrollTop = percentage * (other.scrollHeight - other.offsetHeight);
             }
             timer = setTimeout(function () {
@@ -51,21 +52,24 @@ export default class WEditor extends Component {
             }, 200);
         };
         $divs.on('scroll', sync);
-        $(window).on('resize', this.onWindowResize);
+        $(window).on('resize', this.debounceWindowResize);
     }
 
     componentWillUnmount() {
-        $(window).off('resize', this.onWindowResize);
+        $(window).off('resize', this.debounceWindowResize);
     }
 
     onWindowResize = () => {
+        this.setState({
+            width: window.innerWidth
+        });
     };
 
 
     componentWillReceiveProps(nextProps) {
     }
 
-    onChange(change,editSession) {
+    onChange(change, editSession) {
         editor.value = editSession.getValue();
     };
 
@@ -76,18 +80,14 @@ export default class WEditor extends Component {
                     <Toolbar/>
                 </div>
                 <div className="weditor-body">
-                    <div className="content-container">
+                    <div className="content-container" style={{width: this.state.width > 900 ? '50%' : '100%'}}>
                         <Editor readOnly={this.props.readOnly}
                                 defaultValue={this.props.defaultValue}
-                            onChange={this.onChange}/>
+                                onChange={this.onChange}/>
                     </div>
-                    {
-                        this.state.width > 900 && (
-                            <div className="mdeditor-preview">
-                                <Preview/>
-                            </div>
-                        )
-                    }
+                    <div className="mdeditor-preview" style={{display: this.state.width > 900 ? 'block' : 'none'}}>
+                        <Preview/>
+                    </div>
                 </div>
 
                 {

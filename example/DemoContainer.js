@@ -4,8 +4,7 @@
 'use strict';
 import React, {Component} from "react";
 import MDEditor from '../src/index';
-let defaultVal = `
-# markdown 简易说明
+let defaultVal = `# markdown 简易说明
 
 这就是 ~~删除线~~
 
@@ -139,16 +138,7 @@ export default class DemoContainer extends Component{
     render(){
         return (
             <MDEditor
-                defaultValue={`* dasaaassqcs
-* fdsa
-* fdsa
-* fdssssnihaomeiyouss
-* jiushizaishenmeshihou
-* jiushizaizheli
-fdsssssfdsafdsf
-fdsafdsfdsfds
-
-## heheda`}
+                defaultValue={defaultVal}
                 doc = {{name:'test.doc',status:'fjdisoaifasdof'
                 }}
                 ref={(e)=>{this.mdEditor = e;}}

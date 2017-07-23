@@ -4,45 +4,72 @@
 'use strict';
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import {inject, observer} from 'mobx-react';
 import 'rc-tabs/assets/index.css';
-import Tabs, { TabPane} from 'rc-tabs';
+import Tabs, {TabPane} from 'rc-tabs';
 import ScrollableInkTabBar from 'rc-tabs/lib/ScrollableInkTabBar.js';
 import TabContent from 'rc-tabs/lib/TabContent.js';
 import Dialog from '../dialog';
 import {contains} from '../../lib/util';
 import {Uploader} from '../uploader/index';
 import Button from '../button';
-
-
-import Input from '../input';
+import insert from '../../model/insert';
+import {getEditor} from '../../lib/aceEditor';
+import {Line} from 'rc-progress';
 import {error} from '../toast';
+import Input from '../input';
 const $ = window.jQuery;
+import {insertAround, insertBefore} from '../../lib/aceUtil';
 
 export default class InsertImage extends Component {
     state = {
-        activeKey:'1',
-        linkUrl:''
-    }
+        activeKey: '1',
+        linkUrl: '',
+        progress: 0
+    };
+
     componentDidMount() {
-        setTimeout(()=>{
-            window.document.addEventListener('click', this.otherDOMClick);
-        },100);
+        setTimeout(() => {
+            $(document).on('mousedown', this.otherDOMClick);
+        }, 10);
         this.initUploader();
     }
 
-    onLinkUrlChange = (e)=>{
+    onLinkUrlChange = (e) => {
         this.setState({
-            linkUrl:e.target.value
+            linkUrl: e.target.value
         });
-    }
+    };
 
-    insertLink = ()=>{
-        if(this.state.linkUrl) {
+    onLoad = async (url) => {
+        return new Promise((res, rej) => {
+            let elem = document.createElement("img");
+            elem.setAttribute("src", url);
+            elem.onload = function () {
+                res({
+                    width: this.width,
+                    height: this.height
+                });
+            };
+            elem.onerror = function () {
+                res({
+                    code: 500
+                })
+            }
+        })
+    };
 
+    insertImage = async (url) => {
+        insertAround('![' + url, '](' + url + ')\n');
+        insert.openImageDialog = false;
+    };
+
+    insertLink = () => {
+        if (this.state.linkUrl) {
+            this.insertImage(this.state.linkUrl);
         }
 
-    }
+    };
+
     initUploader() {
         this.rootNode = ReactDOM.findDOMNode(this);
         this.target = this.rootNode.getElementsByClassName('weditor-insert-image-dialog')[0];
@@ -57,31 +84,64 @@ export default class InsertImage extends Component {
             'body': this.target,
             'multiple': false,
             'method': 'post',
-            'withCredentials':true,
-            'server': this.props.uploadUrl || ''
+            'withCredentials': true,
+            'server': this.props.uploadUrl || '',
+            accept: {
+                title: 'Images',
+                extensions: 'jpg,jpeg,bmp,png,gif',
+                mimeTypes: 'image/*'
+            }
         });
+
+        uploader.on('beforeFileQueued', (wuFile) => {
+            if (wuFile.size > 1024 * 1024 * 20) {
+                error('图片大小不能超过20M');
+                uploader.reset();
+                return false;
+            }
+            return true;
+        });
+
+        uploader.on('fileQueued', (wuFile) => {
+            this.file = wuFile;
+        });
+
+        uploader.on('uploadProgress', (file, currentProgress, loaded, total) => {
+            console.log('uploadProgress'.repeat(10))
+            console.log(currentProgress, loaded, total)
+            this.setState({
+                progress: (currentProgress / total) * 100
+            })
+        });
+
         uploader.on('uploadAccept', (obj, res) => {
-            res = JSON.parse(res);
+            this.file = null;
+            if (typeof res === 'string') {
+                res = JSON.parse(res);
+            }
+            console.log('uploadAccept', res, res.errno === 0, insert)
             if (res.errno === 0) {
                 if (res.data.url) {
-                    const {index, length} = this.props.insert.imageSelection;
-                    this.props.insert.openImageDialog = false;
+                    this.insertImage(res.data.url);
                 }
             } else {
                 error('上传服务错误');
             }
         });
-        uploader.on('uploadComplete',()=>{
+
+        uploader.on('uploadComplete', () => {
             uploader.reset();
         });
-        uploader.on('uploadError',()=>{
+
+        uploader.on('uploadError', (file, err) => {
+            console.error(err);
             uploader.reset();
-            error('上传服务错误');
+            error('上传服务错误!');
         });
     }
 
     componentWillUnmount() {
-        window.document.removeEventListener('click', this.otherDOMClick);
+        $(document).off('mousedown', this.otherDOMClick);
         this.uploader.removeEvent('uploadAccept');
         this.uploader.removeEvent('uploadComplete');
         this.uploader.removeEvent('uploadError');
@@ -89,7 +149,10 @@ export default class InsertImage extends Component {
     }
 
     closeBubble = () => {
-        this.props.insert.openImageDialog = false;
+        if (this.file && this.file.id) {
+            this.uploader.removeFile(this.file.id);
+        }
+        insert.openImageDialog = false;
     };
 
     otherDOMClick = (e) => {
@@ -101,15 +164,17 @@ export default class InsertImage extends Component {
         if (insert.openImageDialog && !contains(target, node)) {
             this.closeBubble();
         }
-    }
+    };
 
     onChange = (activeKey) => {
         this.setState({
             activeKey
         });
-    }
+    };
+
 
     render() {
+        const {progress} = this.state;
         return (
             <Dialog
                 title="插入图片"
@@ -119,14 +184,20 @@ export default class InsertImage extends Component {
                         <div className="weditor-uploader-wrapper">
                             <Tabs
                                 renderTabBar={() => <ScrollableInkTabBar onTabClick={this.onTabClick}/>}
-                                renderTabContent={() => <TabContent animatedWithMargin />}
+                                renderTabContent={() => <TabContent animatedWithMargin/>}
                                 activeKey={this.state.activeKey}
                                 onChange={this.onChange}
                             >
                                 <TabPane tab={'本地上传'} key="1">
                                     <div className="weditor-uploader-file-inner">
-                                        <p className="weditor-image-tips">最大上传20M的图片</p>
-                                        <Button id="weditorUploaderPick">点击上传</Button>
+                                        <p className="weditor-image-tips"
+                                           style={{display: (progress === 0 || progress === 100) ? 'block' : 'none'}}>
+                                            最大上传20M的图片</p>
+                                        <Button id="weditorUploaderPick"
+                                                style={{display: (progress === 0 || progress === 100) ? 'block' : 'none'}}>点击上传</Button>
+                                        <Line percent={progress} trailWidth="2" strokeWidth="2" strokeColor="#118bfb"
+                                              style={{display: (progress > 0 && progress < 100) ? 'block' : 'none'}}/>
+
                                     </div>
                                 </TabPane>
                                 <TabPane tab={'插入外链'} key="2">
