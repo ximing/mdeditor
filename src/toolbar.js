@@ -26,64 +26,108 @@ export default class EditorToolbar extends Component {
 
     componentDidMount() {
         setTimeout(() => {
-            if (false&&getEditor()) {
-                getEditor().addKeyMap({
-                    [`${getCtrl()}-B`]: (cm) => {
+            if (getEditor()) {
+                [{
+                    name: "insert bold",
+                    bindKey: {win: "Ctrl-B", mac: "Command-B"},
+                    exec: function(editor) {
                         insertAround('**', '**');
-                    },
-                    [`${getCtrl()}-I`]: (cm) => {
-                        insertAround('**', '**');
-                    },
-                    [`${getCtrl()}-shift-S`]: () => {
+                    }
+                },{
+                    name: "insert italic",
+                    bindKey: {win: "Ctrl-I", mac: "Command-I"},
+                    exec: function(editor) {
+                        insertAround('*', '*');
+                    }
+                },{
+                    name: "insert strike",
+                    bindKey: {win: "Ctrl-Shift-S", mac: "Command-Shift-S"},
+                    exec: function(editor) {
                         insertAround('~', '~')
-                    },
-                    [`${getCtrl()}-Alt-L`]: () => {
+                    }
+                },{
+                    name: "insert List",
+                    bindKey: {win: "Ctrl-Alt-L", mac: "Command-Alt-L"},
+                    exec: function(editor) {
                         insertBefore('1. ', 3);
-                    },
-                    [`${getCtrl()}-Alt-U`]: () => {
+                    }
+                },{
+                    name: "insert bullet List",
+                    bindKey: {win: "Ctrl-Alt-U", mac: "Command-Alt-U"},
+                    exec: function(editor) {
                         insertBefore('* ', 3);
-                    },
-                    [`${getCtrl()}-Alt-H`]: () => {
-                        this.insert('---');
-                    },
-                    [`${getCtrl()}-Alt-C`]: () => {
+                    }
+                },{
+                    name: "insert HR",
+                    bindKey: {win: "Ctrl-Alt-H", mac: "Command-Alt-H"},
+                    exec: function(editor) {
+                        insertBefore('------\r\n');
+                    }
+                },{
+                    name: "insert code",
+                    bindKey: {win: "Ctrl-Alt-C", mac: "Command-Alt-C"},
+                    exec: function(editor) {
                         insertAround('```\r\n', '\r\n```')
-                    },
-                    [`${getCtrl()}-Alt-I`]: () => {
-                        insertAround('[', '](http://)');
-                    },
-                    [`${getCtrl()}-Alt-Q`]: () => {
+                    }
+                },{
+                    name: "insert image",
+                    bindKey: {win: "Ctrl-Alt-I", mac: "Command-Alt-I"},
+                    exec: function(editor) {
+                        insertAround('![' + '](' + ')');
+                    }
+                },{
+                    name: "insert link",
+                    bindKey: {win: "Ctrl-Alt-L", mac: "Command-Alt-L"},
+                    exec: function(editor) {
+                        insertAround('[' + '](' + ')');
+                    }
+                },{
+                    name: "insert quote",
+                    bindKey: {win: "Alt-Shift-Q", mac: "Alt-Shift-Q"},
+                    exec: function(editor) {
                         insertBefore('> ', 2);
-                    },
-                    [`${getCtrl()}-Alt-L`]: () => {
-                        insertBefore('![](http://)', 2);
-                    },
-                    [`${getCtrl()}-Alt-0`]: () => {
-                        insertBefore('![](http://)', 2);
-                    },
-                    [`${getCtrl()}-Alt-1`]: () => {
+                    }
+                },{
+                    name: "insert H1",
+                    bindKey: {win: "Ctrl-Alt-1", mac: "Command-Alt-1"},
+                    exec: function(editor) {
                         insertBefore('# ', 0);
-                    },
-                    [`${getCtrl()}-Alt-2`]: () => {
+                    }
+                },{
+                    name: "insert H2",
+                    bindKey: {win: "Ctrl-Alt-2", mac: "Command-Alt-2"},
+                    exec: function(editor) {
                         insertBefore('## ', 0);
-                    },
-                    [`${getCtrl()}-Alt-3`]: () => {
+                    }
+                },{
+                    name: "insert H3",
+                    bindKey: {win: "Ctrl-Alt-3", mac: "Command-Alt-3"},
+                    exec: function(editor) {
                         insertBefore('### ', 0);
-                    },
-                    [`${getCtrl()}-Alt-4`]: () => {
+                    }
+                },{
+                    name: "insert H4",
+                    bindKey: {win: "Ctrl-Alt-4", mac: "Command-Alt-4"},
+                    exec: function(editor) {
                         insertBefore('#### ', 0);
-                    },
-                    [`${getCtrl()}-Alt-5`]: () => {
+                    }
+                },{
+                    name: "insert H5",
+                    bindKey: {win: "Ctrl-Alt-5", mac: "Command-Alt-5"},
+                    exec: function(editor) {
                         insertBefore('##### ', 0);
-                    },
-                    [`${getCtrl()}-Alt-6`]: () => {
+                    }
+                },{
+                    name: "insert H6",
+                    bindKey: {win: "Ctrl-Alt-6", mac: "Command-Alt-6"},
+                    exec: function(editor) {
                         insertBefore('###### ', 0);
                     }
-                })
+                }].forEach((item)=>{
+                    getEditor().commands.addCommand(item);
+                });
             }
-        }, 1000);
-
-
+        },100)
     }
 
     /**
@@ -123,7 +167,7 @@ export default class EditorToolbar extends Component {
         const classname = classnames({
             button: true,
             active: isActive
-        })
+        });
         return (
             <button className={classname} onMouseDown={onMouseDown}>
                 <Icon type={icon}/>
@@ -141,6 +185,7 @@ export default class EditorToolbar extends Component {
     onClickMark = (e, type) => {
         e.preventDefault()
         const quillEditor = getEditor();
+        console.log(type)
         if (quillEditor) {
             if (type === 'bold') {
                 insertAround('**', '**')
@@ -155,11 +200,10 @@ export default class EditorToolbar extends Component {
             } else if (type === 'bullet') {
                 insertBefore('* ', 3);
             } else if (type === 'hr') {
-                this.insert('---');
+                insertBefore('------ \r\n', 0);
             } else if (type === 'quote') {
                 insertBefore('> ', 2);
             } else if (type === 'image') {
-                //insertAround('![', '](http://)');
                 this.props.insert.openImageDialog = true;
             } else if (type === 'link') {
                 this.props.insert.openLinkDialog = true;
@@ -186,8 +230,6 @@ export default class EditorToolbar extends Component {
     };
 
     render() {
-        let {rangeFormat} = this.props;
-        let {header} = rangeFormat;
         return (
             <div className="toolbar-opver" id="toolbarOpver">
                 <ToolTip
@@ -298,7 +340,7 @@ export default class EditorToolbar extends Component {
                     placement="bottom"
                     mouseEnterDelay={0}
                     mouseLeaveDelay={0}
-                    overlay={<div>插入引用 {getCtrl()}+Alt+q</div>}
+                    overlay={<div>插入引用 Alt+Shift+q</div>}
                 >
                     {this.renderMarkButton('quote', 'quote')}
                 </ToolTip>
