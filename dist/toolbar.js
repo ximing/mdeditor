@@ -38,8 +38,6 @@ var _aceUtil = require('./lib/aceUtil');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -87,6 +85,7 @@ var EditorToolbar = (_dec = (0, _mobxReact.inject)(function (state) {
         _this.onClickMark = function (e, type) {
             e.preventDefault();
             var quillEditor = (0, _aceEditor.getEditor)();
+            console.log(type);
             if (quillEditor) {
                 if (type === 'bold') {
                     (0, _aceUtil.insertAround)('**', '**');
@@ -101,11 +100,10 @@ var EditorToolbar = (_dec = (0, _mobxReact.inject)(function (state) {
                 } else if (type === 'bullet') {
                     (0, _aceUtil.insertBefore)('* ', 3);
                 } else if (type === 'hr') {
-                    _this.insert('---');
+                    (0, _aceUtil.insertBefore)('------ \r\n', 0);
                 } else if (type === 'quote') {
                     (0, _aceUtil.insertBefore)('> ', 2);
                 } else if (type === 'image') {
-                    //insertAround('![', '](http://)');
                     _this.props.insert.openImageDialog = true;
                 } else if (type === 'link') {
                     _this.props.insert.openLinkDialog = true;
@@ -137,49 +135,109 @@ var EditorToolbar = (_dec = (0, _mobxReact.inject)(function (state) {
     _createClass(EditorToolbar, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
-            var _this2 = this;
-
             setTimeout(function () {
-                if (false && (0, _aceEditor.getEditor)()) {
-                    var _getEditor$addKeyMap;
-
-                    (0, _aceEditor.getEditor)().addKeyMap((_getEditor$addKeyMap = {}, _defineProperty(_getEditor$addKeyMap, (0, _util.getCtrl)() + '-B', function undefined(cm) {
-                        (0, _aceUtil.insertAround)('**', '**');
-                    }), _defineProperty(_getEditor$addKeyMap, (0, _util.getCtrl)() + '-I', function undefined(cm) {
-                        (0, _aceUtil.insertAround)('**', '**');
-                    }), _defineProperty(_getEditor$addKeyMap, (0, _util.getCtrl)() + '-shift-S', function undefined() {
-                        (0, _aceUtil.insertAround)('~', '~');
-                    }), _defineProperty(_getEditor$addKeyMap, (0, _util.getCtrl)() + '-Alt-L', function undefined() {
-                        (0, _aceUtil.insertBefore)('1. ', 3);
-                    }), _defineProperty(_getEditor$addKeyMap, (0, _util.getCtrl)() + '-Alt-U', function undefined() {
-                        (0, _aceUtil.insertBefore)('* ', 3);
-                    }), _defineProperty(_getEditor$addKeyMap, (0, _util.getCtrl)() + '-Alt-H', function undefined() {
-                        _this2.insert('---');
-                    }), _defineProperty(_getEditor$addKeyMap, (0, _util.getCtrl)() + '-Alt-C', function undefined() {
-                        (0, _aceUtil.insertAround)('```\r\n', '\r\n```');
-                    }), _defineProperty(_getEditor$addKeyMap, (0, _util.getCtrl)() + '-Alt-I', function undefined() {
-                        (0, _aceUtil.insertAround)('[', '](http://)');
-                    }), _defineProperty(_getEditor$addKeyMap, (0, _util.getCtrl)() + '-Alt-Q', function undefined() {
-                        (0, _aceUtil.insertBefore)('> ', 2);
-                    }), _defineProperty(_getEditor$addKeyMap, (0, _util.getCtrl)() + '-Alt-L', function undefined() {
-                        (0, _aceUtil.insertBefore)('![](http://)', 2);
-                    }), _defineProperty(_getEditor$addKeyMap, (0, _util.getCtrl)() + '-Alt-0', function undefined() {
-                        (0, _aceUtil.insertBefore)('![](http://)', 2);
-                    }), _defineProperty(_getEditor$addKeyMap, (0, _util.getCtrl)() + '-Alt-1', function undefined() {
-                        (0, _aceUtil.insertBefore)('# ', 0);
-                    }), _defineProperty(_getEditor$addKeyMap, (0, _util.getCtrl)() + '-Alt-2', function undefined() {
-                        (0, _aceUtil.insertBefore)('## ', 0);
-                    }), _defineProperty(_getEditor$addKeyMap, (0, _util.getCtrl)() + '-Alt-3', function undefined() {
-                        (0, _aceUtil.insertBefore)('### ', 0);
-                    }), _defineProperty(_getEditor$addKeyMap, (0, _util.getCtrl)() + '-Alt-4', function undefined() {
-                        (0, _aceUtil.insertBefore)('#### ', 0);
-                    }), _defineProperty(_getEditor$addKeyMap, (0, _util.getCtrl)() + '-Alt-5', function undefined() {
-                        (0, _aceUtil.insertBefore)('##### ', 0);
-                    }), _defineProperty(_getEditor$addKeyMap, (0, _util.getCtrl)() + '-Alt-6', function undefined() {
-                        (0, _aceUtil.insertBefore)('###### ', 0);
-                    }), _getEditor$addKeyMap));
+                if ((0, _aceEditor.getEditor)()) {
+                    [{
+                        name: "insert bold",
+                        bindKey: { win: "Ctrl-B", mac: "Command-B" },
+                        exec: function exec(editor) {
+                            (0, _aceUtil.insertAround)('**', '**');
+                        }
+                    }, {
+                        name: "insert italic",
+                        bindKey: { win: "Ctrl-I", mac: "Command-I" },
+                        exec: function exec(editor) {
+                            (0, _aceUtil.insertAround)('*', '*');
+                        }
+                    }, {
+                        name: "insert strike",
+                        bindKey: { win: "Ctrl-Shift-S", mac: "Command-Shift-S" },
+                        exec: function exec(editor) {
+                            (0, _aceUtil.insertAround)('~', '~');
+                        }
+                    }, {
+                        name: "insert List",
+                        bindKey: { win: "Ctrl-Alt-L", mac: "Command-Alt-L" },
+                        exec: function exec(editor) {
+                            (0, _aceUtil.insertBefore)('1. ', 3);
+                        }
+                    }, {
+                        name: "insert bullet List",
+                        bindKey: { win: "Ctrl-Alt-U", mac: "Command-Alt-U" },
+                        exec: function exec(editor) {
+                            (0, _aceUtil.insertBefore)('* ', 3);
+                        }
+                    }, {
+                        name: "insert HR",
+                        bindKey: { win: "Ctrl-Alt-H", mac: "Command-Alt-H" },
+                        exec: function exec(editor) {
+                            (0, _aceUtil.insertBefore)('------\r\n');
+                        }
+                    }, {
+                        name: "insert code",
+                        bindKey: { win: "Ctrl-Alt-C", mac: "Command-Alt-C" },
+                        exec: function exec(editor) {
+                            (0, _aceUtil.insertAround)('```\r\n', '\r\n```');
+                        }
+                    }, {
+                        name: "insert image",
+                        bindKey: { win: "Ctrl-Alt-I", mac: "Command-Alt-I" },
+                        exec: function exec(editor) {
+                            (0, _aceUtil.insertAround)('![' + '](' + ')');
+                        }
+                    }, {
+                        name: "insert link",
+                        bindKey: { win: "Ctrl-Alt-L", mac: "Command-Alt-L" },
+                        exec: function exec(editor) {
+                            (0, _aceUtil.insertAround)('[' + '](' + ')');
+                        }
+                    }, {
+                        name: "insert quote",
+                        bindKey: { win: "Alt-Shift-Q", mac: "Alt-Shift-Q" },
+                        exec: function exec(editor) {
+                            (0, _aceUtil.insertBefore)('> ', 2);
+                        }
+                    }, {
+                        name: "insert H1",
+                        bindKey: { win: "Ctrl-Alt-1", mac: "Command-Alt-1" },
+                        exec: function exec(editor) {
+                            (0, _aceUtil.insertBefore)('# ', 0);
+                        }
+                    }, {
+                        name: "insert H2",
+                        bindKey: { win: "Ctrl-Alt-2", mac: "Command-Alt-2" },
+                        exec: function exec(editor) {
+                            (0, _aceUtil.insertBefore)('## ', 0);
+                        }
+                    }, {
+                        name: "insert H3",
+                        bindKey: { win: "Ctrl-Alt-3", mac: "Command-Alt-3" },
+                        exec: function exec(editor) {
+                            (0, _aceUtil.insertBefore)('### ', 0);
+                        }
+                    }, {
+                        name: "insert H4",
+                        bindKey: { win: "Ctrl-Alt-4", mac: "Command-Alt-4" },
+                        exec: function exec(editor) {
+                            (0, _aceUtil.insertBefore)('#### ', 0);
+                        }
+                    }, {
+                        name: "insert H5",
+                        bindKey: { win: "Ctrl-Alt-5", mac: "Command-Alt-5" },
+                        exec: function exec(editor) {
+                            (0, _aceUtil.insertBefore)('##### ', 0);
+                        }
+                    }, {
+                        name: "insert H6",
+                        bindKey: { win: "Ctrl-Alt-6", mac: "Command-Alt-6" },
+                        exec: function exec(editor) {
+                            (0, _aceUtil.insertBefore)('###### ', 0);
+                        }
+                    }].forEach(function (item) {
+                        (0, _aceEditor.getEditor)().commands.addCommand(item);
+                    });
                 }
-            }, 1000);
+            }, 100);
         }
 
         /**
@@ -214,9 +272,6 @@ var EditorToolbar = (_dec = (0, _mobxReact.inject)(function (state) {
     }, {
         key: 'render',
         value: function render() {
-            var rangeFormat = this.props.rangeFormat;
-            var header = rangeFormat.header;
-
             return _react2.default.createElement(
                 'div',
                 { className: 'toolbar-opver', id: 'toolbarOpver' },
@@ -433,9 +488,7 @@ var EditorToolbar = (_dec = (0, _mobxReact.inject)(function (state) {
                         overlay: _react2.default.createElement(
                             'div',
                             null,
-                            '\u63D2\u5165\u5F15\u7528 ',
-                            (0, _util.getCtrl)(),
-                            '+Alt+q'
+                            '\u63D2\u5165\u5F15\u7528 Alt+Shift+q'
                         )
                     },
                     this.renderMarkButton('quote', 'quote')

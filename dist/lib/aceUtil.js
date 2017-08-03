@@ -71,6 +71,8 @@ var insertBefore = exports.insertBefore = function insertBefore(insertion) {
     //     doc.setCursor({ line: cursor.line, ch: cursorOffset || 0 })
     // }
     var aceEditor = (0, _aceEditor.getEditor)();
-    var position = aceEditor.getCursorPositionScreen();
-    aceEditor.getSession().insert({ row: position.row, column: 0 }, insertion);
+    // const position = aceEditor.getCursorPositionScreen();
+    // console.log(position)
+    aceEditor.insert(insertion);
+    // aceEditor.session.insert({row: position.row, column: 0}, insertion)
 };
