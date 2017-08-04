@@ -31,7 +31,7 @@ export default class WEditor extends Component {
     constructor(props) {
         super(props);
         editor.value = props.defaultValue;
-        this.debounceWindowResize = debounce(this.onWindowResize);
+        // this.debounceWindowResize = debounce(this.onWindowResize);
     }
 
     componentDidMount() {
@@ -53,11 +53,11 @@ export default class WEditor extends Component {
             }, 200);
         };
         $divs.on('scroll', sync);
-        $(window).on('resize', this.debounceWindowResize);
+        $(window).on('resize', this.onWindowResize);
     }
 
     componentWillUnmount() {
-        $(window).off('resize', this.debounceWindowResize);
+        $(window).off('resize', this.onWindowResize);
     }
 
     onWindowResize = () => {
