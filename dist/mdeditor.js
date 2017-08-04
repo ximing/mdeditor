@@ -89,6 +89,9 @@ var WEditor = (_dec = (0, _mobxReact.inject)(function (state) {
             _this.setState({
                 width: window.innerWidth
             });
+            if ((0, _aceEditor.getEditor)()) {
+                (0, _aceEditor.getEditor)().renderer.updateFull();
+            }
         };
 
         _editor4.default.value = props.defaultValue;
