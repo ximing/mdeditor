@@ -95,7 +95,7 @@ var WEditor = (_dec = (0, _mobxReact.inject)(function (state) {
         };
 
         _editor4.default.value = props.defaultValue;
-        _this.debounceWindowResize = (0, _lodash2.default)(_this.onWindowResize);
+        // this.debounceWindowResize = debounce(this.onWindowResize);
         return _this;
     }
 
@@ -120,12 +120,12 @@ var WEditor = (_dec = (0, _mobxReact.inject)(function (state) {
                 }, 200);
             };
             $divs.on('scroll', sync);
-            $(window).on('resize', this.debounceWindowResize);
+            $(window).on('resize', this.onWindowResize);
         }
     }, {
         key: 'componentWillUnmount',
         value: function componentWillUnmount() {
-            $(window).off('resize', this.debounceWindowResize);
+            $(window).off('resize', this.onWindowResize);
         }
     }, {
         key: 'componentWillReceiveProps',
