@@ -64,6 +64,9 @@ export default class WEditor extends Component {
         this.setState({
             width: window.innerWidth
         });
+        if(getEditor()){
+            getEditor().renderer.updateFull();
+        }
     };
 
 
