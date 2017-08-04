@@ -18,7 +18,6 @@ import debounce from 'lodash.debounce';
 
 @inject(state => ({
     insert: state.insert,
-    open: state.catalogue.open,
     focus: state.editor.focus,
     help: state.help
 })) @observer

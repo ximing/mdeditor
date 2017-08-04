@@ -9,7 +9,6 @@ import {Provider} from 'mobx-react';
 
 import {getEditor} from './lib/aceEditor';
 import MDEditor from './mdeditor';
-import catalogue from './model/catalogue';
 import insert from './model/insert';
 import editor from './model/editor';
 import help from './model/help';
@@ -42,7 +41,6 @@ class  Editor extends Component {
     render() {
         return(
             <Provider
-                catalogue={catalogue}
                 insert={insert}
                 editor={editor}
                 help={help}
