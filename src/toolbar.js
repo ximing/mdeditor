@@ -6,6 +6,8 @@ import React, {Component} from 'react';
 import {inject, observer} from 'mobx-react';
 
 import ToolTip from './components/tooltip';
+import Trigger from './components/Trigger';
+import TableSelector from 'select-row-col';
 import Icon from './components/icon';
 import classnames from 'classnames';
 
@@ -215,7 +217,12 @@ export default class EditorToolbar extends Component {
                 insertBefore('### ', 0);
             }
         }
-    }
+    };
+
+    onInsertTable = (size) => {
+        let {row, col} = size;
+        //...
+    };
 
     undo = () => {
         if (getUndoManager()) {
@@ -303,23 +310,28 @@ export default class EditorToolbar extends Component {
                     {this.renderMarkButton('strike', 'strike')}
                 </ToolTip>
                 <Icon type="vertical"/>
-                <ToolTip
-                    placement="bottom"
-                    mouseEnterDelay={0}
-                    mouseLeaveDelay={0}
-                    overlay={<div>有序列表 {getCtrl()}+Alt+L</div>}
+
+                <Trigger
+                    destroyPopupOnHide={true}
+                    action={['click']}
+                    popup={<TableSelector onSelect={this.onInsertTable} maxSize={{row:20, col:12}} /> }
+                    popupAlign={{
+                        points: ['tl', 'bl'],
+                        offset: [0, 0]
+                    }}
                 >
-                    {this.renderMarkButton('ordered', 'ol')}
-                </ToolTip>
-                <ToolTip
-                    placement="bottom"
-                    mouseEnterDelay={0}
-                    mouseLeaveDelay={0}
-                    overlay={<div>无序列表 {getCtrl()}+Alt+U</div>}
-                >
-                    {this.renderMarkButton('bullet', 'ul')}
-                </ToolTip>
-                <Icon type="vertical"/>
+                    <ToolTip
+                        ref='tableIcon'
+                        placement="bottom"
+                        mouseEnterDelay={0}
+                        mouseLeaveDelay={0}
+                        overlay={<div>插入表格 {getCtrl()}+Alt+t</div>}
+                    >
+                        {this.renderMarkButton('table', 'table')}
+                    </ToolTip>
+                </Trigger>
+
+
                 <ToolTip
                     placement="bottom"
                     mouseEnterDelay={0}
@@ -359,6 +371,23 @@ export default class EditorToolbar extends Component {
                     overlay={<div>插入链接 {getCtrl()}+Alt+l</div>}
                 >
                     {this.renderMarkButton('link', 'link')}
+                </ToolTip>
+                <Icon type="vertical"/>
+                <ToolTip
+                    placement="bottom"
+                    mouseEnterDelay={0}
+                    mouseLeaveDelay={0}
+                    overlay={<div>有序列表 {getCtrl()}+Alt+L</div>}
+                >
+                    {this.renderMarkButton('ordered', 'ol')}
+                </ToolTip>
+                <ToolTip
+                    placement="bottom"
+                    mouseEnterDelay={0}
+                    mouseLeaveDelay={0}
+                    overlay={<div>无序列表 {getCtrl()}+Alt+U</div>}
+                >
+                    {this.renderMarkButton('bullet', 'ul')}
                 </ToolTip>
             </div>
         );

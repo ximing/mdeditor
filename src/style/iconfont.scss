@@ -119,6 +119,11 @@
 .#{$iconfont-css-prefix}-image:before {
     content: "\e674";
 }
+
+.#{$iconfont-css-prefix}-table:before {
+    content: "\e6a1";
+}
+
 .#{$iconfont-css-prefix}-link:before {
     content: "\e602";
 }
