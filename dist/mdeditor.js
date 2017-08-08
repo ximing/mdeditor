@@ -68,7 +68,6 @@ var $ = window.jQuery;
 var WEditor = (_dec = (0, _mobxReact.inject)(function (state) {
     return {
         insert: state.insert,
-        open: state.catalogue.open,
         focus: state.editor.focus,
         help: state.help
     };
