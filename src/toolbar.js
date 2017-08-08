@@ -221,7 +221,26 @@ export default class EditorToolbar extends Component {
 
     onInsertTable = (size) => {
         let {row, col} = size;
-        //...
+        const _editor = getEditor();
+
+        if(_editor){
+            let _title = `|${' 标题 |'.repeat(col)}`,
+                _config = `|${' ---- |'.repeat(col)}`,
+                _body = `|${' 文本 |'.repeat(col)}\n`.repeat(row-1) + `|${' 文本 |'.repeat(col)}`;
+            let _table = `${_title}\n${_config}\n${_body}`;
+
+            let {row: cursorRow, column} = _editor.selection.getCursor();
+            //cursor position cases:
+            //1.光标在空行的开头 2.光标在非空行的开头 3.光标不在一行的开头但在一行的结尾 4.光标在一行的中间 5.还有「选中」的情况
+            //case 1和2的处理方式: 当前行插入表格, 并在表格结尾另起一行; 3和4的处理方式: 另起一行, 插入表格
+            if(column === 0){
+                insert(`${_table}\n`, 0);
+            } else {
+                _editor.getSession().replace(_editor.getSelectionRange(), ''); //先清除选中的内容
+                _editor.gotoLine(cursorRow + 2);  // +2: getCursor获取的row跟gotoLine的row起始值不一致
+                insert(`${_table}\n`, 0);
+            }
+        }
     };
 
     undo = () => {
@@ -314,7 +333,7 @@ export default class EditorToolbar extends Component {
                 <Trigger
                     destroyPopupOnHide={true}
                     action={['click']}
-                    popup={<TableSelector onSelect={this.onInsertTable} maxSize={{row:20, col:12}} /> }
+                    popup={<TableSelector onSelect={this.onInsertTable} maxSize={{row:15, col:10}} /> }
                     popupAlign={{
                         points: ['tl', 'bl'],
                         offset: [0, 0]
