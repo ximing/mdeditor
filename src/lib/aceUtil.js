@@ -15,7 +15,7 @@ export const insert = function (insertion, cursorOffset) {
         aceEditor.gotoLine(aceEditor.getSelectionRange().end.row + 1,
             aceEditor.getSelectionRange().end.column - insertion.length + cursorOffset - 1);
     }
-}
+};
 
 /**
  * Insert a string at the start and end of a selection
@@ -36,7 +36,7 @@ export const insertAround = function (start, end) {
     // }
     const aceEditor = getEditor();
     insert(`${start}${aceEditor.getSession().getTextRange()}${end}`);
-}
+};
 
 /**
  * Insert a string before a selection
@@ -63,9 +63,7 @@ export const insertBefore = function (insertion, cursorOffset = 0) {
     //     doc.setCursor({ line: cursor.line, ch: cursorOffset || 0 })
     // }
     const aceEditor = getEditor();
-    // const position = aceEditor.getCursorPositionScreen();
-    // console.log(position)
-    aceEditor.insert(insertion);
-    // aceEditor.session.insert({row: position.row, column: 0}, insertion)
-
-}
+    // aceEditor.insert(insertion);
+    const position = aceEditor.selection.getCursor();
+    aceEditor.session.insert({row: position.row, column: 0}, insertion);
+};

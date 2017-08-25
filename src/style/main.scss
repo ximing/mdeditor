@@ -20,11 +20,6 @@ body {
         box-sizing: border-box;
     }
 
-
-    h1, h2, h3 {
-        line-height: 40px;
-    }
-
     h1, h2, h3, h4, h5, h6 {
         margin: 10px 0;
         font-family: inherit;
@@ -32,6 +27,10 @@ body {
         line-height: 20px;
         color: #111;
         text-rendering: optimizelegibility;
+    }
+
+    h1, h2, h3 {
+        line-height: 40px;
     }
 
     h1 {

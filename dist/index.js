@@ -26,10 +26,6 @@ var _mdeditor = require('./mdeditor');
 
 var _mdeditor2 = _interopRequireDefault(_mdeditor);
 
-var _catalogue = require('./model/catalogue');
-
-var _catalogue2 = _interopRequireDefault(_catalogue);
-
 var _insert = require('./model/insert');
 
 var _insert2 = _interopRequireDefault(_insert);
@@ -73,7 +69,6 @@ var Editor = (_temp = _class = function (_Component) {
             return _react2.default.createElement(
                 _mobxReact.Provider,
                 {
-                    catalogue: _catalogue2.default,
                     insert: _insert2.default,
                     editor: _editor2.default,
                     help: _help2.default
