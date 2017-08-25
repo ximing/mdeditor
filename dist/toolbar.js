@@ -22,6 +22,14 @@ var _tooltip = require('./components/tooltip');
 
 var _tooltip2 = _interopRequireDefault(_tooltip);
 
+var _Trigger = require('./components/Trigger');
+
+var _Trigger2 = _interopRequireDefault(_Trigger);
+
+var _selectRowCol = require('select-row-col');
+
+var _selectRowCol2 = _interopRequireDefault(_selectRowCol);
+
 var _icon = require('./components/icon');
 
 var _icon2 = _interopRequireDefault(_icon);
@@ -113,6 +121,36 @@ var EditorToolbar = (_dec = (0, _mobxReact.inject)(function (state) {
                     (0, _aceUtil.insertBefore)('## ', 0);
                 } else if (type === 'h3') {
                     (0, _aceUtil.insertBefore)('### ', 0);
+                }
+            }
+        };
+
+        _this.onInsertTable = function (size) {
+            var row = size.row,
+                col = size.col;
+
+            var _editor = (0, _aceEditor.getEditor)();
+
+            if (_editor) {
+                var _title = '|' + ' 标题 |'.repeat(col),
+                    _config = '|' + ' ---- |'.repeat(col),
+                    _body = ('|' + ' 文本 |'.repeat(col) + '\n').repeat(row - 1) + ('|' + ' 文本 |'.repeat(col));
+                var _table = _title + '\n' + _config + '\n' + _body;
+
+                var _editor$selection$get = _editor.selection.getCursor(),
+                    cursorRow = _editor$selection$get.row,
+                    column = _editor$selection$get.column;
+                //cursor position cases:
+                //1.光标在空行的开头 2.光标在非空行的开头 3.光标不在一行的开头但在一行的结尾 4.光标在一行的中间 5.还有「选中」的情况
+                //case 1和2的处理方式: 当前行插入表格, 并在表格结尾另起一行; 3和4的处理方式: 另起一行, 插入表格
+
+
+                if (column === 0) {
+                    (0, _aceUtil.insert)(_table + '\n', 0);
+                } else {
+                    _editor.getSession().replace(_editor.getSelectionRange(), ''); //先清除选中的内容
+                    _editor.gotoLine(cursorRow + 2); // +2: getCursor获取的row跟gotoLine的row起始值不一致
+                    (0, _aceUtil.insert)(_table + '\n', 0);
                 }
             }
         };
@@ -415,38 +453,34 @@ var EditorToolbar = (_dec = (0, _mobxReact.inject)(function (state) {
                 ),
                 _react2.default.createElement(_icon2.default, { type: 'vertical' }),
                 _react2.default.createElement(
-                    _tooltip2.default,
+                    _Trigger2.default,
                     {
-                        placement: 'bottom',
-                        mouseEnterDelay: 0,
-                        mouseLeaveDelay: 0,
-                        overlay: _react2.default.createElement(
-                            'div',
-                            null,
-                            '\u6709\u5E8F\u5217\u8868 ',
-                            (0, _util.getCtrl)(),
-                            '+Alt+L'
-                        )
+                        destroyPopupOnHide: true,
+                        action: ['click'],
+                        popup: _react2.default.createElement(_selectRowCol2.default, { onSelect: this.onInsertTable, maxSize: { row: 15, col: 10 } }),
+                        popupAlign: {
+                            points: ['tl', 'bl'],
+                            offset: [0, 0]
+                        }
                     },
-                    this.renderMarkButton('ordered', 'ol')
+                    _react2.default.createElement(
+                        _tooltip2.default,
+                        {
+                            ref: 'tableIcon',
+                            placement: 'bottom',
+                            mouseEnterDelay: 0,
+                            mouseLeaveDelay: 0,
+                            overlay: _react2.default.createElement(
+                                'div',
+                                null,
+                                '\u63D2\u5165\u8868\u683C ',
+                                (0, _util.getCtrl)(),
+                                '+Alt+t'
+                            )
+                        },
+                        this.renderMarkButton('table', 'table')
+                    )
                 ),
-                _react2.default.createElement(
-                    _tooltip2.default,
-                    {
-                        placement: 'bottom',
-                        mouseEnterDelay: 0,
-                        mouseLeaveDelay: 0,
-                        overlay: _react2.default.createElement(
-                            'div',
-                            null,
-                            '\u65E0\u5E8F\u5217\u8868 ',
-                            (0, _util.getCtrl)(),
-                            '+Alt+U'
-                        )
-                    },
-                    this.renderMarkButton('bullet', 'ul')
-                ),
-                _react2.default.createElement(_icon2.default, { type: 'vertical' }),
                 _react2.default.createElement(
                     _tooltip2.default,
                     {
@@ -524,6 +558,39 @@ var EditorToolbar = (_dec = (0, _mobxReact.inject)(function (state) {
                         )
                     },
                     this.renderMarkButton('link', 'link')
+                ),
+                _react2.default.createElement(_icon2.default, { type: 'vertical' }),
+                _react2.default.createElement(
+                    _tooltip2.default,
+                    {
+                        placement: 'bottom',
+                        mouseEnterDelay: 0,
+                        mouseLeaveDelay: 0,
+                        overlay: _react2.default.createElement(
+                            'div',
+                            null,
+                            '\u6709\u5E8F\u5217\u8868 ',
+                            (0, _util.getCtrl)(),
+                            '+Alt+L'
+                        )
+                    },
+                    this.renderMarkButton('ordered', 'ol')
+                ),
+                _react2.default.createElement(
+                    _tooltip2.default,
+                    {
+                        placement: 'bottom',
+                        mouseEnterDelay: 0,
+                        mouseLeaveDelay: 0,
+                        overlay: _react2.default.createElement(
+                            'div',
+                            null,
+                            '\u65E0\u5E8F\u5217\u8868 ',
+                            (0, _util.getCtrl)(),
+                            '+Alt+U'
+                        )
+                    },
+                    this.renderMarkButton('bullet', 'ul')
                 )
             );
         }
